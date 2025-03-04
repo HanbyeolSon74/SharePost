@@ -1,0 +1,20 @@
+/* 기본 설정 */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.contentWrapBox {
+  flex: 1;
+}
+
+.my_footer {
+  margin-top: auto;
+}
