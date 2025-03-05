@@ -34,14 +34,13 @@
                   placeholder="도메인 입력"
                 />
                 <select id="emailDomainSelect" onchange="toggleCustomDomain()">
+                  <option value="직접입력">직접 입력</option>
                   <option value="naver.com">naver.com</option>
                   <option value="gmail.com">gmail.com</option>
                   <option value="daum.net">daum.net</option>
-                  <option value="직접입력">직접 입력</option>
                 </select>
-                <div class="emailCheckBtn">중복확인</div>
+                <button class="emailCheckBtn">중복확인</button>
               </div>
-              <div class="guideText">이메일 형식으로 입력하세요.</div>
               <div class="emailText"></div>
             </div>
           </div>
@@ -66,7 +65,7 @@
                 </div>
               </div>
               <div class="guideText">
-                영문, 숫자, 특수문자를 포함해야 합니다.
+                (영문, 숫자, 특수문자를 포함해야 합니다.)
               </div>
               <div class="passwordText"></div>
             </div>
@@ -83,7 +82,6 @@
                   id="confirmPassword"
                   placeholder="비밀번호 확인"
                   required
-                  onkeyup="checkPasswordMatch()"
                 />
                 <div
                   class="togglePassword"
@@ -104,7 +102,7 @@
               <div class="inputBox nameBox">
                 <input type="text" id="name" placeholder="이름 입력" required />
               </div>
-              <div class="guideText">실명을 입력하세요.</div>
+
               <div class="nameText"></div>
             </div>
           </div>
@@ -227,7 +225,7 @@
             </div>
           </div>
         </div>
-        <div class="signBtn">회원가입</div>
+        <button class="signBtn">회원가입</button>
         <!-- 본문 끝 -->
       </div>
       <!-- 푸터 -->

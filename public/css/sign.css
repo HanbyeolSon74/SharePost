@@ -42,6 +42,7 @@ body {
   cursor: pointer;
   display: inline-block;
   margin-bottom: 50px;
+  border: none;
   font-size: 12px;
 }
 
@@ -55,6 +56,7 @@ body {
   font-weight: bold;
   width: 80px;
   cursor: pointer;
+  border: none;
   font-size: 12px;
 }
 
@@ -76,4 +78,10 @@ body {
 }
 .address-fields {
   display: flex;
+}
+
+.guideText {
+  font-size: 12px;
+  color: rgb(42, 42, 42);
+  font-weight: bold;
 }

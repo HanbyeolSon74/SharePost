@@ -19,16 +19,16 @@ document.getElementById("overLay").addEventListener("click", function () {
 });
 
 // hover시 선 없애기
-const menuItems = document.querySelectorAll(".menuItem");
-const header = document.querySelector(".headerContainer");
 
-menuItems.forEach((item) => {
+document.querySelectorAll(".menuItem").forEach((item) => {
   item.addEventListener("mouseenter", () => {
-    header.style.borderBottom = "1px solid #fff";
+    document.querySelector(".headerContainer").header.style.borderBottom =
+      "1px solid #fff";
   });
 
   item.addEventListener("mouseleave", () => {
-    header.style.borderBottom = "1px solid #000";
+    document.querySelector(".headerContainer").header.style.borderBottom =
+      "1px solid #000";
   });
 });
 
