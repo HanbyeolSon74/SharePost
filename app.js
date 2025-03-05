@@ -22,7 +22,7 @@ app.use("/uploads", express.static("uploads")); // 업로드된 파일 접근
 
 // 기본 라우트
 app.get("/", (req, res) => {
-  res.render("main");
+  res.render("sign");
 });
 
 // DB 연결 확인 및 서버 실행
