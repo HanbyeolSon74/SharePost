@@ -1,0 +1,61 @@
+/* 기본 설정 */
+html,
+body {
+  height: 100%;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  padding-top: 58px;
+}
+
+.footerAllWrap {
+  min-height: 100px;
+  border-top: solid 1px black;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.footerWrap {
+  padding-top: 30px;
+  padding-bottom: 10px;
+  height: 100%;
+  width: 100%;
+}
+.snsWrap {
+  font-size: 13px;
+}
+
+.snsWrap a {
+  margin-left: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.companyWrap1,
+.companyWrap2 {
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.snsWrap a i {
+  display: none;
+}
+/* 반응형 CSS */
+@media (max-width: 768px) {
+  .snsWrap a span {
+    display: none;
+  }
+
+  .snsWrap a i {
+    display: inline-block;
+    font-size: 15px;
+  }
+  .companyWrap1,
+  .companyWrap2 {
+    font-size: 10px;
+  }
+}

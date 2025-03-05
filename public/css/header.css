@@ -1,0 +1,267 @@
+/* 기본 설정 */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  padding-top: 58px;
+  overflow-x: hidden;
+}
+.companyName {
+  padding: 10px 50px 10px 50px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.menuNav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.headerContainer {
+  display: flex;
+  width: 100%;
+  height: 58px;
+  align-items: center;
+  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  border-bottom: #000 solid 1px;
+  width: 100%;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding-right: 20px;
+  background-color: #fff;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+.menu-item .dropdownMenu {
+  position: fixed;
+  display: none;
+  background-color: #fff;
+  padding: 10px;
+  width: 100vw;
+  left: 0px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-bottom: 1px solid black;
+}
+
+.menu-item:hover .dropdownMenu {
+  display: block;
+}
+
+.menu-item:hover .dropdownBackground {
+  display: block;
+}
+.menu-item {
+  padding: 10px;
+  position: relative;
+}
+.menu-item a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+}
+
+.dropdownMenu a {
+  padding: 8px 10px;
+  display: block;
+}
+
+.dropdownMenu a:hover {
+  cursor: pointer;
+}
+
+/* 상세 메뉴 padding */
+#store-menu {
+  padding-left: 215px;
+}
+#menu-menu {
+  padding-left: 285px;
+}
+#projects-menu {
+  padding-left: 350px;
+}
+
+/* 사이드 바 */
+.sideBarContent {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  right: -40px;
+  overflow-x: hidden;
+  transition: width 0.3s ease;
+  padding: 60px 20px 20px 20px;
+  z-index: 1000;
+  background-color: white;
+}
+
+.sideBarContent.open {
+  width: 300px;
+  transition: width 0.3s ease;
+}
+
+.sideBarContent input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+}
+
+.searchCloseBtn {
+  font-size: 24px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.searchOpenBtn {
+  border: none;
+  padding-left: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.searchOpenBtn i {
+  margin-right: 5px;
+}
+
+.searchOpenBtn p {
+  margin: 0;
+}
+
+/* 사이드바 버튼 hover 효과 */
+.searchOpenBtn:hover {
+  cursor: pointer;
+}
+
+/* 오버레이 설정 (사이드바 열릴 때) */
+.overLay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+  transition: visibility 0s, opacity 0.3s ease;
+  opacity: 0;
+  z-index: 999;
+}
+
+.overLay.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* 오른쪽 로그인, 하트 버튼 */
+.rigntSearchBar {
+  display: flex;
+}
+
+.loginBtn {
+  padding-left: 12px;
+}
+
+/* 반응형 */
+.menuToggleBtn {
+  display: none; /* 기본 상태에서 숨김 */
+  padding: 15px 30px;
+  cursor: pointer;
+}
+/* 모바일에서 헤더 메뉴와 사이드바 숨기기 */
+@media (max-width: 768px) {
+  /* 메뉴 토글 버튼 보이기 */
+  .menuToggleBtn {
+    display: block;
+  }
+
+  /* 메뉴를 기본적으로 숨기고, 버튼 클릭 시 보이도록 */
+  .menuNav {
+    display: none;
+    position: absolute;
+    top: 58px;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 999;
+  }
+  .menu-item > a {
+    font-weight: bold;
+  }
+  .menuNav.open {
+    display: block;
+  }
+
+  /* 모바일에서 헤더의 로고 가운데 배치 */
+  .headerLeft {
+    flex-grow: 1;
+    justify-content: center; /* 로고를 가운데로 배치 */
+  }
+
+  /* 오른쪽 버튼 (검색, 하트, 로그인) 유지 */
+  .rigntSearchBar {
+    display: flex;
+  }
+
+  /* 메뉴 아이템 스타일 */
+  .menu-item button {
+    width: 100%;
+    padding: 15px;
+    text-align: left;
+  }
+  .menuNav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  /* 드롭다운 메뉴가 메뉴 아이템 아래로 세로로 표시 */
+  .dropdownMenu {
+    width: 100%;
+    position: relative;
+    display: block;
+  }
+  .menu-item .dropdownMenu {
+    position: unset;
+    display: none;
+    background-color: #fff;
+    padding: 10px;
+    width: 100%;
+    left: 0;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-bottom: 0;
+  }
+  #store-menu,
+  #menu-menu,
+  #projects-menu {
+    padding-left: 0px;
+  }
+  nav {
+    border-bottom: solid 1px black;
+  }
+  .searchOpenBtn p {
+    display: none;
+  }
+
+  .headerContainer {
+    padding-right: 5px;
+  }
+  .companyName {
+    text-align: center;
+  }
+}

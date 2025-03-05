@@ -5,7 +5,9 @@ body {
   margin: 0;
   padding: 0;
 }
-
+body {
+  padding-top: 58px;
+}
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -13,8 +15,65 @@ body {
 }
 .contentWrapBox {
   flex: 1;
+  text-align: center; /* 자식 요소들을 가로로 중앙 정렬 */
 }
 
 .my_footer {
   margin-top: auto;
+}
+.signBox {
+  padding: 50px;
+}
+
+/* 라벨 CSS */
+.labelInputBox {
+  display: flex;
+}
+
+.signBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 8px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  width: 100px;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 50px;
+  font-size: 12px;
+}
+
+.emailCheckBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 3px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  width: 80px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.inputBox {
+  display: flex;
+}
+.findAddress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 3px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  width: 80px;
+  cursor: pointer;
+  font-size: 12px;
+  border: none;
+}
+.address-fields {
+  display: flex;
 }
