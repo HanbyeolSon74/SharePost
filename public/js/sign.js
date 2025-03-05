@@ -120,13 +120,124 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // 유효성 검사
-let emailcheck = false;
+let emailCheck = false;
+let passwordCheck = false;
+let confirmPasswordCheck = false;
+
+// 이메일 유효성 검사
+const emailOninput = () => {
+  const emailInput = document.querySelector("#email");
+  const customDomainInput = document.querySelector("#customDomain");
+  const emailDomainSelect = document.querySelector("#emailDomainSelect");
+  const emailText = document.querySelector(".emailText");
+
+  const emailInputText = emailInput.value.trim();
+  const customDomainText = customDomainInput.value.trim();
+  const selectedDomain = emailDomainSelect.value;
+
+  let fullEmail = emailInputText;
+  if (selectedDomain === "직접입력") {
+    fullEmail += "@" + customDomainText;
+  } else {
+    fullEmail += "@" + selectedDomain;
+  }
+
+  const strictEmailRegex =
+    /^(?!.*\.\.)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  // 이메일이 비어있거나, 도메인이 비어있으면
+  if (emailInputText.length < 1) {
+    emailText.innerText = "아이디를 입력하세요.";
+    emailText.style.color = "red";
+    emailCheck = false;
+  } else if (selectedDomain === "직접입력" && customDomainText.length < 1) {
+    emailText.innerText = "도메인을 입력하세요.";
+    emailText.style.color = "red";
+    emailCheck = false;
+  }
+  // 이메일 형식이 맞지 않으면
+  else if (!strictEmailRegex.test(fullEmail)) {
+    emailText.innerText = "이메일 형식으로 입력하세요.";
+    emailText.style.color = "red";
+    emailCheck = false;
+  } else {
+    emailText.innerText = ""; // 메시지 제거
+    emailCheck = true;
+  }
+  validCheck();
+};
+// 비밀번호 검사
+const passwordOninput = () => {
+  const passwordInput = document.querySelector("#password");
+  const passwordText = document.querySelector(".passwordText");
+
+  const passwordTextValue = passwordInput.value.trim();
+  const passwordRegex =
+    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+
+  if (passwordTextValue.length < 1) {
+    passwordText.innerText = "비밀번호를 입력하세요.";
+    passwordText.style.color = "red";
+    passwordCheck = false;
+  } else if (!passwordRegex.test(passwordTextValue)) {
+    passwordText.innerText =
+      "영문, 숫자, 특수문자를 포함하여 8자 이상 작성해주세요.";
+    passwordText.style.color = "red";
+    passwordCheck = false;
+  } else {
+    passwordText.innerText = "";
+    passwordCheck = true;
+  }
+  validCheck();
+};
+
+// 비밀번호 확인
+const confirmPasswordOninput = () => {
+  const passwordInput = document.querySelector("#password");
+  const confirmPasswordInput = document.querySelector("#confirmPassword");
+  const confirmPasswordText = document.querySelector(".confirmPasswordText");
+
+  const passwordValue = passwordInput.value.trim();
+  const confirmPasswordValue = confirmPasswordInput.value.trim();
+
+  if (confirmPasswordValue.length < 1) {
+    confirmPasswordText.innerText = "비밀번호 확인을 입력하세요.";
+    confirmPasswordText.style.color = "red";
+    confirmPasswordCheck = false;
+  } else if (passwordValue !== confirmPasswordValue) {
+    confirmPasswordText.innerText = "비밀번호가 일치하지 않습니다.";
+    confirmPasswordText.style.color = "red";
+    confirmPasswordCheck = false;
+  } else {
+    confirmPasswordText.innerText = "";
+    confirmPasswordCheck = true;
+  }
+  validCheck();
+};
+
+// 이름
+const nameOninput = () => {
+  const nameInput = document.querySelector("#name");
+  const nameText = document.querySelector(".nameText");
+
+  const nameInputText = nameInput.value.trim();
+
+  if (nameInputText.length < 1) {
+    nameText.innerText = "이름을 입력하세요.";
+    nameText.style.color = "red";
+    nameCheck = false;
+  } else {
+    nameText.innerText = "";
+    nameCheck = true;
+  }
+  validCheck();
+};
 
 // 회원가입 총 유효성 검사
 // let saveBtn = document.querySelector("#saveBtn");
 // function validCheck() {
 //   if (
-//     nameCheck === true &&
+//     emailCheck === true &&
 //     idCheck === true &&
 //     priceCheck === true &&
 //     contentCheck === true &&

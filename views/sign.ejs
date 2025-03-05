@@ -25,6 +25,7 @@
                   type="text"
                   id="email"
                   placeholder="아이디 입력"
+                  oninput="emailOninput()"
                   required
                 />
                 @
@@ -32,6 +33,7 @@
                   type="text"
                   id="customDomain"
                   placeholder="도메인 입력"
+                  oninput="emailOninput()"
                 />
                 <select id="emailDomainSelect" onchange="toggleCustomDomain()">
                   <option value="직접입력">직접 입력</option>
@@ -55,6 +57,7 @@
                   type="password"
                   id="password"
                   placeholder="비밀번호 입력"
+                  oninput="passwordOninput()"
                   required
                 />
                 <div
@@ -63,9 +66,6 @@
                 >
                   <span id="toggleIcon1">👁️</span>
                 </div>
-              </div>
-              <div class="guideText">
-                (영문, 숫자, 특수문자를 포함해야 합니다.)
               </div>
               <div class="passwordText"></div>
             </div>
@@ -81,6 +81,7 @@
                   type="password"
                   id="confirmPassword"
                   placeholder="비밀번호 확인"
+                  oninput="confirmPasswordOninput()"
                   required
                 />
                 <div
@@ -102,7 +103,6 @@
               <div class="inputBox nameBox">
                 <input type="text" id="name" placeholder="이름 입력" required />
               </div>
-
               <div class="nameText"></div>
             </div>
           </div>

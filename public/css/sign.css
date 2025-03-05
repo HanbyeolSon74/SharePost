@@ -79,9 +79,3 @@ body {
 .address-fields {
   display: flex;
 }
-
-.guideText {
-  font-size: 12px;
-  color: rgb(42, 42, 42);
-  font-weight: bold;
-}
