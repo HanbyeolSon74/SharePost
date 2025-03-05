@@ -15,6 +15,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 
+
 # 빌드된 파일
 dist/
 build/
