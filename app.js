@@ -1,17 +1,15 @@
 require("dotenv").config(); // 환경변수 로드
 const express = require("express");
+
 const sequelize = require("./config/database");
 const userRoutes = require("./routers/userRouter"); // 회원가입 라우트
 const upload = require("./config/multer"); // multer 미들웨어 가져오기
 
 const app = express();
 
-// 회원가입 라우트 연결
-app.use("/api/users", userRoutes);
-
-// bodyParser 대신 Express 내장 미들웨어 사용
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// ✅ Body-parser 미들웨어 (라우트 등록 전 호출)
+app.use(express.json()); // JSON 요청 처리
+app.use(express.urlencoded({ extended: true })); // URL-encoded 데이터 처리
 
 // EJS 설정 (뷰 엔진 사용 시)
 app.set("view engine", "ejs");
@@ -19,6 +17,9 @@ app.set("view engine", "ejs");
 // 정적 파일 제공 (CSS, JS, 이미지 등)
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads")); // 업로드된 파일 접근
+
+// ✅ 회원가입 라우트 연결 (미들웨어 적용 후)
+app.use("/api/users", userRoutes);
 
 // 기본 라우트
 app.get("/", (req, res) => {
