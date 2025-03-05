@@ -200,7 +200,7 @@ document.querySelector(".signBtn").addEventListener("click", async function () {
   };
 
   try {
-    const response = await axios.post("/api/signup", userData);
+    const response = await axios.post("/api/users/signup", userData);
     alert("회원가입 성공!");
     console.log(response.data);
   } catch (error) {
