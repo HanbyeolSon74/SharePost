@@ -6,7 +6,7 @@ const Sequelize = require("sequelize");
 const process = require("process");
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
-const config = require("../config/config")[env]; // 수정된 부분
+const config = require("../config/config")[env];
 const db = {};
 
 let sequelize;
@@ -44,5 +44,7 @@ Object.keys(db).forEach((modelName) => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+db.User = require("./userModel")(sequelize, Sequelize);
 
 module.exports = db;
