@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const User = require("../models/userModel");
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
       }
 
       // 비밀번호 해싱
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = await bcryptjs.hash(password, 10); // bcryptjs로 수정
 
       let profilePicPath = null;
 
