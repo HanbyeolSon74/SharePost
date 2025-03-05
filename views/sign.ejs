@@ -197,15 +197,33 @@
             <div class="inputWrapBox">
               <div class="inputBox genderBox">
                 <label
-                  ><input type="radio" name="gender" value="male" required />
+                  ><input
+                    type="radio"
+                    name="gender"
+                    value="M"
+                    required
+                    onchange="genderOninput()"
+                  />
                   남성</label
                 >
                 <label
-                  ><input type="radio" name="gender" value="female" required />
+                  ><input
+                    type="radio"
+                    name="gender"
+                    value="F"
+                    required
+                    onchange="genderOninput()"
+                  />
                   여성</label
                 >
                 <label
-                  ><input type="radio" name="gender" value="other" required />
+                  ><input
+                    type="radio"
+                    name="gender"
+                    value="O"
+                    required
+                    onchange="genderOninput()"
+                  />
                   기타</label
                 >
               </div>
