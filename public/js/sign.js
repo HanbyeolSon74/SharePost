@@ -106,23 +106,16 @@ document.addEventListener("DOMContentLoaded", function () {
   monthSelect.addEventListener("change", updateDays);
 });
 
-// 숫자 input
-document.addEventListener("DOMContentLoaded", function () {
-  const phoneMiddle = document.getElementById("phoneMiddle");
-  const phoneLast = document.getElementById("phoneLast");
-
-  function allowOnlyNumbers(event) {
-    this.value = this.value.replace(/[^0-9]/g, "");
-  }
-
-  phoneMiddle.addEventListener("input", allowOnlyNumbers);
-  phoneLast.addEventListener("input", allowOnlyNumbers);
-});
-
 // 유효성 검사
 let emailCheck = false;
 let passwordCheck = false;
 let confirmPasswordCheck = false;
+let nameCheck = false;
+let addressCheck = false;
+let phoneCheck = false;
+let genderCheck = false;
+let isChecked = false;
+let birthCheck = false;
 
 // 이메일 유효성 검사
 const emailOninput = () => {
@@ -145,7 +138,6 @@ const emailOninput = () => {
   const strictEmailRegex =
     /^(?!.*\.\.)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  // 이메일이 비어있거나, 도메인이 비어있으면
   if (emailInputText.length < 1) {
     emailText.innerText = "아이디를 입력하세요.";
     emailText.style.color = "red";
@@ -154,14 +146,12 @@ const emailOninput = () => {
     emailText.innerText = "도메인을 입력하세요.";
     emailText.style.color = "red";
     emailCheck = false;
-  }
-  // 이메일 형식이 맞지 않으면
-  else if (!strictEmailRegex.test(fullEmail)) {
+  } else if (!strictEmailRegex.test(fullEmail)) {
     emailText.innerText = "이메일 형식으로 입력하세요.";
     emailText.style.color = "red";
     emailCheck = false;
   } else {
-    emailText.innerText = ""; // 메시지 제거
+    emailText.innerText = "";
     emailCheck = true;
   }
   validCheck();
@@ -233,47 +223,160 @@ const nameOninput = () => {
   validCheck();
 };
 
+// 주소 검사
+const addressOninput = () => {
+  const postcodeInput = document.querySelector("#sample6_postcode");
+  const addressInput = document.querySelector("#sample6_address");
+  const detailAddressInput = document.querySelector("#sample6_detailAddress");
+  const addressText = document.querySelector(".addressText");
+
+  const postcode = postcodeInput.value.trim();
+  const address = addressInput.value.trim();
+  const detailAddress = detailAddressInput.value.trim();
+
+  if (postcode.length < 1) {
+    addressText.innerText = "우편번호를 입력하세요.";
+    addressText.style.color = "red";
+    addressCheck = false;
+  } else if (address.length < 1) {
+    addressText.innerText = "주소를 입력하세요.";
+    addressText.style.color = "red";
+    addressCheck = false;
+  } else if (detailAddress.length < 1) {
+    addressText.innerText = "상세주소를 입력하세요.";
+    addressText.style.color = "red";
+    addressCheck = false;
+  } else {
+    addressText.innerText = "";
+    addressCheck = true;
+  }
+  validCheck();
+};
+
+// 휴대폰 번호 검사
+const phoneOninput = () => {
+  const phonePrefix = document.querySelector("#phonePrefix");
+  const phoneMiddle = document.querySelector("#phoneMiddle");
+  const phoneLast = document.querySelector("#phoneLast");
+  const phoneText = document.querySelector(".phoneText");
+
+  const phoneMiddleValue = phoneMiddle.value.trim();
+  const phoneLastValue = phoneLast.value.trim();
+  const phoneRegex = /^\d{4}$/;
+
+  if (phonePrefix.selectedIndex === 0 || phonePrefix.value === "") {
+    phoneText.innerText = "전화번호 앞자리를 선택하세요.";
+    phoneText.style.color = "red";
+    phoneCheck = false;
+  } else {
+    phoneText.innerText = "";
+    phoneCheck = true;
+  }
+  if (!phoneRegex.test(phoneMiddleValue)) {
+    phoneText.innerText = "전화번호 중간 4자리를 정확히 입력하세요.";
+    phoneText.style.color = "red";
+    phoneCheck = false;
+  } else {
+    phoneText.innerText = "";
+    phoneCheck = true;
+  }
+  if (!phoneRegex.test(phoneLastValue)) {
+    phoneText.innerText = "전화번호 마지막 4자리를 정확히 입력하세요.";
+    phoneText.style.color = "red";
+    phoneCheck = false;
+  } else {
+    phoneText.innerText = "";
+    phoneCheck = true;
+  }
+  validCheck();
+};
+
+// 성별 검사
+const genderOninput = () => {
+  const genderInputs = document.querySelectorAll('input[name="gender"]');
+  const genderText = document.querySelector(".genderText");
+
+  let isChecked = false;
+  genderInputs.forEach((input) => {
+    if (input.checked) {
+      isChecked = true;
+    }
+  });
+
+  if (!isChecked) {
+    genderText.innerText = "성별을 선택하세요.";
+    genderText.style.color = "red";
+    genderCheck = false;
+  } else {
+    genderText.innerText = "";
+    genderCheck = true;
+  }
+  validCheck();
+};
+
+const birthOninput = () => {
+  const birthYear = document.querySelector("#birthYear");
+  const birthMonth = document.querySelector("#birthMonth");
+  const birthDay = document.querySelector("#birthDay");
+  const birthText = document.querySelector(".birthText");
+
+  if (!birthYear.value || !birthMonth.value || !birthDay.value) {
+    birthText.innerText = "생년월일을 모두 선택하세요.";
+    birthText.style.color = "red";
+    birthCheck = false;
+  } else {
+    birthText.innerText = "";
+    birthCheck = true;
+  }
+  validCheck();
+};
+
 // 회원가입 총 유효성 검사
-// let saveBtn = document.querySelector("#saveBtn");
-// function validCheck() {
-//   if (
-//     emailCheck === true &&
-//     idCheck === true &&
-//     priceCheck === true &&
-//     contentCheck === true &&
-//     imageAdd === true &&
-//     typecheck === true
-//   ) {
-//     saveBtn.disabled = false;
-//   } else {
-//     saveBtn.disabled = true;
-//   }
-// }
+let saveBtn = document.querySelector(".signBtn");
+function validCheck() {
+  if (
+    emailCheck === false &&
+    passwordCheck === false &&
+    confirmPasswordCheck === false &&
+    nameCheck === false &&
+    addressCheck === false &&
+    phoneCheck === false &&
+    genderCheck === false &&
+    isChecked === false &&
+    birthCheck === false
+  ) {
+    saveBtn.disabled = false;
+  } else {
+    saveBtn.disabled = true;
+  }
+}
 
 // input 초기화
-// 초기화 함수
-// function resetForm() {
-//   // 텍스트 초기화
-//   document.querySelector(".nameText").innerText = "";
-//   document.querySelector(".priceText").innerText = "";
-//   document.querySelector(".contentText").innerText = "";
-//   document.querySelector(".idText").innerText = "";
-//   document.querySelector(".imageupText").innerText = "";
-//   document.querySelector("#preview").src = "";
-//   document.querySelector("#preview").style.display = "none";
-//   document.getElementById("imgpreviewbox1").style.border = "none";
-//   document.getElementById("imgpreviewbox2").style.border = "none";
-//   document.querySelector(".typeText").innerText = "";
+function resetForm() {
+  // 텍스트 초기화
+  document.querySelector("#email").value = "";
+  document.querySelector("#customDomain").value = "";
+  document.querySelector("#password").value = "";
+  document.querySelector("#confirmPassword").value = "";
+  document.querySelector("#name").value = "";
+  document.querySelector("#sample6_postcode").value = "";
+  document.querySelector("#sample6_address").value = "";
+  document.querySelector("#sample6_detailAddress").value = "";
+  document.querySelector("#phonePrefix").value = "";
+  document.querySelector("#phoneMiddle").value = "";
+  document.querySelector("#phoneLast").value = "";
 
-//   // 체크 변수 초기화
-//   nameCheck = false;
-//   priceCheck = false;
-//   contentCheck = false;
-//   idCheck = false;
-//   imageAdd = false;
-//   typecheck = false;
-//   firstidCheck = false;
-// }
+  // 체크 변수 초기화
+  emailCheck = false;
+  passwordCheck = false;
+  confirmPasswordCheck = false;
+  nameCheck = false;
+  addressCheck = false;
+  phoneCheck = false;
+  genderCheck = false;
+  isChecked = false;
+  birthCheck = false;
+}
 
 // 회원가입 axios
 document.querySelector(".signBtn").addEventListener("click", async function () {

@@ -19,7 +19,6 @@ document.getElementById("overLay").addEventListener("click", function () {
 });
 
 // hover시 선 없애기
-
 document.querySelectorAll(".menuItem").forEach((item) => {
   item.addEventListener("mouseenter", () => {
     document.querySelector(".headerContainer").header.style.borderBottom =

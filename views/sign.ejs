@@ -101,7 +101,13 @@
             </div>
             <div class="inputWrapBox">
               <div class="inputBox nameBox">
-                <input type="text" id="name" placeholder="이름 입력" required />
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="이름 입력"
+                  oninput="nameOninput()"
+                  required
+                />
               </div>
               <div class="nameText"></div>
             </div>
@@ -132,6 +138,7 @@
                     type="text"
                     id="sample6_detailAddress"
                     placeholder="상세주소"
+                    oninput="addressOninput()"
                   />
                   <input
                     type="text"
@@ -141,8 +148,8 @@
                 </div>
               </div>
             </div>
+            <div class="addressText"></div>
           </div>
-
           <!-- 휴대폰 번호 -->
           <div class="labelInputBox phoneLabelBox">
             <div class="labelBox">
@@ -166,6 +173,7 @@
                   placeholder="1234"
                   required
                   maxlength="4"
+                  oninput="phoneOninput()"
                 />
                 -
                 <input
@@ -174,6 +182,7 @@
                   placeholder="5678"
                   required
                   maxlength="4"
+                  oninput="phoneOninput()"
                 />
               </div>
               <div class="phoneText"></div>
@@ -188,15 +197,33 @@
             <div class="inputWrapBox">
               <div class="inputBox genderBox">
                 <label
-                  ><input type="radio" name="gender" value="male" required />
+                  ><input
+                    type="radio"
+                    name="gender"
+                    value="M"
+                    required
+                    onchange="genderOninput()"
+                  />
                   남성</label
                 >
                 <label
-                  ><input type="radio" name="gender" value="female" required />
+                  ><input
+                    type="radio"
+                    name="gender"
+                    value="F"
+                    required
+                    onchange="genderOninput()"
+                  />
                   여성</label
                 >
                 <label
-                  ><input type="radio" name="gender" value="other" required />
+                  ><input
+                    type="radio"
+                    name="gender"
+                    value="O"
+                    required
+                    onchange="genderOninput()"
+                  />
                   기타</label
                 >
               </div>
@@ -211,13 +238,13 @@
             </div>
             <div class="inputWrapBox">
               <div class="inputBox birthBox">
-                <select id="birthYear" required>
+                <select id="birthYear" onchange="birthOninput()" required>
                   <option value="" disabled selected>년도</option>
                 </select>
-                <select id="birthMonth" required>
+                <select id="birthMonth" onchange="birthOninput()" required>
                   <option value="" disabled selected>월</option>
                 </select>
-                <select id="birthDay" required>
+                <select id="birthDay" onchange="birthOninput()" required>
                   <option value="" disabled selected>일</option>
                 </select>
               </div>
