@@ -430,6 +430,7 @@ const emailDomainSelect = document.querySelector("#emailDomainSelect");
 const emailCheckBtn = document.querySelector(".emailCheckBtn");
 const emailText = document.querySelector(".emailText");
 
+// 이메일 주소 생성 함수
 function getEmailAddress() {
   const email = emailInput.value.trim();
   const domain =
@@ -439,30 +440,38 @@ function getEmailAddress() {
   return `${email}@${domain}`;
 }
 
-emailCheckBtn.addEventListener("click", () => {
+// 이메일 중복 체크 함수
+function checkEmail() {
   const emailAddress = getEmailAddress();
 
+  // 이메일 주소가 유효하지 않으면 에러 메시지 출력
   if (!emailAddress.includes("@") || emailAddress.split("@")[0] === "") {
     emailText.innerText = "올바른 이메일 형식이 아닙니다.";
     emailText.style.color = "red";
     return;
   }
 
+  // 이메일 중복 확인 API 요청
   axios
-    .post("/api/emailcheck", { email: emailAddress })
-    .then((res) => {
-      if (res.data.available) {
+    .get("/user/checkEmail", { params: { email: emailAddress } }) // 수정된 경로 확인
+    .then((response) => {
+      if (response.data.success) {
         emailText.innerText = "사용 가능한 이메일입니다.";
         emailText.style.color = "green";
-      } else {
-        emailText.innerText =
-          "중복된 이메일입니다. 다른 이메일을 입력해주세요.";
-        emailText.style.color = "red";
       }
     })
     .catch((error) => {
-      console.error("중복 확인 에러:", error);
-      emailText.innerText = "서버 오류. 다시 시도해주세요.";
-      emailText.style.color = "red";
+      console.error(error);
+      if (error.response && error.response.data) {
+        emailText.innerText =
+          error.response.data.message || "이메일 중복 확인 오류";
+        emailText.style.color = "red";
+      } else {
+        emailText.innerText = "서버와의 연결 오류입니다.";
+        emailText.style.color = "red";
+      }
     });
-});
+}
+
+// 버튼 클릭 시 이메일 중복 체크 실행
+emailCheckBtn.addEventListener("click", checkEmail);
