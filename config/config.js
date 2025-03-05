@@ -4,17 +4,17 @@ module.exports = {
   development: {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    database: process.env.DB_DATABASE, // DBuser로 설정
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
-    imageStoragePath: process.env.IMAGE_STORAGE_PATH, // .env에서 로컬 이미지 경로 설정
+    imageStoragePath: process.env.IMAGE_STORAGE_PATH,
   },
   production: {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    database: process.env.DB_DATABASE, // DBuser로 설정
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
-    imageStoragePath: process.env.IMAGE_STORAGE_PATH, // 프로덕션에서도 로컬 이미지 경로 사용
+    imageStoragePath: process.env.IMAGE_STORAGE_PATH,
   },
 };
