@@ -35,7 +35,7 @@ document
     };
 
     try {
-      const response = await axios.post("/users/login", logindata);
+      const response = await axios.post("/user/login", logindata);
       if (response.status === 200) {
         alert("로그인 성공!");
         document.querySelector("#loginModal").style.display = "none";

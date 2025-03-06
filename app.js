@@ -40,5 +40,5 @@ sequelize
   })
   .catch((err) => {
     console.error("데이터베이스 연결 실패:", err);
-    res.status(500).send("서버 오류 발생"); // 에러 핸들링
+    res.status(500).send("서버 오류 발생");
   });
