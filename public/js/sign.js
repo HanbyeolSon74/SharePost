@@ -172,7 +172,6 @@ const passwordOninput = () => {
     passwordText.innerText = "";
     passwordCheck = true;
   }
-  console.log(passwordCheck, "passwordCheck");
   validCheck();
 };
 
@@ -197,7 +196,6 @@ const confirmPasswordOninput = () => {
     confirmPasswordText.innerText = "";
     confirmPasswordCheck = true;
   }
-  console.log(confirmPasswordCheck, "confirmPasswordCheck");
   validCheck();
 };
 
@@ -216,7 +214,6 @@ const nameOninput = () => {
     nameText.innerText = "";
     nameCheck = true;
   }
-  console.log(nameCheck, "nameCheck");
   validCheck();
 };
 
@@ -247,7 +244,6 @@ const addressOninput = () => {
     addressText.innerText = "";
     addressCheck = true;
   }
-  console.log(addressCheck, "ad?");
   validCheck();
 };
 
@@ -288,7 +284,6 @@ const phoneOninput = () => {
     phoneText.innerText = "";
     phoneCheck = true;
   }
-  console.log(phoneCheck, "?phone");
   validCheck();
 };
 
@@ -331,7 +326,6 @@ const birthOninput = () => {
     birthCheck = true;
   }
   validCheck();
-  console.log(birthCheck, "birthCheck");
 };
 
 // 회원가입 총 유효성 검사
@@ -355,16 +349,6 @@ const birthOninput = () => {
 // }
 let saveBtn = document.querySelector(".signBtn");
 function validCheck() {
-  console.log("validCheck 실행됨");
-  console.log("emailCheck:", emailCheck);
-  console.log("passwordCheck:", passwordCheck);
-  console.log("confirmPasswordCheck:", confirmPasswordCheck);
-  console.log("nameCheck:", nameCheck);
-  console.log("addressCheck:", addressCheck);
-  console.log("phoneCheck:", phoneCheck);
-  console.log("isChecked:", isChecked);
-  console.log("birthCheck:", birthCheck);
-
   if (
     emailCheck === true &&
     passwordCheck === true &&
@@ -375,10 +359,9 @@ function validCheck() {
     isChecked === true &&
     birthCheck === true
   ) {
-    console.log("✅ 모든 조건 충족, 버튼 활성화!");
     saveBtn.disabled = false;
+    resetForm();
   } else {
-    console.log("❌ 조건 부족, 버튼 비활성화...");
     saveBtn.disabled = true;
   }
 }
@@ -479,9 +462,11 @@ function checkEmail() {
   if (!emailAddress.includes("@") || emailAddress.split("@")[0] === "") {
     emailText.innerText = "올바른 이메일 형식이 아닙니다.";
     emailText.style.color = "red";
+    emailCheck = false;
     return;
+  } else {
+    emailText.innerText = "";
   }
-  console.log(emailAddress, "?");
   axios
     .get("/user/checkEmail", { params: { email: emailAddress } })
     .then((response) => {
@@ -490,9 +475,7 @@ function checkEmail() {
         emailText.style.color = "green";
         emailCheck = true;
       }
-      console.log(emailCheck, "emailCheck1??");
       validCheck();
-      console.log(emailCheck, "emailCheck2??");
     })
     .catch((error) => {
       console.error(error);
