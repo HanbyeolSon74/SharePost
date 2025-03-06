@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Board</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/css/board.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- 헤더 만들기 -->
+      <div class="shopHeader"><%- include('header.ejs') %></div>
+      <!-- 본문 시작 -->
+      <div class="contentWrapBox"></div>
+      <!-- 푸터 -->
+      <div class="my_footer"><%- include('footer.ejs') %></div>
+    </div>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/js/board.js"></script>
+  </body>
+</html>
