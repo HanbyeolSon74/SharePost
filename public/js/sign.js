@@ -140,7 +140,7 @@ const emailOninput = () => {
   if (emailInputText.length < 1) {
     emailText.innerText = "아이디를 입력하세요.";
     emailText.style.color = "red";
-  } else if (selectedDomain === "직접입력") {
+  } else if (selectedDomain === "직접입력" && customDomainText.length < 1) {
     emailText.innerText = "도메인을 입력하세요.";
     emailText.style.color = "red";
   } else if (!strictEmailRegex.test(fullEmail)) {
@@ -149,7 +149,13 @@ const emailOninput = () => {
   } else {
     emailText.innerText = "";
   }
+
+  // '직접입력'이 아닐 경우 빨간 글씨 없애기
+  if (selectedDomain !== "직접입력" && emailText.innerText !== "") {
+    emailText.innerText = "";
+  }
 };
+
 // 비밀번호 검사
 const passwordOninput = () => {
   const passwordInput = document.querySelector("#password");
