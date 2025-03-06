@@ -462,6 +462,7 @@ function checkEmail() {
         emailText.innerText = "사용 가능한 이메일입니다.";
         emailText.style.color = "green";
         emailCheck = "true";
+        validCheck();
       }
     })
     .catch((error) => {
