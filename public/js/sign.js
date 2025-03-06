@@ -113,7 +113,6 @@ let confirmPasswordCheck = false;
 let nameCheck = false;
 let addressCheck = false;
 let phoneCheck = false;
-let genderCheck = false;
 let isChecked = false;
 let birthCheck = false;
 
@@ -141,20 +140,15 @@ const emailOninput = () => {
   if (emailInputText.length < 1) {
     emailText.innerText = "아이디를 입력하세요.";
     emailText.style.color = "red";
-    emailCheck = false;
-  } else if (selectedDomain === "직접입력" && customDomainText.length < 1) {
+  } else if (selectedDomain === "직접입력") {
     emailText.innerText = "도메인을 입력하세요.";
     emailText.style.color = "red";
-    emailCheck = false;
   } else if (!strictEmailRegex.test(fullEmail)) {
     emailText.innerText = "이메일 형식으로 입력하세요.";
     emailText.style.color = "red";
-    emailCheck = false;
   } else {
     emailText.innerText = "";
-    // emailCheck = true;
   }
-  validCheck();
 };
 // 비밀번호 검사
 const passwordOninput = () => {
@@ -178,6 +172,7 @@ const passwordOninput = () => {
     passwordText.innerText = "";
     passwordCheck = true;
   }
+  console.log(passwordCheck, "passwordCheck");
   validCheck();
 };
 
@@ -202,6 +197,7 @@ const confirmPasswordOninput = () => {
     confirmPasswordText.innerText = "";
     confirmPasswordCheck = true;
   }
+  console.log(confirmPasswordCheck, "confirmPasswordCheck");
   validCheck();
 };
 
@@ -220,6 +216,7 @@ const nameOninput = () => {
     nameText.innerText = "";
     nameCheck = true;
   }
+  console.log(nameCheck, "nameCheck");
   validCheck();
 };
 
@@ -250,6 +247,7 @@ const addressOninput = () => {
     addressText.innerText = "";
     addressCheck = true;
   }
+  console.log(addressCheck, "ad?");
   validCheck();
 };
 
@@ -268,30 +266,29 @@ const phoneOninput = () => {
     phoneText.innerText = "전화번호 앞자리를 선택하세요.";
     phoneText.style.color = "red";
     phoneCheck = false;
-    validCheck();
   } else {
     phoneText.innerText = "";
     phoneCheck = true;
   }
-
+  validCheck();
   if (!phoneRegex.test(phoneMiddleValue)) {
     phoneText.innerText = "전화번호 중간 4자리를 정확히 입력하세요.";
     phoneText.style.color = "red";
     phoneCheck = false;
-    validCheck();
   } else {
     phoneText.innerText = "";
     phoneCheck = true;
   }
+  validCheck();
   if (!phoneRegex.test(phoneLastValue)) {
     phoneText.innerText = "전화번호 마지막 4자리를 정확히 입력하세요.";
     phoneText.style.color = "red";
     phoneCheck = false;
-    validCheck();
   } else {
     phoneText.innerText = "";
     phoneCheck = true;
   }
+  console.log(phoneCheck, "?phone");
   validCheck();
 };
 
@@ -300,22 +297,23 @@ const genderOninput = () => {
   const genderInputs = document.querySelectorAll('input[name="gender"]');
   const genderText = document.querySelector(".genderText");
 
-  let isChecked = false;
   genderInputs.forEach((input) => {
     if (input.checked) {
       isChecked = true;
     }
+    validCheck();
   });
 
-  if (!isChecked) {
-    genderText.innerText = "성별을 선택하세요.";
-    genderText.style.color = "red";
-    genderCheck = false;
-  } else {
-    genderText.innerText = "";
-    genderCheck = true;
-  }
-  validCheck();
+  // if (!isChecked) {
+  //   genderText.innerText = "성별을 선택하세요.";
+  //   genderText.style.color = "red";
+  //   genderCheck = false;
+  // } else {
+  //   genderText.innerText = "";
+  //   genderCheck = true;
+  // }
+
+  // validCheck();
 };
 
 const birthOninput = () => {
@@ -333,11 +331,40 @@ const birthOninput = () => {
     birthCheck = true;
   }
   validCheck();
+  console.log(birthCheck, "birthCheck");
 };
 
 // 회원가입 총 유효성 검사
+// let saveBtn = document.querySelector(".signBtn");
+// function validCheck() {
+//   if (
+//     emailCheck === true &&
+//     passwordCheck === true &&
+//     confirmPasswordCheck === true &&
+//     nameCheck === true &&
+//     addressCheck === true &&
+//     phoneCheck === true &&
+//     genderCheck === true &&
+//     isChecked === true &&
+//     birthCheck === true
+//   ) {
+//     saveBtn.disabled = false;
+//   } else {
+//     saveBtn.disabled = true;
+//   }
+// }
 let saveBtn = document.querySelector(".signBtn");
 function validCheck() {
+  console.log("validCheck 실행됨");
+  console.log("emailCheck:", emailCheck);
+  console.log("passwordCheck:", passwordCheck);
+  console.log("confirmPasswordCheck:", confirmPasswordCheck);
+  console.log("nameCheck:", nameCheck);
+  console.log("addressCheck:", addressCheck);
+  console.log("phoneCheck:", phoneCheck);
+  console.log("isChecked:", isChecked);
+  console.log("birthCheck:", birthCheck);
+
   if (
     emailCheck === true &&
     passwordCheck === true &&
@@ -345,12 +372,13 @@ function validCheck() {
     nameCheck === true &&
     addressCheck === true &&
     phoneCheck === true &&
-    genderCheck === true &&
     isChecked === true &&
     birthCheck === true
   ) {
+    console.log("✅ 모든 조건 충족, 버튼 활성화!");
     saveBtn.disabled = false;
   } else {
+    console.log("❌ 조건 부족, 버튼 비활성화...");
     saveBtn.disabled = true;
   }
 }
@@ -377,7 +405,6 @@ function resetForm() {
   nameCheck = false;
   addressCheck = false;
   phoneCheck = false;
-  genderCheck = false;
   isChecked = false;
   birthCheck = false;
 }
@@ -454,16 +481,18 @@ function checkEmail() {
     emailText.style.color = "red";
     return;
   }
-
+  console.log(emailAddress, "?");
   axios
     .get("/user/checkEmail", { params: { email: emailAddress } })
     .then((response) => {
       if (response.data.success) {
         emailText.innerText = "사용 가능한 이메일입니다.";
         emailText.style.color = "green";
-        emailCheck = "true";
-        validCheck();
+        emailCheck = true;
       }
+      console.log(emailCheck, "emailCheck1??");
+      validCheck();
+      console.log(emailCheck, "emailCheck2??");
     })
     .catch((error) => {
       console.error(error);
