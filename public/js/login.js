@@ -67,9 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("login-form").addEventListener("submit", login);
 
   // 회원가입 페이지로 이동
-  function goToJoinPage() {
+  window.goToJoinPage = function () {
     window.location.href = "/user/sign";
-  }
+  };
 
   // 아이디 찾기 페이지로 이동
   window.goToFindIdPage = function () {

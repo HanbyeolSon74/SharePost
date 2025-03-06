@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("Users", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -16,7 +16,6 @@ module.exports = {
       },
       phone: {
         type: Sequelize.STRING(15),
-        unique: true,
         allowNull: false,
       },
       email: {
@@ -33,7 +32,7 @@ module.exports = {
         allowNull: true,
       },
       gender: {
-        type: Sequelize.ENUM("M", "F", "O"),
+        type: Sequelize.ENUM("M", "F", "O"), // ENUM 필드를 수동으로 추가!
         allowNull: false,
       },
       age: {
@@ -48,12 +47,12 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: true,
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW,
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW,
@@ -62,6 +61,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("Users");
   },
 };
