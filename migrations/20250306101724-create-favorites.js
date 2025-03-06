@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "users", // users 테이블
+          model: "Users", // ✅ users 테이블과 연결
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "posts", // posts 테이블
+          model: "Posts", // ✅ posts 테이블과 연결
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -32,15 +32,15 @@ module.exports = {
       },
       is_favorite: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false, // 찜 상태 초기값 false
         allowNull: false,
+        defaultValue: false, // 기본값 false
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW,
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW,

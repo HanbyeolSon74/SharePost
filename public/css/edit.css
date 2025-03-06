@@ -21,3 +21,118 @@ body {
 .my_footer {
   margin-top: auto;
 }
+
+form {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  width: 60%;
+  margin: 50px auto;
+  border: 1px solid #ddd;
+}
+
+label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+input[type="text"],
+select,
+input[type="file"],
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+select:focus,
+input[type="file"]:focus,
+button[type="submit"]:focus {
+  outline: none;
+  border-color: #111;
+  background-color: #fff;
+}
+
+button[type="submit"] {
+  background-color: #111;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 15px 0;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #333;
+}
+
+/* 이미지 미리보기 */
+#preview {
+  display: block;
+  max-width: 200px;
+  height: auto;
+  margin: 20px auto;
+  border-radius: 8px;
+}
+
+/* 이미지 업로드 버튼 */
+.image-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f7f7;
+  padding: 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px dashed #ddd;
+  transition: all 0.3s ease;
+}
+
+.image-upload:hover {
+  background-color: #fff;
+  border-color: #111;
+}
+
+.image-upload img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* 에러 메시지 */
+#name-error {
+  font-size: 14px;
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+/* 상세 내용 편집기 */
+#details {
+  margin-bottom: 20px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  form {
+    padding: 25px;
+    width: 90%;
+  }
+
+  button[type="submit"] {
+    font-size: 16px;
+    padding: 12px 0;
+  }
+}

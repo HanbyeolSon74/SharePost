@@ -147,30 +147,22 @@ module.exports = {
     }
   },
 
-  // 아이디 찾기 페이지
-  findIdPage: (req, res) => {
-    res.render("findid"); // findid 페이지 렌더링
-  },
-
-  // 비밀번호 찾기 페이지
-  findPasswordPage: (req, res) => {
-    res.render("findpassword"); // findpassword 페이지 렌더링
-  },
-
-  // 아이디 찾기 기능
+  // 아이디 찾기 기능 (전화번호 기준)
   findId: async (req, res) => {
-    const { email } = req.body;
+    const { phone } = req.body; // 전화번호를 요청 본문에서 받음
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({ where: { phone } }); // 전화번호로 유저 찾기
       if (user) {
-        return res.json({
-          success: true,
-          message: `등록된 아이디는 ${user.email} 입니다.`,
+        // 유저를 찾았으면 그 이메일을 반환 (아이디로 사용)
+        return res.render("findid", {
+          userId: user.email, // 찾은 유저의 이메일을 userId로 전달
+          message: null, // 메시지는 null로 설정
         });
       } else {
-        return res.status(404).json({
-          success: false,
-          message: "등록된 이메일이 없습니다.",
+        // 유저를 찾지 못했으면 message에 오류 메시지를 전달
+        return res.render("findid", {
+          userId: null, // userId는 null로 설정
+          message: "등록된 전화번호가 없습니다.", // 오류 메시지
         });
       }
     } catch (error) {
@@ -182,24 +174,40 @@ module.exports = {
     }
   },
 
-  // 비밀번호 찾기 기능
-  findPassword: async (req, res) => {
-    const { email } = req.body;
+  // 아이디 찾기 페이지
+  findIdPage: (req, res) => {
+    res.render("findid"); // findid 페이지 렌더링
+  },
+
+  // 비밀번호 찾기 페이지
+  findPasswordPage: (req, res) => {
+    res.render("findpassword"); // findpassword 페이지 렌더링
+  },
+
+  // 비밀번호 수정 기능
+  resetPassword: async (req, res) => {
+    const { email, password } = req.body; // 이메일과 새 비밀번호 받기
     try {
+      // 이메일로 사용자 조회
       const user = await User.findOne({ where: { email } });
-      if (user) {
-        // 비밀번호 재설정 로직 예시: 이메일로 재설정 링크 보내기
-        // 실제 구현 시 이메일 보내는 로직이 추가되어야 합니다.
-        return res.json({
-          success: true,
-          message: `비밀번호 재설정 링크가 ${email}로 전송되었습니다.`,
-        });
-      } else {
+      if (!user) {
         return res.status(404).json({
           success: false,
           message: "등록된 이메일이 없습니다.",
         });
       }
+
+      // 비밀번호 해싱
+      const hashedPassword = await bcryptjs.hash(password, 10);
+
+      // 비밀번호 업데이트
+      user.password = hashedPassword;
+      await user.save();
+
+      return res.json({
+        success: true,
+        message: "비밀번호가 성공적으로 변경되었습니다.",
+      });
     } catch (error) {
       console.error(error);
       res.status(500).json({
