@@ -15,42 +15,65 @@ body {
 }
 .contentWrapBox {
   flex: 1;
-  text-align: center; /* 자식 요소들을 가로로 중앙 정렬 */
+  text-align: center;
 }
 
 .my_footer {
   margin-top: auto;
 }
 .signBox {
-  padding: 50px;
+  padding: 30px 100px 30px 100px;
 }
 
+.genderBox label {
+  font-size: 13px;
+  color: #353535;
+}
 /* 라벨 CSS */
 .labelInputBox {
   display: flex;
 }
+.addressHeight {
+  height: 90px;
+}
+.genderLabelBox,
+.nameWrapBox,
+.wrapHeight {
+  height: 40px;
+}
 
+.phoneLabelBox,
+.birthLabelBox {
+  height: 60px;
+}
 .signBtn {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px 8px;
+  padding: 15px 2px;
   background-color: black;
   color: white;
   font-weight: bold;
-  width: 100px;
+  width: 200px;
   cursor: pointer;
   display: inline-block;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
   border: none;
-  font-size: 12px;
+  font-size: 13px;
+}
+
+.signBtn:disabled {
+  background-color: gray;
+  color: lightgray;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .emailCheckBtn {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 3px;
+  padding: 8px 2px;
   background-color: black;
   color: white;
   font-weight: bold;
@@ -63,11 +86,12 @@ body {
 .inputBox {
   display: flex;
 }
+
 .findAddress {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 3px;
+  padding: 8px 2px;
   background-color: black;
   color: white;
   font-weight: bold;
@@ -78,4 +102,288 @@ body {
 }
 .address-fields {
   display: flex;
+  align-items: center;
+}
+
+/* 회원가입 input */
+.labelBox {
+  width: 15%;
+  display: flex;
+  justify-content: left;
+  font-size: 12px;
+  align-items: center;
+}
+.inputWrapBox {
+  width: 85%;
+  padding: 10px;
+}
+.togglePassword {
+  display: flex;
+  align-items: center;
+}
+.address-fields2 {
+  padding-top: 10px;
+}
+.inputBox input {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: inherit;
+  color: #353535;
+  border: 1px solid #d7d5d5;
+  border-radius: 0px;
+  outline-style: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.emailBox {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+.emailBox input {
+  width: 150px;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 13px;
+  color: #353535;
+  border: 1px solid #d7d5d5;
+  outline-style: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.emailBox select {
+  height: 34px;
+  padding: 0px 15px 0px 8px;
+  line-height: 40px;
+  font-size: 13px;
+  color: #333;
+  border: 1px solid #d7d5d5;
+  background-size: auto 25px;
+}
+
+#sample6_postcode,
+#sample6_address,
+#sample6_detailAddress,
+#sample6_extraAddress {
+  padding: 10px;
+  font-size: 12px;
+  line-height: 13px;
+  font-weight: inherit;
+  color: #353535;
+  border: 1px solid #d7d5d5;
+  border-radius: 0px;
+  outline-style: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.phoneBox {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+#phoneMiddle,
+#phoneLast {
+  padding: 10px;
+  font-size: 12px;
+  line-height: 13px;
+  font-weight: inherit;
+  color: #353535;
+  border: 1px solid #d7d5d5;
+  border-radius: 0px;
+  outline-style: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100px;
+  height: 30px;
+}
+.labelInputBox {
+  border-bottom: 1px gray solid;
+  padding: 10px;
+}
+
+.inputBox select,
+.phoneBox select {
+  height: 30px;
+  padding: 0 15px 0 8px;
+  line-height: 40px;
+  font-size: 13px;
+  color: #333;
+  border: 1px solid #d7d5d5;
+  background-size: auto 25px;
+}
+.signName {
+  font-size: 30px;
+  font-weight: bold;
+  padding-top: 60px;
+}
+
+.passwordText,
+.emailText,
+.confirmPasswordText,
+.nameText,
+.addressText,
+.genderText,
+.birthText,
+.phoneText {
+  text-align: left;
+  font-size: 10px;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.addressWrapBox {
+  flex-direction: column;
+}
+@media (max-width: 1024px) {
+  .wrapHeight {
+    height: auto;
+  }
+  .emailBox {
+    display: block;
+    text-align: left;
+  }
+  .emailCheckBtn {
+    margin-top: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .signBox {
+    padding: 40px 30px;
+  }
+
+  .labelBox {
+    font-size: 11px;
+  }
+
+  .inputWrapBox {
+    width: 78%;
+    text-align: center;
+  }
+
+  .phoneBox {
+    font-size: 12px;
+    line-height: 12px;
+  }
+  .phoneBox input {
+    margin-left: 5px;
+  }
+
+  .signBtn {
+    width: 40%;
+    font-size: 14px;
+  }
+
+  .emailBox input {
+    width: 100px;
+    margin-bottom: 10px;
+  }
+  .emailBox {
+    display: block;
+    text-align: left;
+  }
+  .wrapHeight {
+    height: auto;
+  }
+
+  .inputBox input,
+  .inputBox select {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .addressHeight {
+    display: block;
+    text-align: left;
+    height: auto;
+  }
+
+  .addressHeight input {
+    width: 70px;
+    margin-bottom: 10px;
+  }
+
+  #sample6_postcode,
+  #sample6_address,
+  #sample6_detailAddress,
+  #sample6_extraAddress {
+    width: 70px;
+    height: 35px;
+  }
+
+  .emailCheckBtn {
+    width: 80px;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+
+  .findAddress {
+    width: 80px;
+    font-size: 12px;
+  }
+  #phoneMiddle,
+  #phoneLast {
+    width: 70px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signBox {
+    padding: 30px 20px;
+  }
+
+  .signBtn {
+    width: 80%;
+    font-size: 13px;
+  }
+
+  .labelBox {
+    font-size: 11px;
+  }
+
+  .inputBox input,
+  .inputBox select {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .phoneBox input {
+    width: 70px;
+  }
+
+  .emailBox input {
+    width: 100px;
+    margin-bottom: 10px;
+  }
+  .emailBox {
+    display: block;
+    text-align: left;
+  }
+  .wrapHeight {
+    height: auto;
+  }
+  .addressHeight {
+    display: block;
+    text-align: left;
+  }
+
+  .addressHeight input {
+    width: 80px;
+    margin-bottom: 10px;
+  }
+
+  .findAddress,
+  .emailCheckBtn {
+    width: 80px;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+
+  .signName {
+    font-size: 24px;
+  }
 }

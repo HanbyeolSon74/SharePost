@@ -13,34 +13,34 @@
       <div class="shopHeader"><%- include('header.ejs') %></div>
       <!-- 본문 시작 -->
       <div class="contentWrapBox">
+        <div class="signName">Sign Up</div>
         <div class="signBox">
           <!-- 아이디 -->
           <div class="labelInputBox emailLabelBox">
             <div class="labelBox">
-              <label for="email">아이디</label>
+              <label for="email">아이디 *</label>
             </div>
-            <div class="inputWrapBox">
-              <div class="inputBox emailBox">
+            <div class="inputWrapBox wrapHeight">
+              <div class="emailBox">
                 <input
                   type="text"
                   id="email"
                   placeholder="아이디 입력"
                   oninput="emailOninput()"
                   required
-                />
-                @
+                />&nbsp;@&nbsp;
                 <input
                   type="text"
                   id="customDomain"
                   placeholder="도메인 입력"
                   oninput="emailOninput()"
-                />
+                />&nbsp;&nbsp;
                 <select id="emailDomainSelect" onchange="toggleCustomDomain()">
                   <option value="직접입력">직접 입력</option>
                   <option value="naver.com">naver.com</option>
                   <option value="gmail.com">gmail.com</option>
-                  <option value="daum.net">daum.net</option>
-                </select>
+                  <option value="daum.net">daum.net</option></select
+                >&nbsp;&nbsp;
                 <button class="emailCheckBtn" onclick="checkEmail()">
                   중복확인
                 </button>
@@ -51,9 +51,9 @@
           <!-- 비밀번호 -->
           <div class="labelInputBox">
             <div class="labelBox pwLabelBox">
-              <label for="password">비밀번호</label>
+              <label for="password">비밀번호 *</label>
             </div>
-            <div class="inputWrapBox">
+            <div class="inputWrapBox wrapHeight">
               <div class="inputBox passwordBox">
                 <input
                   type="password"
@@ -66,7 +66,7 @@
                   class="togglePassword"
                   onclick="togglePassword('password', 'toggleIcon1')"
                 >
-                  <span id="toggleIcon1">👁️</span>
+                  &nbsp;<span id="toggleIcon1">👁️</span>
                 </div>
               </div>
               <div class="passwordText"></div>
@@ -75,9 +75,9 @@
           <!-- 비밀번호 확인 -->
           <div class="labelInputBox">
             <div class="labelBox">
-              <label for="confirmPassword">비밀번호 확인</label>
+              <label for="confirmPassword">비밀번호 확인 *</label>
             </div>
-            <div class="inputWrapBox">
+            <div class="inputWrapBox wrapHeight">
               <div class="inputBox passwordBox">
                 <input
                   type="password"
@@ -90,7 +90,7 @@
                   class="togglePassword"
                   onclick="togglePassword('confirmPassword', 'toggleIcon2')"
                 >
-                  <span id="toggleIcon2">👁️</span>
+                  &nbsp;<span id="toggleIcon2">👁️</span>
                 </div>
               </div>
               <div class="confirmPasswordText"></div>
@@ -99,9 +99,9 @@
           <!-- 이름 -->
           <div class="labelInputBox nameLabelBox">
             <div class="labelBox">
-              <label for="name">이름</label>
+              <label for="name">이름 *</label>
             </div>
-            <div class="inputWrapBox">
+            <div class="inputWrapBox nameWrapBox">
               <div class="inputBox nameBox">
                 <input
                   type="text"
@@ -117,48 +117,54 @@
           <!-- 주소 -->
           <div class="labelInputBox">
             <div class="labelBox">
-              <label for="sample6_address">주소</label>
+              <label for="sample6_address">주소 *</label>
             </div>
-            <div class="inputWrapBox">
-              <div class="inputBox addressBox">
-                <div class="address-fields">
-                  <input
-                    type="text"
-                    id="sample6_postcode"
-                    placeholder="우편번호"
-                  />
-                  <input
-                    type="button"
-                    class="findAddress"
-                    onclick="sample6_execDaumPostcode()"
-                    value="우편번호"
-                  />
-                </div>
-                <div class="address-fields">
-                  <input type="text" id="sample6_address" placeholder="주소" />
-                  <input
-                    type="text"
-                    id="sample6_detailAddress"
-                    placeholder="상세주소"
-                    oninput="addressOninput()"
-                  />
-                  <input
-                    type="text"
-                    id="sample6_extraAddress"
-                    placeholder="참고항목"
-                  />
+            <div class="inputWrapBox addressHeight">
+              <div class="addressWrapBox">
+                <div class="addressBox">
+                  <div class="address-fields">
+                    <input
+                      type="text"
+                      id="sample6_postcode"
+                      placeholder="우편번호"
+                    />&nbsp;
+                    <input
+                      type="button"
+                      class="findAddress"
+                      onclick="sample6_execDaumPostcode()"
+                      value="우편번호"
+                    />
+                  </div>
+                  <div class="address-fields address-fields2">
+                    <input
+                      type="text"
+                      id="sample6_address"
+                      placeholder="주소"
+                    />&nbsp;
+                    <input
+                      type="text"
+                      id="sample6_detailAddress"
+                      placeholder="상세주소"
+                      oninput="addressOninput()"
+                    />&nbsp;
+                    <input
+                      type="text"
+                      id="sample6_extraAddress"
+                      placeholder="참고항목"
+                    />
+                  </div>
                 </div>
               </div>
+              <div class="addressText"></div>
             </div>
-            <div class="addressText"></div>
           </div>
           <!-- 휴대폰 번호 -->
           <div class="labelInputBox phoneLabelBox">
             <div class="labelBox">
-              <label for="phone">전화번호</label>
+              <label for="phone">전화번호 *</label>
             </div>
             <div class="inputWrapBox">
-              <div class="inputBox phoneBox">
+              <div class="phoneBox">
                 <select id="phonePrefix" required>
                   <option value="" disabled selected>선택</option>
                   <option value="010">010</option>
@@ -168,7 +174,7 @@
                   <option value="018">018</option>
                   <option value="019">019</option>
                 </select>
-                -
+                &nbsp;-&nbsp;
                 <input
                   type="text"
                   id="phoneMiddle"
@@ -177,7 +183,7 @@
                   maxlength="4"
                   oninput="phoneOninput()"
                 />
-                -
+                &nbsp;-&nbsp;
                 <input
                   type="text"
                   id="phoneLast"
@@ -194,7 +200,7 @@
           <!-- 성별 -->
           <div class="labelInputBox genderLabelBox">
             <div class="labelBox">
-              <label>성별</label>
+              <label>성별 *</label>
             </div>
             <div class="inputWrapBox">
               <div class="inputBox genderBox">
@@ -207,7 +213,7 @@
                     onchange="genderOninput()"
                   />
                   남성</label
-                >
+                >&nbsp;
                 <label
                   ><input
                     type="radio"
@@ -217,7 +223,7 @@
                     onchange="genderOninput()"
                   />
                   여성</label
-                >
+                >&nbsp;
                 <label
                   ><input
                     type="radio"
@@ -236,16 +242,16 @@
           <!-- 생년월일 -->
           <div class="labelInputBox birthLabelBox">
             <div class="labelBox">
-              <label>생년월일</label>
+              <label>생년월일 *</label>
             </div>
             <div class="inputWrapBox">
               <div class="inputBox birthBox">
                 <select id="birthYear" onchange="birthOninput()" required>
-                  <option value="" disabled selected>년도</option>
-                </select>
+                  <option value="" disabled selected>년도</option></select
+                >&nbsp;
                 <select id="birthMonth" onchange="birthOninput()" required>
-                  <option value="" disabled selected>월</option>
-                </select>
+                  <option value="" disabled selected>월</option></select
+                >&nbsp;
                 <select id="birthDay" onchange="birthOninput()" required>
                   <option value="" disabled selected>일</option>
                 </select>

@@ -1,15 +1,15 @@
 // 사이드바 열기 버튼 클릭
 document.getElementById("searchOpenBtn").addEventListener("click", function () {
-  document.getElementById("sideBarContent").classList.add("open"); // 사이드바 열기
-  document.getElementById("overLay").classList.add("open"); // 오버레이 활성화
+  document.getElementById("sideBarContent").classList.add("open");
+  document.getElementById("overLay").classList.add("open");
 });
 
 // 사이드바 닫기 버튼 클릭
 document
   .getElementById("searchCloseBtn")
   .addEventListener("click", function () {
-    document.getElementById("sideBarContent").classList.remove("open"); // 사이드바 닫기
-    document.getElementById("overLay").classList.remove("open"); // 오버레이 비활성화
+    document.getElementById("sideBarContent").classList.remove("open");
+    document.getElementById("overLay").classList.remove("open");
   });
 
 // 오버레이 클릭 시 사이드바 닫기
@@ -31,10 +31,18 @@ document.querySelectorAll(".menuItem").forEach((item) => {
   });
 });
 
-// 반응형 메뉴 토글 버튼 클릭 시
+// 반응형 메뉴 토글
 const menuToggleBtn = document.getElementById("menuToggleBtn");
 const menuNav = document.querySelector(".menuNav");
-
 menuToggleBtn.addEventListener("click", () => {
   menuNav.classList.toggle("open");
+});
+
+document.addEventListener("click", function (event) {
+  if (
+    !menuNav.contains(event.target) &&
+    !menuToggleBtn.contains(event.target)
+  ) {
+    menuNav.classList.remove("open");
+  }
 });

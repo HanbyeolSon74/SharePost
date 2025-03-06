@@ -71,9 +71,11 @@ body {
 .menu-item a {
   text-decoration: none;
   color: #000;
-  display: block;
 }
-
+.companyName a {
+  text-decoration: none;
+  color: #000;
+}
 .dropdownMenu a {
   padding: 8px 10px;
   display: block;
@@ -103,7 +105,7 @@ body {
   right: -40px;
   overflow-x: hidden;
   transition: width 0.3s ease;
-  padding: 60px 20px 20px 20px;
+  padding: 30px 20px 20px 20px;
   z-index: 1000;
   background-color: white;
 }
@@ -116,14 +118,16 @@ body {
 .sideBarContent input {
   width: 100%;
   padding: 10px;
-  margin-top: 20px;
   border: none;
 }
 
 .searchCloseBtn {
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
-  margin-bottom: 20px;
+  text-align: right;
+  position: absolute;
+  top: 20px;
+  right: 65px;
 }
 
 .searchOpenBtn {
@@ -147,7 +151,7 @@ body {
   cursor: pointer;
 }
 
-/* 오버레이 설정 (사이드바 열릴 때) */
+/* 오버레이 설정 */
 .overLay {
   position: fixed;
   top: 0;
@@ -177,18 +181,16 @@ body {
 
 /* 반응형 */
 .menuToggleBtn {
-  display: none; /* 기본 상태에서 숨김 */
+  display: none;
   padding: 15px 30px;
   cursor: pointer;
 }
-/* 모바일에서 헤더 메뉴와 사이드바 숨기기 */
+
 @media (max-width: 768px) {
-  /* 메뉴 토글 버튼 보이기 */
   .menuToggleBtn {
     display: block;
   }
 
-  /* 메뉴를 기본적으로 숨기고, 버튼 클릭 시 보이도록 */
   .menuNav {
     display: none;
     position: absolute;
@@ -208,15 +210,13 @@ body {
   /* 모바일에서 헤더의 로고 가운데 배치 */
   .headerLeft {
     flex-grow: 1;
-    justify-content: center; /* 로고를 가운데로 배치 */
+    justify-content: center;
   }
 
-  /* 오른쪽 버튼 (검색, 하트, 로그인) 유지 */
   .rigntSearchBar {
     display: flex;
   }
 
-  /* 메뉴 아이템 스타일 */
   .menu-item button {
     width: 100%;
     padding: 15px;
@@ -229,7 +229,7 @@ body {
     display: flex;
     flex-direction: column;
   }
-  /* 드롭다운 메뉴가 메뉴 아이템 아래로 세로로 표시 */
+
   .dropdownMenu {
     width: 100%;
     position: relative;
@@ -264,4 +264,22 @@ body {
   .companyName {
     text-align: center;
   }
+}
+
+.searchInput {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+.searchInput input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 5px;
+  font-size: 15px;
+  width: 200px;
+  color: rgb(59, 59, 59);
+  line-height: 20px;
+  height: 30px;
 }

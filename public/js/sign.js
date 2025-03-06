@@ -7,7 +7,7 @@ function toggleCustomDomain() {
     customDomainInput.focus();
   } else {
     customDomainInput.disabled = true;
-    customDomainInput.value = "";
+    customDomainInput.value = emailDomainSelect.value;
   }
 }
 
@@ -152,7 +152,7 @@ const emailOninput = () => {
     emailCheck = false;
   } else {
     emailText.innerText = "";
-    emailCheck = true;
+    // emailCheck = true;
   }
   validCheck();
 };
@@ -268,14 +268,17 @@ const phoneOninput = () => {
     phoneText.innerText = "전화번호 앞자리를 선택하세요.";
     phoneText.style.color = "red";
     phoneCheck = false;
+    validCheck();
   } else {
     phoneText.innerText = "";
     phoneCheck = true;
   }
+
   if (!phoneRegex.test(phoneMiddleValue)) {
     phoneText.innerText = "전화번호 중간 4자리를 정확히 입력하세요.";
     phoneText.style.color = "red";
     phoneCheck = false;
+    validCheck();
   } else {
     phoneText.innerText = "";
     phoneCheck = true;
@@ -284,6 +287,7 @@ const phoneOninput = () => {
     phoneText.innerText = "전화번호 마지막 4자리를 정확히 입력하세요.";
     phoneText.style.color = "red";
     phoneCheck = false;
+    validCheck();
   } else {
     phoneText.innerText = "";
     phoneCheck = true;
@@ -335,15 +339,15 @@ const birthOninput = () => {
 let saveBtn = document.querySelector(".signBtn");
 function validCheck() {
   if (
-    emailCheck === false &&
-    passwordCheck === false &&
-    confirmPasswordCheck === false &&
-    nameCheck === false &&
-    addressCheck === false &&
-    phoneCheck === false &&
-    genderCheck === false &&
-    isChecked === false &&
-    birthCheck === false
+    emailCheck === true &&
+    passwordCheck === true &&
+    confirmPasswordCheck === true &&
+    nameCheck === true &&
+    addressCheck === true &&
+    phoneCheck === true &&
+    genderCheck === true &&
+    isChecked === true &&
+    birthCheck === true
   ) {
     saveBtn.disabled = false;
   } else {
@@ -416,6 +420,7 @@ document.querySelector(".signBtn").addEventListener("click", async function () {
   try {
     const response = await axios.post("/api/users/signup", userData);
     alert("회원가입 성공!");
+    resetForm();
     console.log(response.data);
   } catch (error) {
     alert("회원가입 실패: " + (error.response?.data?.message || error.message));
@@ -444,20 +449,19 @@ function getEmailAddress() {
 function checkEmail() {
   const emailAddress = getEmailAddress();
 
-  // 이메일 주소가 유효하지 않으면 에러 메시지 출력
   if (!emailAddress.includes("@") || emailAddress.split("@")[0] === "") {
     emailText.innerText = "올바른 이메일 형식이 아닙니다.";
     emailText.style.color = "red";
     return;
   }
 
-  // 이메일 중복 확인 API 요청
   axios
-    .get("/user/checkEmail", { params: { email: emailAddress } }) // 수정된 경로 확인
+    .get("/user/checkEmail", { params: { email: emailAddress } })
     .then((response) => {
       if (response.data.success) {
         emailText.innerText = "사용 가능한 이메일입니다.";
         emailText.style.color = "green";
+        emailCheck = "true";
       }
     })
     .catch((error) => {
@@ -473,5 +477,4 @@ function checkEmail() {
     });
 }
 
-// 버튼 클릭 시 이메일 중복 체크 실행
 emailCheckBtn.addEventListener("click", checkEmail);
