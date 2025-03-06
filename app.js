@@ -1,4 +1,5 @@
 require("dotenv").config(); // 환경변수 로드
+
 const express = require("express");
 const sequelize = require("./config/database");
 const userRoutes = require("./routers/userRouter"); // 회원가입 라우트
@@ -23,6 +24,11 @@ app.use("/user", userRoutes); // /user 경로로 모든 라우터 적용
 // 기본 라우트
 app.get("/", (req, res) => {
   res.render("sign");
+});
+
+// 로그인 페이지
+app.get("/login", (req, res) => {
+  res.render("login");
 });
 
 // DB 연결 확인 및 서버 실행
