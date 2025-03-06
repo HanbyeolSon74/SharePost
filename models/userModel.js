@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       tableName: "users", // 테이블 이름 지정
-      timestamps: true, // ✅ createdAt, updatedAt 자동 생성 및 관리
+      timestamps: true, // createdAt, updatedAt 자동 생성 및 관리
     }
   );
 
