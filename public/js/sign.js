@@ -111,7 +111,7 @@ let emailCheck = false;
 let passwordCheck = false;
 let confirmPasswordCheck = false;
 let nameCheck = false;
-let addressCheck = false;
+// let addressCheck = false;
 let phoneCheck = false;
 let isChecked = false;
 let birthCheck = false;
@@ -224,34 +224,34 @@ const nameOninput = () => {
 };
 
 // 주소 검사
-const addressOninput = () => {
-  const postcodeInput = document.querySelector("#sample6_postcode");
-  const addressInput = document.querySelector("#sample6_address");
-  const detailAddressInput = document.querySelector("#sample6_detailAddress");
-  const addressText = document.querySelector(".addressText");
+// const addressOninput = () => {
+//   const postcodeInput = document.querySelector("#sample6_postcode");
+//   const addressInput = document.querySelector("#sample6_address");
+//   const detailAddressInput = document.querySelector("#sample6_detailAddress");
+//   const addressText = document.querySelector(".addressText");
 
-  const postcode = postcodeInput.value.trim();
-  const address = addressInput.value.trim();
-  const detailAddress = detailAddressInput.value.trim();
+//   const postcode = postcodeInput.value.trim();
+//   const address = addressInput.value.trim();
+//   const detailAddress = detailAddressInput.value.trim();
 
-  if (postcode.length < 1) {
-    addressText.innerText = "우편번호를 입력하세요.";
-    addressText.style.color = "red";
-    addressCheck = false;
-  } else if (address.length < 1) {
-    addressText.innerText = "주소를 입력하세요.";
-    addressText.style.color = "red";
-    addressCheck = false;
-  } else if (detailAddress.length < 1) {
-    addressText.innerText = "상세주소를 입력하세요.";
-    addressText.style.color = "red";
-    addressCheck = false;
-  } else {
-    addressText.innerText = "";
-    addressCheck = true;
-  }
-  validCheck();
-};
+//   if (postcode.length < 1) {
+//     addressText.innerText = "우편번호를 입력하세요.";
+//     addressText.style.color = "red";
+//     addressCheck = false;
+//   } else if (address.length < 1) {
+//     addressText.innerText = "주소를 입력하세요.";
+//     addressText.style.color = "red";
+//     addressCheck = false;
+//   } else if (detailAddress.length < 1) {
+//     addressText.innerText = "상세주소를 입력하세요.";
+//     addressText.style.color = "red";
+//     addressCheck = false;
+//   } else {
+//     addressText.innerText = "";
+//     addressCheck = true;
+//   }
+//   validCheck();
+// };
 
 // 휴대폰 번호 검사
 const phoneOninput = () => {
@@ -362,7 +362,7 @@ function validCheck() {
     passwordCheck === true &&
     confirmPasswordCheck === true &&
     nameCheck === true &&
-    addressCheck === true &&
+    // addressCheck === true &&
     phoneCheck === true &&
     isChecked === true &&
     birthCheck === true
@@ -381,9 +381,9 @@ function resetForm() {
   document.querySelector("#password").value = "";
   document.querySelector("#confirmPassword").value = "";
   document.querySelector("#name").value = "";
-  document.querySelector("#sample6_postcode").value = "";
-  document.querySelector("#sample6_address").value = "";
-  document.querySelector("#sample6_detailAddress").value = "";
+  // document.querySelector("#sample6_postcode").value = "";
+  // document.querySelector("#sample6_address").value = "";
+  // document.querySelector("#sample6_detailAddress").value = "";
   document.querySelector("#phonePrefix").value = "";
   document.querySelector("#phoneMiddle").value = "";
   document.querySelector("#phoneLast").value = "";
@@ -393,7 +393,7 @@ function resetForm() {
   passwordCheck = false;
   confirmPasswordCheck = false;
   nameCheck = false;
-  addressCheck = false;
+  // addressCheck = false;
   phoneCheck = false;
   isChecked = false;
   birthCheck = false;
@@ -416,12 +416,12 @@ document.querySelector(".signBtn").addEventListener("click", async function () {
         ? document.getElementById("customDomain").value
         : document.getElementById("emailDomainSelect").value),
     password: document.getElementById("password").value,
-    address: {
-      postcode: document.getElementById("sample6_postcode").value,
-      fullAddress: document.getElementById("sample6_address").value,
-      detail: document.getElementById("sample6_detailAddress").value,
-      extra: document.getElementById("sample6_extraAddress").value,
-    },
+    // address: {
+    //   postcode: document.getElementById("sample6_postcode").value,
+    //   fullAddress: document.getElementById("sample6_address").value,
+    //   detail: document.getElementById("sample6_detailAddress").value,
+    //   extra: document.getElementById("sample6_extraAddress").value,
+    // },
     gender: document.querySelector('input[name="gender"]:checked')?.value,
     birth_date:
       document.getElementById("birthYear").value +

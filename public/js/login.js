@@ -45,3 +45,16 @@ document
       console.error(error);
     }
   });
+
+const goToJoinPage = () => {
+  window.location.href = "/user/sign";
+};
+
+const goToFindIdPage = () => {
+  window.location.href = "/user/findid";
+};
+
+// 주소 수정 필요
+const goToFindPasswordPage = () => {
+  window.location.href = "/user/reset-password";
+};
