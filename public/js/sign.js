@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function updateDays() {
-    daySelect.innerHTML = '<option value="" disabled selected>일</option>'; // 초기화
+    daySelect.innerHTML = '<option value="" disabled selected>일</option>';
     let selectedYear = parseInt(yearSelect.value);
     let selectedMonth = parseInt(monthSelect.value);
     if (!selectedYear || !selectedMonth) return;
@@ -353,6 +353,8 @@ const birthOninput = () => {
 //     saveBtn.disabled = true;
 //   }
 // }
+
+//유효성 검사
 let saveBtn = document.querySelector(".signBtn");
 function validCheck() {
   if (
@@ -366,12 +368,11 @@ function validCheck() {
     birthCheck === true
   ) {
     saveBtn.disabled = false;
-    resetForm();
   } else {
     saveBtn.disabled = true;
   }
 }
-
+validCheck();
 // input 초기화
 function resetForm() {
   // 텍스트 초기화
@@ -470,8 +471,6 @@ function checkEmail() {
     emailText.style.color = "red";
     emailCheck = false;
     return;
-  } else {
-    emailText.innerText = "";
   }
   axios
     .get("/user/checkEmail", { params: { email: emailAddress } })
