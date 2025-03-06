@@ -21,3 +21,42 @@ body {
 .my_footer {
   margin-top: auto;
 }
+
+/* 모달 로그인 창 */
+.btnsModal {
+  display: flex;
+}
+
+/* 모달 기본 숨김 */
+.loginModal {
+  display: none; /* 기본적으로 숨김 */
+  position: fixed;
+  z-index: 1000; /* 최상위 배치 */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 검정색 투명 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 모달 내부 스타일 */
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+/* 닫기 버튼 */
+.loginModalClose {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/header.css" />
-    <script src="/js/login.js"></script>
+    <link rel="stylesheet" href="/css/login.css" />
     <title>header</title>
   </head>
   <body>
@@ -84,41 +84,48 @@
     </div>
 
     <!-- 로그인 모달 -->
-    <!-- <div id="loginModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
+    <div id="loginModal" class="loginModal" style="display: none">
+      <div class="modalContent">
+        <span class="loginModalClose" id="closeModal">&times;</span>
         <h2>로그인</h2>
-        <form id="login-form">
+        <form id="loginForm">
           <div>
-            <label for="email">아이디</label>
-            <input type="email" id="email" required placeholder="아이디 입력" />
+            <label for="loginEmail">아이디</label>
+            <input
+              type="email"
+              id="loginEmail"
+              required
+              placeholder="아이디 입력"
+            />
           </div>
           <div>
-            <label for="password">비밀번호</label>
+            <label for="loginPassword">비밀번호</label>
             <input
               type="password"
-              id="password"
+              id="loginPassword"
               required
               placeholder="비밀번호 입력"
             />
           </div>
-          <button type="submit">로그인</button>
-        </form> -->
+          <button class="loginBtnModal">로그인</button>
+        </form>
+        <div class="btnsModal">
+          <div class="modalSignBtn" onclick="goToJoinPage()">회원가입</div>
+          |
 
-    <!-- 회원가입 버튼 -->
-    <!-- <button type="button" onclick="goToJoinPage()">회원가입</button> -->
-
-    <!-- 아이디 찾기 버튼 -->
-    <!-- <button type="button" onclick="goToFindIdPage()">ID 찾기</button> -->
-
-    <!-- 비밀번호 찾기 버튼 -->
-    <!-- <button type="button" onclick="goToFindPasswordPage()">
-          비밀번호 찾기
-        </button> -->
-    <!-- </div>
-    </div> -->
+          <div class="modalLoginBtn" onclick="goToFindIdPage()">
+            아이디 찾기
+          </div>
+          |
+          <div class="modalpwButton" onclick="goToFindPasswordPage()">
+            비밀번호 찾기
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/js/header.js"></script>
+    <script src="/js/login.js"></script>
   </body>
 </html>

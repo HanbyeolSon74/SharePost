@@ -435,10 +435,9 @@ document.querySelector(".signBtn").addEventListener("click", async function () {
   };
 
   try {
-    const response = await axios.post("/api/users/signup", userData);
+    const response = await axios.post("/users/signup", userData);
     alert("회원가입 성공!");
     resetForm();
-    console.log(response.data);
   } catch (error) {
     alert("회원가입 실패: " + (error.response?.data?.message || error.message));
     console.error(error);
