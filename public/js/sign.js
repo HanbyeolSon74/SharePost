@@ -124,7 +124,7 @@ const emailOninput = () => {
   const emailText = document.querySelector(".emailText");
 
   const emailInputText = emailInput.value.trim();
-  const customDomainText = customDomainInput.value.trim();
+  const customDomainText = customDomainInput.value;
   const selectedDomain = emailDomainSelect.value;
 
   let fullEmail = emailInputText;
@@ -150,8 +150,10 @@ const emailOninput = () => {
     emailText.innerText = "";
   }
 
-  // '직접입력'이 아닐 경우 빨간 글씨 없애기
   if (selectedDomain !== "직접입력" && emailText.innerText !== "") {
+    emailText.innerText = "";
+  }
+  if (customDomainText.length > 0) {
     emailText.innerText = "";
   }
 };
@@ -387,7 +389,21 @@ function resetForm() {
   document.querySelector("#phonePrefix").value = "";
   document.querySelector("#phoneMiddle").value = "";
   document.querySelector("#phoneLast").value = "";
+  document.querySelector(".emailText").innerText = "";
+  document.querySelector(".passwordText").innerText = "";
+  document.querySelector(".confirmPasswordText").innerText = "";
+  document.querySelector(".nameText").innerText = "";
+  document.querySelector(".phoneText").innerText = "";
+  document.querySelector(".genderText").innerText = "";
+  document.querySelector(".birthText").innerText = "";
+  document.querySelector("#emailDomainSelect").value = "직접입력";
+  document.querySelector("#birthYear").value = "";
+  document.querySelector("#birthMonth").value = "";
+  document.querySelector("#birthDay").value = "";
 
+  document.querySelectorAll("input[name='gender']").forEach((radio) => {
+    radio.checked = false;
+  });
   // 체크 변수 초기화
   emailCheck = false;
   passwordCheck = false;

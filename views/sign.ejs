@@ -35,7 +35,11 @@
                   placeholder="도메인 입력"
                   oninput="emailOninput()"
                 />&nbsp;&nbsp;
-                <select id="emailDomainSelect" onchange="toggleCustomDomain()">
+                <select
+                  id="emailDomainSelect"
+                  onchange="toggleCustomDomain()"
+                  oninput="emailOninput()"
+                >
                   <option value="직접입력">직접 입력</option>
                   <option value="naver.com">naver.com</option>
                   <option value="gmail.com">gmail.com</option>
