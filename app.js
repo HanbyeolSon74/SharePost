@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config(); // .env 파일 로드
 const express = require("express");
 const sequelize = require("./config/database");
 const userRoutes = require("./routers/userRouter"); // 회원 관련
@@ -29,6 +29,21 @@ app.use("/", pageRoutes); // EJS 페이지 연결
 app.get("/", (req, res) => {
   res.render("main");
 });
+
+// 네이버 로그인 URL 생성
+const CLIENT_ID = process.env.NAVER_CLIENT_ID;
+const CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;
+const REDIRECT_URI = process.env.NAVER_REDIRECT_URI;
+
+// 콘솔에 출력해서 확인
+console.log(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+
+// 예시: 네이버 로그인 URL을 만들기
+const STATE = "some_random_string_for_state"; // CSRF 방지용 임의의 문자열
+const naverLoginUrl = `
+https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&state=${STATE}`;
+
+console.log("네이버 로그인 URL:", naverLoginUrl);
 
 // ✅ DB 연결 및 서버 실행
 sequelize

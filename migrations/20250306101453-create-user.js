@@ -47,6 +47,20 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: true,
       },
+      // 네이버 로그인 관련 컬럼 추가
+      naver_id: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+        unique: true, // 네이버 ID는 유일해야 하므로 unique 설정
+      },
+      social_type: {
+        type: Sequelize.STRING(50),
+        allowNull: true, // 소셜 로그인 타입 (네이버의 경우 'naver' 저장)
+      },
+      access_token: {
+        type: Sequelize.STRING(255),
+        allowNull: true, // 액세스 토큰은 선택적
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
