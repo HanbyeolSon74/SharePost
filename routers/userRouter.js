@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 const upload = require("../config/multer");
+const naverController = require("../controllers/naverController"); // 네이버 로그인 관련 컨트롤러 추가
 
 // 회원가입 페이지 렌더링
 router.get("/sign", (req, res) => {
@@ -28,5 +29,11 @@ router.get("/findpassword", userController.findPasswordPage);
 
 // 비밀번호 재설정 (POST)
 router.post("/reset-password", userController.resetPassword);
+
+// 네이버 로그인 라우트
+router.get("/login/naver", naverController.redirectToNaver); // 네이버 로그인 페이지로 리디렉션
+
+// 네이버 로그인 후 콜백 처리
+router.get("/login/naver/callback", naverController.handleNaverCallback);
 
 module.exports = router;
