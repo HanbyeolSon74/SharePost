@@ -60,28 +60,28 @@ const goToFindPasswordPage = () => {
 };
 
 // 네이버 로그인 axios
-document
-  .getElementById("naver-login-btn")
-  .addEventListener("click", function () {
-    window.location.href = "http://localhost:3000/user/login/naver";
-  });
+// document
+//   .getElementById("naver-login-btn")
+//   .addEventListener("click", function () {
+//     window.location.href = "http://localhost:3000/user/login/naver";
+//   });
 
-const params = new URLSearchParams(window.location.search);
-const code = params.get("code");
-const state = params.get("state");
+// const params = new URLSearchParams(window.location.search);
+// const code = params.get("code");
+// const state = params.get("state");
 
-axios
-  .post("http://localhost:3000/user/login/naver/callback", { code, state })
-  .then((response) => {
-    console.log("네이버 로그인 성공:", response.data);
-  })
-  .catch((error) => {
-    console.error("네이버 로그인 실패:", error);
-  });
+// axios
+//   .post("http://localhost:3000/user/login/naver/callback", { code, state })
+//   .then((response) => {
+//     console.log("네이버 로그인 성공:", response.data);
+//   })
+//   .catch((error) => {
+//     console.error("네이버 로그인 실패:", error);
+//   });
 
 // 카카오 로그인
-Kakao.init(process.env.KAKAO_JS_KEY);
-console.log(Kakao.isInitialized());
+// Kakao.init(process.env.KAKAO_JS_KEY);
+// console.log(Kakao.isInitialized());
 
 function kakaoLogin() {
   Kakao.Auth.login({
