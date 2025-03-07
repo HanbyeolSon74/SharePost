@@ -1,42 +1,36 @@
-require("dotenv").config(); // 환경변수 로드
-
+require("dotenv").config();
 const express = require("express");
 const sequelize = require("./config/database");
-const userRoutes = require("./routers/userRouter"); // 회원가입 라우트
-const path = require("path"); // path 모듈 추가
+const userRoutes = require("./routers/userRouter"); // 회원 관련
+const postRoutes = require("./routers/postRouter"); // 게시판 관련
+const pageRoutes = require("./routers/pageRouter"); // EJS 페이지 라우트
+const path = require("path");
 
 const app = express();
 
-// ✅ Body-parser 미들웨어 (라우트 등록 전 호출)
-app.use(express.json()); // JSON 요청 처리
-app.use(express.urlencoded({ extended: true })); // URL-encoded 데이터 처리
+// ✅ Body-parser 미들웨어
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// EJS 설정 (뷰 엔진 사용 시)
+// ✅ EJS 설정
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views")); // views 경로 설정
+app.set("views", path.join(__dirname, "views"));
 
-// 정적 파일 제공 (CSS, JS, 이미지 등)
+// ✅ 정적 파일 제공 (CSS, JS, 이미지 등)
 app.use(express.static("public"));
-app.use("/uploads", express.static("uploads")); // 업로드된 파일 접근
+app.use("/uploads", express.static("uploads"));
 
-app.use("/user", userRoutes); // /user 경로로 모든 라우터 적용
+// ✅ 라우터 등록
+app.use("/user", userRoutes); // 회원 관련
+app.use("/post", postRoutes); // 게시판 관련
+app.use("/", pageRoutes); // EJS 페이지 연결
 
-// 기본 라우트
+// 기본 라우트 (메인 페이지)
 app.get("/", (req, res) => {
-  res.render("sign");
+  res.render("main");
 });
 
-// 로그인 페이지
-app.get("/login", (req, res) => {
-  res.render("login");
-});
-
-// 게시판 페이지
-app.get("/board", (req, res) => {
-  res.render("board");
-});
-
-// DB 연결 확인 및 서버 실행
+// ✅ DB 연결 및 서버 실행
 sequelize
   .sync({ force: false })
   .then(() => {
@@ -45,5 +39,4 @@ sequelize
   })
   .catch((err) => {
     console.error("데이터베이스 연결 실패:", err);
-    res.status(500).send("서버 오류 발생");
   });
