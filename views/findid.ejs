@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>아이디 찾기</title>
     <link rel="stylesheet" href="/css/findid.css" />
   </head>
@@ -10,16 +11,18 @@
     <div class="wrapper">
       <!-- 헤더 -->
       <div class="shopHeader"><%- include('header.ejs') %></div>
-
-      <h1>아이디 찾기</h1>
-      <form>
-        <label for="phone">전화번호</label>
-        <input type="number" id="phone" name="phone" required />
-        <button type="submit">아이디 찾기</button>
-      </form>
-
+      <div class="findBoxWrap">
+        <h1>아이디 찾기</h1>
+        <form id="findIdform">
+          <label for="findPhoneNum">전화번호</label>
+          <input type="number" id="findPhoneNum" name="phone" required />
+          <button type="button" id="idFindBtn">아이디 찾기</button>
+        </form>
+        <p id="idResult"></p>
+      </div>
       <!-- 푸터 -->
       <div class="my_footer"><%- include('footer.ejs') %></div>
     </div>
+    <script src="/js/findid.js"></script>
   </body>
 </html>
