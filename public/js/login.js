@@ -73,7 +73,7 @@ const state = params.get("state");
 document
   .getElementById("naver-login-btn")
   .addEventListener("click", function () {
-    window.location.href = "http://localhost:3000/login/naver";
+    window.location.href = "http://localhost:3000/user/login/naver";
   });
 
 axios
