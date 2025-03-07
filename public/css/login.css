@@ -78,45 +78,29 @@ input:-webkit-autofill {
   font-weight: bold;
   font-size: 15px;
 }
-
-.naverLogin {
+.snsBtns {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  height: 100%;
-  text-decoration: none;
-  color: #000;
-  font-size: 13px;
-  font-weight: bold;
-  background-color: rgb(89, 228, 89);
-  padding: 10px 0px 10px 0px;
+  justify-content: center; /* 양 옆으로 버튼 배치 */
+  align-items: center; /* 세로로 중앙 정렬 */
+  width: 100%; /* 전체 너비 */
+}
+
+.snsBtns .naverLogin,
+.snsBtns .kakaoLogin {
+  flex: 1; /* 각 버튼에 공간을 균등하게 배분 */
+  text-align: center; /* 버튼의 텍스트를 중앙 정렬 */
+}
+
+.snsBtns .naverLogin a,
+.snsBtns .kakaoLogin a {
+  display: inline-block; /* a 태그를 블록처럼 다뤄버리기 */
+}
+
+.snsBtns img {
+  width: 100%;
+  max-width: 200px;
   margin-top: 10px;
-}
-
-.kakaoLogin {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  height: 100%;
-  text-decoration: none;
-  color: #000;
-  font-size: 13px;
-  font-weight: bold;
-  background-color: rgb(255, 244, 84);
-  padding: 10px 0px 10px 0px;
-  margin-top: 10px;
-}
-
-.naverLogin:hover {
-  background-color: #a7ffa7;
-  cursor: pointer;
-}
-
-.kakaoLogin:hover {
-  background-color: rgb(253, 255, 145);
-  cursor: pointer;
+  height: 40px;
 }
 .btnsModal {
   font-weight: bold;
@@ -124,6 +108,12 @@ input:-webkit-autofill {
   display: flex;
   justify-content: center;
   margin-top: 10px;
+}
+.naverLogin {
+  padding-top: 1px;
+}
+.kakaoLogin {
+  padding-right: 5px;
 }
 
 .saveIdCheck {
