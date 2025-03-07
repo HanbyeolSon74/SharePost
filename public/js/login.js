@@ -60,36 +60,16 @@ const goToFindPasswordPage = () => {
 };
 
 // 네이버 로그인 axios
+const params = new URLSearchParams(window.location.search);
+const code = params.get("code");
+const state = params.get("state");
 
-document
-  .getElementById("naver-login-btn")
-  .addEventListener("click", function () {
-    window.location.href = "http://localhost:3000/login/naver";
-  });
-
+// 서버에 POST 요청 보내기
 axios
-  .get("/auth/naver/callback", {
-    params: {
-      code: "네이버에서_받은_인증_코드",
-      state: "네이버에서_받은_상태값",
-    },
-  })
+  .post("/login/naver/callback", { code, state })
   .then((response) => {
-    const accessToken = response.data.accessToken;
-
-    axios
-      .get("https://openapi.naver.com/v1/nid/me", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((userData) => {
-        console.log(userData);
-      })
-      .catch((error) => {
-        console.error("사용자 정보 가져오기 실패", error);
-      });
+    console.log(response.data);
   })
   .catch((error) => {
-    console.error("액세스 토큰 요청 실패", error);
+    console.error("로그인 실패:", error);
   });
