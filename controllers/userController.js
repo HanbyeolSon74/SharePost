@@ -1,4 +1,4 @@
-const { User } = require("../models"); // User 모델 임포트
+const { Sequelize, User } = require("../models");
 const bcryptjs = require("bcryptjs"); // bcryptjs 임포트
 const moment = require("moment"); // moment 임포트
 const jwt = require("jsonwebtoken"); // JWT 토큰 생성
@@ -149,27 +149,37 @@ module.exports = {
     }
   },
 
-  // 아이디 찾기 기능 (전화번호 기준)
   findId: async (req, res) => {
-    const { phone } = req.body; // 전화번호를 요청 본문에서 받음
+    let { phone } = req.body;
+
+    // 입력된 전화번호에서 하이픈을 제거
+    phone = phone.replace(/-/g, "");
+
     try {
-      const user = await User.findOne({ where: { phone } }); // 전화번호로 유저 찾기
+      // DB에서 하이픈을 제거한 phone과 클라이언트에서 받은 phone을 비교
+      const user = await User.findOne({
+        where: Sequelize.where(
+          Sequelize.fn("REPLACE", Sequelize.col("phone"), "-", ""), // DB에서 하이픈을 제거한 값
+          phone // 클라이언트에서 받은 전화번호
+        ),
+      });
+
       if (user) {
-        // 유저를 찾았으면 그 이메일을 반환 (아이디로 사용)
-        return res.render("findid", {
-          userId: user.email, // 찾은 유저의 이메일을 userId로 전달
-          message: null, // 메시지는 null로 설정
+        return res.json({
+          success: true,
+          userId: user.email, // 해당 유저의 이메일 반환
+          message: null,
         });
       } else {
-        // 유저를 찾지 못했으면 message에 오류 메시지를 전달
-        return res.render("findid", {
-          userId: null, // userId는 null로 설정
-          message: "등록된 전화번호가 없습니다.", // 오류 메시지
+        return res.json({
+          success: false,
+          userId: null,
+          message: "등록된 전화번호가 없습니다.",
         });
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
         message: "서버 오류가 발생했습니다. 다시 시도해 주세요.",
       });
@@ -181,12 +191,35 @@ module.exports = {
     res.render("findid"); // findid 페이지 렌더링
   },
 
-  // 비밀번호 찾기 페이지
-  findPasswordPage: (req, res) => {
-    res.render("findpassword"); // findpassword 페이지 렌더링
+  // 비밀번호 찾기 요청 처리
+  findPassword: async (req, res) => {
+    const { email } = req.body;
+    try {
+      // 이메일로 사용자 조회
+      const user = await User.findOne({ where: { email } });
+
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "등록된 이메일이 없습니다.",
+        });
+      }
+
+      // 사용자가 존재하면 새 비밀번호를 설정하라는 메시지 반환
+      return res.json({
+        success: true,
+        message: "새 비밀번호를 설정해주세요.",
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        success: false,
+        message: "서버 오류가 발생했습니다. 다시 시도해 주세요.",
+      });
+    }
   },
 
-  // 비밀번호 수정 기능
+  // 비밀번호 재설정 기능 처리
   resetPassword: async (req, res) => {
     const { email, password } = req.body; // 이메일과 새 비밀번호 받기
     try {
