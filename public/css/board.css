@@ -20,3 +20,53 @@ body {
 .my_footer {
   margin-top: auto;
 }
+p {
+  all: unset;
+  margin: 0;
+  padding: 0;
+}
+
+.boardPostText {
+  font-size: 45px;
+  font-weight: bold;
+  margin-top: 100px;
+  padding-bottom: 50px;
+  border-bottom: #808080 1px solid;
+}
+.typebox {
+  width: 30%;
+}
+.inputBox input {
+  border: 1px solid #808080;
+  background: transparent;
+  outline: none;
+  padding: 8px;
+  font-size: 16px;
+}
+.nameBox {
+  width: 70%;
+}
+#boardPostName {
+  width: 100%;
+}
+#typeSelect {
+  width: 70%;
+  color: #808080;
+}
+.inputBox select {
+  border: 1px solid #808080;
+  background: transparent;
+  outline: none;
+  padding: 8px;
+  font-size: 16px;
+  height: 100%;
+  margin-left: 10px;
+}
+
+.forminputsBox {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}

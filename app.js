@@ -33,7 +33,7 @@ app.get("/login", (req, res) => {
 
 // 게시판 페이지
 app.get("/board", (req, res) => {
-  res.render("main");
+  res.render("board");
 });
 
 // DB 연결 확인 및 서버 실행
