@@ -1,3 +1,11 @@
+const editor = new toastui.Editor({
+  el: document.querySelector("#toastEditor"),
+  height: "400px",
+  initialEditType: "wysiwyg",
+  previewStyle: "vertical",
+});
+
+editor.setHTML("<%= data.content %>");
 window.onload = function () {
   const editor = new toastui.Editor({
     el: document.querySelector("#toastEditor"),
@@ -5,10 +13,12 @@ window.onload = function () {
     initialEditType: "wysiwyg",
     placeholder: "내용을 입력해 주세요.",
     previewStyle: "vertical",
+    initialValue: "<%= data.content %>", // 기존 내용 불러오기
   });
 };
 
 document.getElementById("previewImg").style.display = "none";
+
 function imageonChange() {
   const fileInput = document.getElementById("mainBoardImage");
   const file = fileInput.files[0];
@@ -34,13 +44,13 @@ function imageonChange() {
   }
 }
 
-// 폼 전체 데이터 axios
-const createData = (event) => {
+const editData = (event) => {
   event.preventDefault();
 
   const form = document.forms["formName"];
   const data = new FormData();
 
+  // 폼 데이터 추가
   data.append("title", form["boardPostName"].value);
   data.append("category_id", form["boardType"].value);
   data.append("content", toastEditor.getHTML());
@@ -51,11 +61,13 @@ const createData = (event) => {
   if (file) {
     data.append("mainimage", file);
   }
-  const token = localStorage.getItem("token");
+
+  const postId = form["postId"].value;
+  const token = localStorage.getItem("authToken");
 
   axios({
     method: "post",
-    url: "/board/post",
+    url: `/board/update/${postId}`,
     data: data,
     headers: {
       "Content-Type": "multipart/form-data",
@@ -63,12 +75,11 @@ const createData = (event) => {
     },
   })
     .then((res) => {
-      console.log(res);
       if (res.status === 200) {
-        alert("게시물이 등록되었습니다.");
-        window.location.href = "/board/main";
+        alert("게시물이 수정되었습니다.");
+        window.location.href = "/board/main"; // 수정 후 게시판 목록 페이지로 이동
       } else {
-        alert("게시물 등록 실패. 다시 시도해주세요.");
+        alert("게시물 수정 실패. 다시 시도해주세요.");
       }
     })
     .catch((e) => {
