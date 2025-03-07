@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/header.css" />
     <link rel="stylesheet" href="/css/login.css" />
+
     <title>header</title>
   </head>
   <body>
@@ -129,8 +130,12 @@
             <div class="naverLogin" id="naver-login-btn">
               <a><span>네이버 로그인</span></a>
             </div>
-            <div class="kakaoLogin" id="kakao-login-btn">
-              <a><span>카카오 로그인</span></a>
+            <div
+              class="kakaoLogin"
+              id="kakao-login-btn"
+              onclick="kakaoLogin();"
+            >
+              <a href="javascript:void(0)"><span>카카오 로그인</span></a>
             </div>
           </div>
         </div>
@@ -140,5 +145,6 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/js/header.js"></script>
     <script src="/js/login.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   </body>
 </html>
