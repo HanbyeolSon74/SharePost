@@ -60,30 +60,21 @@ const goToFindPasswordPage = () => {
 };
 
 // 네이버 로그인 axios
+document
+  .getElementById("naver-login-btn")
+  .addEventListener("click", function () {
+    window.location.href = "http://localhost:3000/user/login/naver";
+  });
+
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 const state = params.get("state");
 
-document
-  .getElementById("naver-login-btn")
-  .addEventListener("click", function () {
-    // 환경변수를 가져오기 위한 API 호출
-    axios
-      .get("/login/naver/")
-      .then(function (response) {
-        const CLIENT_ID = response.data.CLIENT_ID;
-        const REDIRECT_URI = response.data.REDIRECT_URI;
-        const STATE = response.data.STATE;
-
-        // 네이버 로그인 URL 생성
-        const url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&state=${STATE}&redirect_uri=${encodeURIComponent(
-          REDIRECT_URI
-        )}`;
-
-        // 네이버 로그인 페이지로 리디렉션
-        window.location.href = "http://localhost:3000/user/login/naver";
-      })
-      .catch(function (error) {
-        console.error("환경변수 로드 실패:", error);
-      });
+axios
+  .post("http://localhost:3000/user/login/naver/callback", { code, state })
+  .then((response) => {
+    console.log("네이버 로그인 성공:", response.data);
+  })
+  .catch((error) => {
+    console.error("네이버 로그인 실패:", error);
   });

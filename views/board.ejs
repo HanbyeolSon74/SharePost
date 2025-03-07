@@ -61,9 +61,14 @@
               </div>
 
               <!-- 이미지 업로드 -->
-              <div class="formBoxdiv">
-                <div class="labelBox">
-                  <label for="mainBoardImage">게시글 메인 이미지 등록</label>
+              <div class="formBoxdiv imageUpload">
+                <div class="imgRightBox">
+                  <div class="imgRightInBox">
+                    <div id="imgpreviewbox">
+                      <img id="previewImg" src="" />게시글 메인 이미지를
+                      등록해주세요.
+                    </div>
+                  </div>
                 </div>
                 <input
                   type="file"
@@ -73,14 +78,7 @@
                   accept="image/*"
                   required
                 />
-                <div class="imgRightBox">
-                  <div class="imgRightInBox">
-                    <div id="imgpreviewbox">
-                      <img id="previewImg" src="" />
-                    </div>
-                  </div>
-                  <div class="imageupText"></div>
-                </div>
+                <div class="imageupText"></div>
               </div>
 
               <!-- 버튼 -->
