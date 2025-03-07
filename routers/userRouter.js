@@ -28,11 +28,16 @@ router.get("/findid", userController.findIdPage);
 // 아이디 찾기 처리 (POST)
 router.post("/findid", userController.findId);
 
-// 비밀번호 찾기 페이지
-router.get("/findpassword", userController.findPasswordPage);
+// 비밀번호 재설정 페이지 렌더링 (GET)
+router.get("/reset-password", (req, res) => {
+  res.render("editpw");
+});
+
+// 비밀번호 찾기 요청 (POST)
+router.post("/findpassword", userController.findPassword);
 
 // 비밀번호 재설정 (POST)
-router.post("/resetpassword", userController.resetPassword);
+router.post("/reset-password", userController.resetPassword);
 
 // 네이버 로그인 라우트
 router.get("/login/naver", naverController.redirectToNaver); // 네이버 로그인 페이지로 리디렉션
