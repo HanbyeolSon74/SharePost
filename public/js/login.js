@@ -78,3 +78,26 @@ axios
   .catch((error) => {
     console.error("네이버 로그인 실패:", error);
   });
+
+// 카카오 로그인
+Kakao.init(process.env.KAKAO_JS_KEY);
+console.log(Kakao.isInitialized());
+
+function kakaoLogin() {
+  Kakao.Auth.login({
+    success: function (response) {
+      Kakao.API.request({
+        url: "/v2/user/me",
+        success: function (response) {
+          console.log(response);
+        },
+        fail: function (error) {
+          console.log(error);
+        },
+      });
+    },
+    fail: function (error) {
+      console.log(error);
+    },
+  });
+}
