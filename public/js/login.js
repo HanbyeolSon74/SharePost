@@ -60,15 +60,14 @@ const goToFindPasswordPage = () => {
 };
 
 // 네이버 로그인 axios
-
 document
   .getElementById("naver-login-btn")
   .addEventListener("click", function () {
-    window.location.href = "http://localhost:3000/login/naver";
+    window.location.href = "http://localhost:3000/user/login/naver";
   });
 
 axios
-  .get("/auth/naver/callback", {
+  .get("/login/naver/callback", {
     params: {
       code: "네이버에서_받은_인증_코드",
       state: "네이버에서_받은_상태값",
