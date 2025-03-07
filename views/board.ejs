@@ -3,8 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Board 게시판 등록</title>
+    <title>Board</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
+    />
     <link rel="stylesheet" href="/css/board.css" />
   </head>
   <body>
@@ -12,11 +17,91 @@
       <!-- 헤더 만들기 -->
       <div class="shopHeader"><%- include('header.ejs') %></div>
       <!-- 본문 시작 -->
-      <div class="contentWrapBox"></div>
+      <div class="contentWrapBox">
+        <div class="addBox">
+          <div class="boardPostText"><p>게시물 등록</p></div>
+          <div class="formBox">
+            <form name="formName" method="post" enctype="multipart/form-data">
+              <!-- 제목 -->
+              <div class="nameBox formBoxdiv">
+                <div class="inputBox">
+                  <input
+                    placeholder="제목을 입력해 주세요."
+                    id="boardPostName"
+                    name="boardPostName"
+                    oninput="nameonInput()"
+                    required
+                  />
+                  <div class="nameText"></div>
+                </div>
+              </div>
+              <!-- 상품 타입 선택 -->
+              <div class="formBoxdiv">
+                <div class="inputBox typebox">
+                  <select id="typeSelect" name="boardType">
+                    <option value="" disabled selected>
+                      게시판을 선택해주세요.
+                    </option>
+                    <option value="JENNIE COLLAB">JENNIE COLLAB</option>
+                    <option value="NEWJEANS COLLAB">NEWJEANS COLLAB</option>
+                    <option value="SINSA">SINSA</option>
+                    <option value="BIRTH">BIRTH</option>
+                    <option value="PURPOSE">PURPOSE</option>
+                  </select>
+                </div>
+                <div class="typeText"></div>
+              </div>
+              <!-- toast editer -->
+              <div class="contentBox formBoxdiv">
+                <div class="textareaBox">
+                  <div id="toastEditor"></div>
+                  <div class="contentText"></div>
+                </div>
+              </div>
+
+              <!-- 이미지 업로드 -->
+              <div class="formBoxdiv">
+                <div class="labelBox">
+                  <label for="mainBoardImage">게시글 메인 이미지 등록</label>
+                </div>
+                <input
+                  type="file"
+                  name="mainBoardImage"
+                  id="mainBoardImage"
+                  onchange="imageonChange()"
+                  accept="image/*"
+                  required
+                />
+                <div class="imgRightBox">
+                  <div class="imgRightInBox">
+                    <div id="imgpreviewbox">
+                      <img id="previewImg" src="" />
+                    </div>
+                  </div>
+                  <div class="imageupText"></div>
+                </div>
+              </div>
+
+              <!-- 버튼 -->
+              <div class="boardBtnWrap">
+                <button
+                  type="submit"
+                  id="boardBtn"
+                  class="boardBtn"
+                  onclick="createData(event)"
+                >
+                  저장
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
       <!-- 푸터 -->
       <div class="my_footer"><%- include('footer.ejs') %></div>
     </div>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
     <script src="/js/board.js"></script>
   </body>
 </html>
