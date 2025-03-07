@@ -49,7 +49,7 @@ const createData = (event) => {
   const file = fileInput.files[0];
 
   if (file) {
-    data.append("mainimage", file);
+    data.append("mainBoardImage", file);
   }
   const token = localStorage.getItem("token");
 

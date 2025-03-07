@@ -22,7 +22,7 @@ app.use("/uploads", express.static("uploads"));
 
 // ✅ 라우터 등록
 app.use("/user", userRoutes); // 회원 관련
-app.use("/post", postRoutes); // 게시판 관련
+app.use("/board", postRoutes); // 게시판 관련
 app.use("/", pageRoutes); // EJS 페이지 연결
 
 // 기본 라우트 (메인 페이지)

@@ -3,6 +3,11 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const upload = require("../config/multer");
 
+// 회원가입 페이지 렌더링
+router.get("/sign", (req, res) => {
+  res.render("sign"); // sign.ejs 파일을 렌더링
+});
+
 // 회원가입 라우트
 router.post("/signup", upload.single("profilePic"), userController.signup);
 

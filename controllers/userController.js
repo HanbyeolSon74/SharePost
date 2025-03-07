@@ -26,8 +26,10 @@ module.exports = {
       // 비밀번호 해싱
       const hashedPassword = await bcryptjs.hash(password, 10);
 
-      // 주소 객체를 문자열로 변환
-      const fullAddress = `${address.fullAddress} ${address.detail} ${address.extra}`;
+      // 주소 객체를 문자열로 변환 (주소가 없는 경우 빈 값 설정)
+      const fullAddress = address
+        ? `${address.fullAddress} ${address.detail} ${address.extra}`
+        : "";
 
       // 회원가입 부분에서 프로필 사진 경로 설정
       let profilePicPath;
@@ -64,7 +66,7 @@ module.exports = {
         phone,
         email,
         password: hashedPassword,
-        address: fullAddress, // 합쳐진 주소 저장
+        address: fullAddress, // 빈 값 또는 기본 주소 저장
         gender,
         age,
         birth_date: formattedBirthDate.format("YYYY-MM-DD"), // ISO 형식으로 저장
