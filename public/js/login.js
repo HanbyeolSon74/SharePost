@@ -60,11 +60,16 @@ const goToFindPasswordPage = () => {
 };
 
 // 네이버 로그인 axios
+// document
+//   .getElementById("naver-login-btn")
+//   .addEventListener("click", function () {
+//     window.location.href = "http://localhost:3000/login/naver";
+//   });
+
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 const state = params.get("state");
 
-// 서버에 POST 요청 보내기
 axios
   .post("/login/naver/callback", { code, state })
   .then((response) => {
