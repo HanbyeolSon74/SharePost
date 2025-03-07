@@ -70,8 +70,19 @@ const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 const state = params.get("state");
 
+document
+  .getElementById("naver-login-btn")
+  .addEventListener("click", function () {
+    window.location.href = "http://localhost:3000/login/naver";
+  });
+
 axios
-  .post("/login/naver/callback", { code, state })
+  .get("/auth/naver/callback", {
+    params: {
+      code: "네이버에서_받은_인증_코드",
+      state: "네이버에서_받은_상태값",
+    },
+  })
   .then((response) => {
     console.log(response.data);
   })
