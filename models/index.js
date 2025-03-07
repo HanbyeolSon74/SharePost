@@ -20,6 +20,7 @@ if (config.use_env_variable) {
   });
 }
 
+// 모델 파일들을 읽고 함수 형태로 반환되는지 확인
 fs.readdirSync(__dirname)
   .filter(
     (file) =>
@@ -29,22 +30,19 @@ fs.readdirSync(__dirname)
       file.indexOf(".test.js") === -1
   )
   .forEach((file) => {
-    const model = require(path.join(__dirname, file))(
-      sequelize,
-      Sequelize.DataTypes
-    );
-    db[model.name] = model;
+    const model = require(path.join(__dirname, file));
+    if (typeof model === "function") {
+      db[model.name] = model(sequelize, Sequelize.DataTypes); // 모델 함수 호출
+    }
   });
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
-    db[modelName].associate(db);
+    db[modelName].associate(db); // associate 메서드 호출
   }
 });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-
-db.User = require("./userModel")(sequelize, Sequelize);
 
 module.exports = db;
