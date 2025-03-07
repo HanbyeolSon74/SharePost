@@ -219,9 +219,9 @@ module.exports = {
     }
   },
 
-  // 비밀번호 재설정 기능 처리
+  // 비밀번호 변경 요청 처리
   resetPassword: async (req, res) => {
-    const { email, password } = req.body; // 이메일과 새 비밀번호 받기
+    const { email, newPassword } = req.body; // 이메일과 새 비밀번호 받기
     try {
       // 이메일로 사용자 조회
       const user = await User.findOne({ where: { email } });
@@ -233,7 +233,7 @@ module.exports = {
       }
 
       // 비밀번호 해싱
-      const hashedPassword = await bcryptjs.hash(password, 10);
+      const hashedPassword = await bcryptjs.hash(newPassword, 10);
 
       // 비밀번호 업데이트
       user.password = hashedPassword;

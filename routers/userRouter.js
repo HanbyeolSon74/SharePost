@@ -19,6 +19,11 @@ router.post("/signup", upload.single("profilePic"), userController.signup);
 // 로그인 라우트
 router.post("/login", userController.login);
 
+// 로그인 페이지 라우터
+router.get("/login", (req, res) => {
+  res.render("login"); // login.ejs 페이지를 렌더링
+});
+
 // 이메일 중복 확인
 router.get("/checkEmail", userController.checkEmail);
 
@@ -33,10 +38,10 @@ router.get("/reset-password", (req, res) => {
   res.render("editpw");
 });
 
-// 비밀번호 찾기 요청 (POST)
-router.post("/findpassword", userController.findPassword);
+// 비밀번호 찾기 요청
+router.post("/find-password", userController.findPassword);
 
-// 비밀번호 재설정 (POST)
+// 비밀번호 변경 요청
 router.post("/reset-password", userController.resetPassword);
 
 // 네이버 로그인 라우트
