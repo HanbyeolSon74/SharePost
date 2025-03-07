@@ -4,16 +4,21 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 // 네이버 로그인 페이지로 리디렉션
-exports.redirectToNaver = (req, res) => {
+const redirectToNaver = (req, res) => {
   const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NAVER_CLIENT_ID}&redirect_uri=${process.env.NAVER_REDIRECT_URI}&state=${process.env.NAVER_STATE}`;
   res.redirect(naverAuthUrl);
 };
 
 // 네이버 로그인 후 콜백 처리
-exports.handleNaverCallback = async (req, res) => {
+const handleNaverCallback = async (req, res) => {
   const { code, state } = req.query;
 
+  console.log("📌 네이버 콜백 도착");
+  console.log("📌 요청에서 받은 state:", state);
+  console.log("📌 서버의 환경 변수 state:", process.env.NAVER_STATE);
+
   if (state !== process.env.NAVER_STATE) {
+    console.error("❌ state 불일치! 네이버 로그인 요청이 잘못되었습니다.");
     return res.status(400).send("잘못된 요청입니다.");
   }
 
@@ -73,4 +78,10 @@ exports.handleNaverCallback = async (req, res) => {
     console.error("네이버 로그인 실패:", error);
     res.status(500).send("네이버 로그인 실패");
   }
+};
+
+// ✅ 올바르게 exports 하기
+module.exports = {
+  redirectToNaver,
+  handleNaverCallback,
 };

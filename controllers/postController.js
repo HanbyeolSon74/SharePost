@@ -5,8 +5,12 @@ const path = require("path");
 module.exports = {
   createPost: async (req, res) => {
     try {
+      // 요청 본문 및 파일 확인 로그 추가
+      console.log("Request Body:", req.body); // 폼 데이터 로그
+      console.log("Uploaded File:", req.file); // 업로드된 파일 확인
+
       // 로그인된 사용자 정보에서 user_id 가져오기
-      const user_id = req.user ? req.user.id : null; // 로그인된 사용자 정보를 토대로 user_id 설정
+      const user_id = req.user ? req.user.id : null; // 로그인된 사용자의 ID
 
       if (!user_id) {
         return res.status(400).json({
@@ -17,10 +21,10 @@ module.exports = {
 
       const { title, content, category_id } = req.body;
 
-      // 이미지 파일 처리 (파일 업로드가 있을 경우)
+      // 이미지 파일 처리
       let image_url = null;
       if (req.file) {
-        image_url = `/uploads/${req.file.filename}`; // 파일 URL을 설정 (서버의 uploads 폴더 경로로 설정)
+        image_url = `/uploads/${req.file.filename}`; // 파일 URL 설정
       }
 
       // 게시글 생성
@@ -28,7 +32,7 @@ module.exports = {
         title,
         content,
         category_id,
-        user_id, // 로그인한 사용자의 ID를 포함
+        user_id,
         image_url,
       });
 
@@ -38,24 +42,7 @@ module.exports = {
         post: newPost,
       });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({
-        success: false,
-        message: "서버 오류가 발생했습니다.",
-      });
-    }
-  },
-
-  // 모든 게시글 조회
-  getPosts: async (req, res) => {
-    try {
-      const posts = await Post.findAll();
-      res.status(200).json({
-        success: true,
-        posts,
-      });
-    } catch (error) {
-      console.error(error);
+      console.error("게시글 생성 오류:", error);
       res.status(500).json({
         success: false,
         message: "서버 오류가 발생했습니다.",
@@ -82,7 +69,14 @@ module.exports = {
   // 게시글 수정 처리 (POST)
   updatePost: async (req, res) => {
     const { id, title, category, content, existingImage } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : existingImage; // 새 이미지를 올리거나 기존 이미지 유지
+    let image = null;
+
+    // 새 이미지를 업로드하거나 기존 이미지를 유지
+    if (req.file) {
+      image = `/uploads/${req.file.filename}`;
+    } else {
+      image = existingImage || null; // 기존 이미지가 없으면 null로 처리
+    }
 
     try {
       const post = await Post.findByPk(id);

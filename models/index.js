@@ -3,7 +3,6 @@
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
-const process = require("process");
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require("../config/config")[env];
@@ -16,11 +15,11 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, {
     host: config.host,
     dialect: config.dialect,
-    logging: false, // SQL 쿼리 로그를 숨김 (필요하면 true로 변경)
+    logging: false, // SQL 쿼리 로그 숨김
   });
 }
 
-// 모델 파일들을 읽고 함수 형태로 반환되는지 확인
+// 모델을 불러오고 실행
 fs.readdirSync(__dirname)
   .filter(
     (file) =>
@@ -30,19 +29,29 @@ fs.readdirSync(__dirname)
       file.indexOf(".test.js") === -1
   )
   .forEach((file) => {
-    const model = require(path.join(__dirname, file));
+    const model = require(path.join(__dirname, file)); // 모델을 불러옴
     if (typeof model === "function") {
-      db[model.name] = model(sequelize, Sequelize.DataTypes); // 모델 함수 호출
+      const initializedModel = model(sequelize, Sequelize.DataTypes);
+      if (initializedModel.name) {
+        db[initializedModel.name] = initializedModel;
+      } else {
+        console.warn(`⚠️ 모델 이름이 없습니다: ${file}`);
+      }
+    } else {
+      console.warn(`⚠️ 모델이 함수가 아닙니다: ${file}`);
     }
   });
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
-    db[modelName].associate(db); // associate 메서드 호출
+    db[modelName].associate(db); // 관계 설정
   }
 });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+console.log("📌 Loaded models:", Object.keys(db)); // ✅ 로드된 모델 출력
+console.log("✅ User 모델 존재 여부:", !!db.User); // ✅ User가 db에 등록되었는지 확인
 
 module.exports = db;
