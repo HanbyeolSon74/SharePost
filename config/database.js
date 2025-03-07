@@ -6,7 +6,7 @@ const sequelize = new Sequelize({
   dialect: "mysql", // 사용할 DB 종류
   username: process.env.DB_USER || "root", // DB 사용자명
   password: process.env.DB_PASSWORD || "1234", // DB 비밀번호
-  database: process.env.DB_DATABASE || "DBuser", // DB 이름
+  database: process.env.DB_DATABASE || "bakezy", // DB 이름
   logging: false, // 로그 비활성화 (필요시 활성화 가능)
 });
 
