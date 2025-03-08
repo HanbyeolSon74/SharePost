@@ -42,13 +42,16 @@ document
         headers: { "Content-Type": "application/json" },
       });
 
-      if (response.status === 200) {
+      console.log("응답 데이터:", response.data); // 응답 데이터 확인
+      if (response.status === 200 && response.data.accessToken) {
         alert("로그인 성공!");
 
         // JWT 토큰 저장
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", response.data.accessToken);
 
         document.querySelector("#loginModal").style.display = "none";
+      } else {
+        alert("토큰이 없습니다.");
       }
     } catch (error) {
       alert("로그인 실패! " + (error.response?.data?.message || error.message));

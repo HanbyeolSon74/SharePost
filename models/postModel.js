@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      image_url: {
+      mainimage: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      user_id: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      category_id: {
+      categoryId: {
         type: DataTypes.INTEGER,
         references: {
           model: "categories", // 외래키 참조
@@ -41,6 +41,15 @@ module.exports = (sequelize, DataTypes) => {
       updatedAt: "updatedAt", // 테이블의 컬럼명 설정
     }
   );
+
+  // 관계 설정
+  Post.associate = function (models) {
+    // Post는 하나의 Category에 속함
+    Post.belongsTo(models.Category, {
+      foreignKey: "categoryId", // 외래키 이름 설정
+      as: "category", // 연결될 모델 이름
+    });
+  };
 
   return Post;
 };
