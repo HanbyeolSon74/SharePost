@@ -4,6 +4,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: Arial, sans-serif;
 }
 body {
   padding-top: 58px;
@@ -13,52 +14,58 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
-.contentWrapBox {
-  flex: 1;
-  text-align: center;
+
+.blackdiv {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
 }
 
-.my_footer {
-  margin-top: auto;
+.contentWrapBox {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
-/* 아이디 찾기 폼 스타일 */
+
 .findBoxWrap {
-  background-color: white; /* 폼의 배경색을 흰색으로 설정 */
+  background-color: white;
   padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
-  max-width: 400px; /* 폼의 최대 너비 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
   width: 100%;
   text-align: center;
+  margin: 20px;
 }
 
-/* 제목 스타일 */
 .findBoxWrap h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-/* 입력 필드 스타일 */
 .findBoxWrap input {
-  width: 80%;
+  width: 75%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
+  font-size: 12px;
 }
 
-/* 버튼 스타일 */
 .findBoxWrap button {
   width: 80%;
   padding: 10px;
-  background-color: #4caf50; /* 버튼 색상 */
+  background-color: #252525;
   border: none;
-  border-radius: 4px;
   color: white;
-  font-size: 16px;
+  font-size: 13px;
   cursor: pointer;
-  opacity: 0.7; /* 비활성 버튼의 투명도 */
+  opacity: 0.7;
 }
 
 .findBoxWrap button:disabled {
@@ -67,14 +74,97 @@ body {
   opacity: 1;
 }
 
-/* 입력 필드가 활성화될 때 스타일 */
 .findBoxWrap input:focus {
-  border-color: #4caf50;
+  border-color: #000000;
   outline: none;
 }
 
-/* 메시지 텍스트 스타일 */
 .findBoxWrap p {
-  font-size: 14px;
+  font-size: 12px;
   color: #555;
+}
+
+#emailResult {
+  font-size: 11px;
+  color: red;
+}
+
+/* 비밀번호 수정 폼 (기본적으로 숨겨짐) */
+#reset-password-form {
+  background-color: white;
+  padding: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  margin: 20px;
+  display: none;
+}
+
+#reset-password-form h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+#reset-password-form input {
+  width: 75%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  font-size: 12px;
+}
+
+#reset-password-form button {
+  width: 80%;
+  padding: 10px;
+  background-color: #252525;
+  border: none;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#reset-password-form p {
+  font-size: 12px;
+  color: #555;
+}
+
+#pwResult {
+  font-size: 11px;
+  color: red;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .findBoxWrap,
+  #reset-password-form {
+    margin: 20px;
+  }
+
+  .findBoxWrap input {
+    width: 73%;
+  }
+}
+
+@media (max-width: 480px) {
+  .findBoxWrap h1,
+  #reset-password-form h2 {
+    font-size: 20px;
+  }
+
+  .findBoxWrap label,
+  #reset-password-form label,
+  .findBoxWrap input,
+  #reset-password-form input,
+  .findBoxWrap button,
+  #reset-password-form button {
+    font-size: 13px;
+  }
+}
+.findBoxWrap label {
+  font-size: 13px;
+  color: #333;
+}
+#reset-password-form {
+  color: #333;
 }

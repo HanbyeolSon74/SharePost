@@ -8,29 +8,37 @@
     <link rel="stylesheet" href="/css/editpw.css" />
   </head>
   <body>
-    <div class="findBoxWrap">
-      <h1>비밀번호 수정</h1>
-      <form action="javascript:void(0);" onsubmit="findPassword()">
-        <label for="email">이메일 주소:</label>
-        <input type="email" id="email" name="email" required />
-        <button type="submit">비밀번호 찾기</button>
-      </form>
-      <p>이메일 형식으로 입력해주세요.</p>
-      <p id="emailResult"></p>
+    <div class="wrapper">
+      <!-- 헤더 만들기 -->
+      <div class="shopHeader"><%- include('header.ejs') %></div>
+      <div class="blackdiv"></div>
+      <div class="contentWrapBox">
+        <div class="findBoxWrap">
+          <h1>비밀번호 수정</h1>
+          <form action="javascript:void(0);" onsubmit="findPassword()">
+            <label for="email">이메일 주소로 찾기</label>
+            <input type="email" id="email" name="email" required />
+            <button type="submit">비밀번호 찾기</button>
+          </form>
+          <p>이메일 형식으로 입력해주세요.</p>
+          <p id="emailResult"></p>
+        </div>
+        <!-- 비밀번호 수정 폼 (기본적으로 숨겨짐) -->
+        <div id="reset-password-form" style="display: none">
+          <h2>새 비밀번호 설정</h2>
+          <form action="javascript:void(0);" onsubmit="resetPassword()">
+            <label for="new-password">새 비밀번호를 입력하세요.</label>
+            <input type="password" id="new-password" name="password" required />
+            <input type="hidden" id="user-email" name="email" />
+            <button type="submit">비밀번호 변경</button>
+          </form>
+          <p>영문, 숫자, 특수문자를 포함하여 8자 이상 작성해주세요.</p>
+          <p id="pwResult"></p>
+        </div>
+      </div>
     </div>
-    <!-- 비밀번호 수정 폼 (기본적으로 숨겨짐) -->
-    <div id="reset-password-form" style="display: none" class="findBoxWrap">
-      <h2>새 비밀번호 설정</h2>
-      <form action="javascript:void(0);" onsubmit="resetPassword()">
-        <label for="new-password">새 비밀번호:</label>
-        <input type="password" id="new-password" name="password" required />
-        <input type="hidden" id="user-email" name="email" />
-        <button type="submit">비밀번호 변경</button>
-      </form>
-      <p>영문, 숫자, 특수문자를 포함하여 8자 이상 작성해주세요.</p>
-      <p id="pwResult"></p>
-    </div>
-
+    <!-- 푸터 -->
+    <div class="my_footer"><%- include('footer.ejs') %></div>
     <script src="/js/editpw.js"></script>
   </body>
 </html>
