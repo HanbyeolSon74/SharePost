@@ -439,7 +439,7 @@ document.querySelector(".signBtn").addEventListener("click", async function () {
     //   extra: document.getElementById("sample6_extraAddress").value,
     // },
     gender: document.querySelector('input[name="gender"]:checked')?.value,
-    birth_date:
+    birthDate:
       document.getElementById("birthYear").value +
       "-" +
       document.getElementById("birthMonth").value +

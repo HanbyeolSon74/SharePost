@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
+      tableName: "posts", // 테이블 이름을 'posts'로 변경
       timestamps: true, // Sequelize가 자동으로 createdAt, updatedAt을 관리
       createdAt: "createdAt", // 테이블의 컬럼명 설정
       updatedAt: "updatedAt", // 테이블의 컬럼명 설정

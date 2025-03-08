@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Users", // ✅ users 테이블과 연결
+          model: "users", // ✅ users 테이블과 연결
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Posts", // ✅ posts 테이블과 연결
+          model: "posts", // ✅ posts 테이블과 연결
           key: "id",
         },
         onUpdate: "CASCADE",

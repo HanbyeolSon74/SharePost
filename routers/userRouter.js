@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/userController");
-const upload = require("../config/multer");
+const userController = require("../controllers/userController"); // userController import
+const { uploadProfilePic } = require("../config/multer"); // multer 미들웨어 import
 const naverController = require("../controllers/naverController");
 
 console.log("네이버 컨트롤러:", naverController);
@@ -13,8 +13,12 @@ router.get("/sign", (req, res) => {
   res.render("sign");
 });
 
-// 회원가입 라우트
-router.post("/signup", upload.single("profilePic"), userController.signup);
+// 회원가입 라우트에서 프로필 사진 업로드 처리
+router.post(
+  "/signup",
+  uploadProfilePic.single("profilePic"),
+  userController.signup
+); // userController.signup 사용
 
 // 로그인 라우트
 router.post("/login", userController.login);

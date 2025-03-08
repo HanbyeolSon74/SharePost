@@ -1,34 +1,72 @@
+// config/multer.js
 const multer = require("multer");
 const path = require("path");
-const config = require("./config"); // config.js에서 경로 가져오기
+require("dotenv").config();
 
-// Multer의 디스크 저장소 설정
-const storage = multer.diskStorage({
+// 게시글 이미지 업로드 경로
+const boardImageStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, config.development.imageStoragePath); // .env에서 설정한 경로 사용
+    // 게시글 이미지 경로
+    cb(null, process.env.BOARD_IMAGE_STORAGE_PATH || "uploads/boardimages/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // 고유한 이름으로 저장 (파일 이름 중복 방지)
-  },
-});
+    const fileExtension = path.extname(file.originalname).toLowerCase();
+    const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif"];
 
-// 파일 업로드 설정
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 최대 파일 크기 5MB
-  fileFilter: function (req, file, cb) {
-    const fileTypes = /jpeg|jpg|png|gif/; // 허용할 파일 형식
-    const mimeType = fileTypes.test(file.mimetype);
-    const extName = fileTypes.test(
-      path.extname(file.originalname).toLowerCase()
-    );
-
-    if (mimeType && extName) {
-      return cb(null, true); // 파일이 허용된 형식이면 업로드 진행
+    if (allowedExtensions.includes(fileExtension)) {
+      cb(null, Date.now() + fileExtension); // 파일 이름을 고유하게 설정
     } else {
-      cb(new Error("이미지 파일만 업로드 가능합니다."), false); // 형식이 맞지 않으면 에러 처리
+      cb(new Error("허용되지 않은 파일 확장자입니다."), false);
     }
   },
 });
 
-module.exports = upload;
+// 프로필 사진 업로드 경로
+const profilePicStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // 프로필 사진 경로
+    cb(null, process.env.IMAGE_STORAGE_PATH || "uploads/profilepics/");
+  },
+  filename: function (req, file, cb) {
+    const fileExtension = path.extname(file.originalname).toLowerCase();
+    const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif"];
+
+    if (allowedExtensions.includes(fileExtension)) {
+      cb(null, Date.now() + fileExtension); // 파일 이름을 고유하게 설정
+    } else {
+      cb(new Error("허용되지 않은 파일 확장자입니다."), false);
+    }
+  },
+});
+
+// 게시글 이미지를 위한 업로드 미들웨어
+const uploadBoardImage = multer({
+  storage: boardImageStorage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 최대 파일 크기 5MB
+  fileFilter: function (req, file, cb) {
+    const fileTypes = /jpeg|jpg|png|gif/;
+    const mimeType = fileTypes.test(file.mimetype);
+    if (mimeType) {
+      return cb(null, true);
+    } else {
+      cb(new Error("이미지 파일만 업로드 가능합니다."), false);
+    }
+  },
+});
+
+// 프로필 사진을 위한 업로드 미들웨어
+const uploadProfilePic = multer({
+  storage: profilePicStorage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 최대 파일 크기 5MB
+  fileFilter: function (req, file, cb) {
+    const fileTypes = /jpeg|jpg|png|gif/;
+    const mimeType = fileTypes.test(file.mimetype);
+    if (mimeType) {
+      return cb(null, true);
+    } else {
+      cb(new Error("이미지 파일만 업로드 가능합니다."), false);
+    }
+  },
+});
+
+module.exports = { uploadBoardImage, uploadProfilePic };

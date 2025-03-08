@@ -1,9 +1,9 @@
 const { Sequelize, User } = require("../models");
-const bcryptjs = require("bcryptjs"); // bcryptjs 임포트
-const moment = require("moment"); // moment 임포트
-const jwt = require("jsonwebtoken"); // JWT 토큰 생성
-const path = require("path"); // path 모듈 추가
-require("dotenv").config(); // 환경 변수 로드
+const bcryptjs = require("bcryptjs");
+const moment = require("moment");
+const jwt = require("jsonwebtoken");
+const path = require("path");
+require("dotenv").config();
 
 module.exports = {
   // 회원가입
@@ -19,9 +19,9 @@ module.exports = {
         password,
         address,
         gender,
-        birth_date,
+        birthDate,
         socialType,
-      } = req.body; // socialType 추가
+      } = req.body;
 
       // 이메일 중복 체크
       const existingUser = await User.findOne({ where: { email } });
@@ -51,15 +51,11 @@ module.exports = {
       // 프로필 사진 경로 설정
       let profilePicPath = req.file
         ? req.file.path
-        : path.join(
-            __dirname,
-            process.env.IMAGE_STORAGE_PATH,
-            process.env.DEFAULT_PROFILE_PIC
-          );
+        : path.join(__dirname, "..", "public", "images", "image.jpg"); // 기본 이미지 경로로 설정
 
-      // birth_date 유효성 검사
+      // birthDate 유효성 검사
       const formattedBirthDate = moment(
-        birth_date,
+        birthDate,
         ["YYYY-MM-DD", "YYYY-M-D"],
         true
       );
@@ -81,7 +77,7 @@ module.exports = {
         address: fullAddress,
         gender,
         age,
-        birth_date: formattedBirthDate.format("YYYY-MM-DD"),
+        birthDate: formattedBirthDate.format("YYYY-MM-DD"),
         profile_pic: profilePicPath,
         socialType: socialType || "local", // 소셜 로그인 사용자는 해당 값 저장, 기본값은 'local'
       });
@@ -102,10 +98,9 @@ module.exports = {
 
   // 이메일 중복 확인 API
   checkEmail: async (req, res) => {
-    const { email } = req.query; // 이메일을 쿼리 파라미터로 받음
+    const { email } = req.query;
 
     try {
-      // 이메일 중복 여부 확인
       const existingUser = await User.findOne({ where: { email } });
 
       if (existingUser) {
@@ -124,7 +119,7 @@ module.exports = {
   // 로그인
   login: async (req, res) => {
     try {
-      console.log("🔹 로그인 요청 body:", req.body); // 디버깅 추가
+      console.log("🔹 로그인 요청 body:", req.body);
 
       const { email, password } = req.body;
 
@@ -134,7 +129,6 @@ module.exports = {
           .json({ success: false, message: "이메일과 비밀번호를 입력하세요." });
       }
 
-      // 이메일로 사용자 조회
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
@@ -143,7 +137,6 @@ module.exports = {
           .json({ success: false, message: "이메일이 존재하지 않습니다." });
       }
 
-      // 소셜 로그인 유저인지 확인
       if (user.socialType && user.socialType !== "local") {
         return res.status(400).json({
           success: false,
@@ -151,17 +144,13 @@ module.exports = {
         });
       }
 
-      // 비밀번호가 null이면 비교 불가능 (소셜 로그인 유저)
       if (!user.password) {
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: "비밀번호가 설정되지 않은 계정입니다.",
-          });
+        return res.status(400).json({
+          success: false,
+          message: "비밀번호가 설정되지 않은 계정입니다.",
+        });
       }
 
-      // 비밀번호 비교
       const isMatch = await bcryptjs.compare(password, user.password);
       if (!isMatch) {
         return res
@@ -169,14 +158,30 @@ module.exports = {
           .json({ success: false, message: "비밀번호가 일치하지 않습니다." });
       }
 
-      // JWT 토큰 생성
-      const token = jwt.sign(
+      // JWT 액세스 토큰 생성 (1시간)
+      const accessToken = jwt.sign(
         { id: user.id, email: user.email },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
 
-      res.json({ success: true, message: "로그인 성공!", token });
+      // JWT 리프레시 토큰 생성 (1주일)
+      const refreshToken = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
+      );
+
+      // 리프레시 토큰을 쿠키에 저장 (HTTPOnly, Secure, SameSite 옵션 설정)
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7일 동안 유효
+      });
+
+      // 액세스 토큰을 클라이언트로 반환
+      res.json({ success: true, message: "로그인 성공!", accessToken });
     } catch (error) {
       console.error("로그인 오류:", error);
       res.status(500).json({ success: false, message: "서버 오류 발생" });
@@ -186,22 +191,20 @@ module.exports = {
   findId: async (req, res) => {
     let { phone } = req.body;
 
-    // 입력된 전화번호에서 하이픈을 제거
     phone = phone.replace(/-/g, "");
 
     try {
-      // DB에서 하이픈을 제거한 phone과 클라이언트에서 받은 phone을 비교
       const user = await User.findOne({
         where: Sequelize.where(
-          Sequelize.fn("REPLACE", Sequelize.col("phone"), "-", ""), // DB에서 하이픈을 제거한 값
-          phone // 클라이언트에서 받은 전화번호
+          Sequelize.fn("REPLACE", Sequelize.col("phone"), "-", ""),
+          phone
         ),
       });
 
       if (user) {
         return res.json({
           success: true,
-          userId: user.email, // 해당 유저의 이메일 반환
+          userId: user.email,
           message: null,
         });
       } else {
@@ -220,16 +223,13 @@ module.exports = {
     }
   },
 
-  // 아이디 찾기 페이지
   findIdPage: (req, res) => {
-    res.render("findid"); // findid 페이지 렌더링
+    res.render("findid");
   },
 
-  // 비밀번호 찾기 요청 처리
   findPassword: async (req, res) => {
     const { email } = req.body;
     try {
-      // 이메일로 사용자 조회
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
@@ -239,7 +239,6 @@ module.exports = {
         });
       }
 
-      // 사용자가 존재하면 새 비밀번호를 설정하라는 메시지 반환
       return res.json({
         success: true,
         message: "새 비밀번호를 설정해주세요.",
@@ -253,11 +252,9 @@ module.exports = {
     }
   },
 
-  // 비밀번호 변경 요청 처리
   resetPassword: async (req, res) => {
-    const { email, newPassword } = req.body; // 이메일과 새 비밀번호 받기
+    const { email, newPassword } = req.body;
     try {
-      // 이메일로 사용자 조회
       const user = await User.findOne({ where: { email } });
       if (!user) {
         return res.status(404).json({
@@ -266,10 +263,8 @@ module.exports = {
         });
       }
 
-      // 비밀번호 해싱
       const hashedPassword = await bcryptjs.hash(newPassword, 10);
 
-      // 비밀번호 업데이트
       user.password = hashedPassword;
       await user.save();
 

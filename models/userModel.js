@@ -37,11 +37,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      birth_date: {
+      birthDate: {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
-      profile_pic: {
+      profilePic: {
         type: DataTypes.STRING,
         allowNull: true,
       },

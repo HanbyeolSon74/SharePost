@@ -1,38 +1,20 @@
+// routers/postRouter.js
 const express = require("express");
 const router = express.Router();
-const postController = require("../controllers/postController");
-const upload = require("../config/multer"); // multer 설정을 불러옴
+const { uploadBoardImage } = require("../config/multer"); // upload 미들웨어 import
+const { createPost } = require("../controllers/postController"); // 게시글 생성 컨트롤러
 
-// // 게시글 작성 라우터 (POST)
-// router.post(
-//   "/post",
-//   upload.single("mainBoardImage"),
-//   postController.createPost
-// );
-
-// // 게시글 수정 페이지 (GET)
-// router.get("/edit/:id", postController.editPostPage);
-
-// // 게시글 수정 처리 (POST)
-// router.post(
-//   "/edit",
-//   upload.single("mainBoardImage"),
-//   postController.updatePost
-// );
-
-// // 모든 게시글 조회 라우터 (GET)
-// router.get("/posts", postController.getPosts);
-
-// 게시글 작성 라우터 (POST)
-router.post("/post", postController.createPost);
+// 게시글 생성 (게시글 이미지 업로드 포함)
+router.post("/post", uploadBoardImage.single("mainBoardImage"), createPost);
 
 // 게시글 수정 페이지 (GET)
-router.get("/edit/:id", postController.editPostPage);
+// router.get("/edit/:id", postController.editPostPage);
 
 // 게시글 수정 처리 (POST)
-router.post("/edit", postController.updatePost);
-
-// 모든 게시글 조회 라우터 (GET)
-// router.get("/posts", postController.getPosts);
+// router.post(
+//   "/edit",
+//   upload.single("mainBoardImage"), // 이미지 파일 업로드 처리
+//   postController.updatePost // 게시글 수정 컨트롤러 호출
+// );
 
 module.exports = router;

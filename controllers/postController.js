@@ -5,12 +5,19 @@ const path = require("path");
 module.exports = {
   createPost: async (req, res) => {
     try {
-      // 요청 본문 및 파일 확인 로그 추가
-      console.log("Request Body:", req.body); // 폼 데이터 로그
-      console.log("Uploaded File:", req.file); // 업로드된 파일 확인
+      console.log("Request Body:", req.body); // 텍스트 데이터
+      console.log("Uploaded File:", req.file); // 파일 데이터
 
-      // 로그인된 사용자 정보에서 user_id 가져오기
       const user_id = req.user ? req.user.id : null; // 로그인된 사용자의 ID
+
+      // 필수 항목 검증
+      const { title, content, category_id } = req.body;
+      if (!title || !content || !category_id) {
+        return res.status(400).json({
+          success: false,
+          message: "필수 항목이 누락되었습니다.",
+        });
+      }
 
       if (!user_id) {
         return res.status(400).json({
@@ -19,12 +26,10 @@ module.exports = {
         });
       }
 
-      const { title, content, category_id } = req.body;
-
       // 이미지 파일 처리
       let image_url = null;
       if (req.file) {
-        image_url = `/uploads/${req.file.filename}`; // 파일 URL 설정
+        image_url = `/uploads/boardimages/${req.file.filename}`; // 업로드된 이미지 경로
       }
 
       // 게시글 생성
@@ -46,27 +51,12 @@ module.exports = {
       res.status(500).json({
         success: false,
         message: "서버 오류가 발생했습니다.",
+        error: error.message, // 에러 메시지 추가
       });
     }
   },
 
-  // 게시글 수정 페이지 (GET)
-  editPostPage: async (req, res) => {
-    const postId = req.params.id;
-
-    try {
-      const post = await Post.findByPk(postId);
-      if (!post) {
-        return res.status(404).send("게시글을 찾을 수 없습니다.");
-      }
-      res.render("edit-post", { post });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("서버 오류");
-    }
-  },
-
-  // 게시글 수정 처리 (POST)
+  // 게시글 수정 처리 (PUT)
   updatePost: async (req, res) => {
     const { id, title, category, content, existingImage } = req.body;
     let image = null;
@@ -92,7 +82,11 @@ module.exports = {
         image_url: image,
       });
 
-      res.redirect(`/post/${id}`); // 수정된 게시글 페이지로 리디렉션
+      res.status(200).json({
+        success: true,
+        message: "게시글이 성공적으로 수정되었습니다.",
+        post: post,
+      });
     } catch (err) {
       console.error(err);
       res.status(500).send("서버 오류");

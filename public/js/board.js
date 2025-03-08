@@ -1,5 +1,17 @@
+// window.onload = function () {
+//   const editor = new toastui.Editor({
+//     el: document.querySelector("#toastEditor"),
+//     height: "400px",
+//     initialEditType: "wysiwyg",
+//     placeholder: "내용을 입력해 주세요.",
+//     previewStyle: "vertical",
+//   });
+// };
+
+let toastEditor;
+
 window.onload = function () {
-  const editor = new toastui.Editor({
+  toastEditor = new toastui.Editor({
     el: document.querySelector("#toastEditor"),
     height: "400px",
     initialEditType: "wysiwyg",
@@ -63,7 +75,7 @@ const createData = (event) => {
     },
   })
     .then((res) => {
-      console.log(res);
+      console.log("서버 응답:", res); // 서버 응답 내용 출력
       if (res.status === 200) {
         alert("게시물이 등록되었습니다.");
         window.location.href = "/board/main";
@@ -72,7 +84,7 @@ const createData = (event) => {
       }
     })
     .catch((e) => {
-      console.error(e);
+      console.error("오류 발생:", e); // 오류 내용 출력
       alert("오류가 발생했습니다.");
     });
 };
