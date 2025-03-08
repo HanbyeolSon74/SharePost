@@ -26,23 +26,33 @@ document
   .querySelector(".loginBtnModal")
   .addEventListener("click", async function (event) {
     event.preventDefault();
-    const loginEmail = document.querySelector("#loginEmail").value;
-    const loginPassword = document.querySelector("#loginPassword").value;
 
-    const logindata = {
-      email: loginEmail,
-      password: loginPassword,
-    };
+    const loginEmail = document.querySelector("#loginEmail").value.trim();
+    const loginPassword = document.querySelector("#loginPassword").value.trim();
+
+    if (!loginEmail || !loginPassword) {
+      alert("이메일과 비밀번호를 입력하세요.");
+      return;
+    }
+
+    const logindata = { email: loginEmail, password: loginPassword };
 
     try {
-      const response = await axios.post("/user/login", logindata);
+      const response = await axios.post("/user/login", logindata, {
+        headers: { "Content-Type": "application/json" },
+      });
+
       if (response.status === 200) {
         alert("로그인 성공!");
+
+        // JWT 토큰 저장
+        localStorage.setItem("token", response.data.token);
+
         document.querySelector("#loginModal").style.display = "none";
       }
     } catch (error) {
-      alert("로그인 실패!" + (error.response?.data?.message || error.message));
-      console.error(error);
+      alert("로그인 실패! " + (error.response?.data?.message || error.message));
+      console.error("로그인 에러:", error);
     }
   });
 

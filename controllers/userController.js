@@ -9,11 +9,19 @@ module.exports = {
   // 회원가입
   signup: async (req, res) => {
     try {
-      console.log("Request Body:", req.body); // req.body 출력
-      console.log("Uploaded File:", req.file); // req.file 출력
+      console.log("Request Body:", req.body);
+      console.log("Uploaded File:", req.file);
 
-      const { name, phone, email, password, address, gender, birth_date } =
-        req.body;
+      const {
+        name,
+        phone,
+        email,
+        password,
+        address,
+        gender,
+        birth_date,
+        socialType,
+      } = req.body; // socialType 추가
 
       // 이메일 중복 체크
       const existingUser = await User.findOne({ where: { email } });
@@ -23,27 +31,31 @@ module.exports = {
           .json({ success: false, message: "이미 가입된 이메일입니다." });
       }
 
-      // 비밀번호 해싱
-      const hashedPassword = await bcryptjs.hash(password, 10);
+      // 소셜 로그인 사용자는 비밀번호 없이 가입 가능
+      let hashedPassword = null;
+      if (!socialType) {
+        if (!password) {
+          return res.status(400).json({
+            success: false,
+            message: "비밀번호를 입력해주세요.",
+          });
+        }
+        hashedPassword = await bcryptjs.hash(password, 10);
+      }
 
-      // 주소 객체를 문자열로 변환 (주소가 없는 경우 빈 값 설정)
+      // 주소 객체를 문자열로 변환
       const fullAddress = address
         ? `${address.fullAddress} ${address.detail} ${address.extra}`
         : "";
 
-      // 회원가입 부분에서 프로필 사진 경로 설정
-      let profilePicPath;
-
-      // 파일이 업로드되었으면 업로드된 경로를, 없으면 기본 이미지 경로 설정
-      if (req.file) {
-        profilePicPath = req.file.path;
-      } else {
-        profilePicPath = path.join(
-          __dirname,
-          process.env.IMAGE_STORAGE_PATH,
-          process.env.DEFAULT_PROFILE_PIC
-        );
-      }
+      // 프로필 사진 경로 설정
+      let profilePicPath = req.file
+        ? req.file.path
+        : path.join(
+            __dirname,
+            process.env.IMAGE_STORAGE_PATH,
+            process.env.DEFAULT_PROFILE_PIC
+          );
 
       // birth_date 유효성 검사
       const formattedBirthDate = moment(
@@ -60,32 +72,30 @@ module.exports = {
       // 나이 계산
       const age = moment().diff(formattedBirthDate, "years");
 
-      // 유저 데이터 생성
+      // 유저 데이터 생성 (로컬 회원가입 또는 소셜 로그인)
       const newUser = await User.create({
         name,
         phone,
         email,
         password: hashedPassword,
-        address: fullAddress, // 빈 값 또는 기본 주소 저장
+        address: fullAddress,
         gender,
         age,
-        birth_date: formattedBirthDate.format("YYYY-MM-DD"), // ISO 형식으로 저장
-        profile_pic: profilePicPath, // 프로필 사진 경로 저장
+        birth_date: formattedBirthDate.format("YYYY-MM-DD"),
+        profile_pic: profilePicPath,
+        socialType: socialType || "local", // 소셜 로그인 사용자는 해당 값 저장, 기본값은 'local'
       });
 
-      // 회원가입 성공 응답
       res.json({ success: true, message: "회원가입 성공!", user: newUser });
     } catch (error) {
       console.error(error);
 
-      // 이메일 중복 오류 처리
       if (error.name === "SequelizeUniqueConstraintError") {
         return res
           .status(400)
           .json({ success: false, message: "이미 가입된 이메일입니다." });
       }
 
-      // 기타 오류 처리
       res.status(500).json({ success: false, message: "서버 오류 발생" });
     }
   },
@@ -114,7 +124,15 @@ module.exports = {
   // 로그인
   login: async (req, res) => {
     try {
-      const { email, password } = req.body; // 사용자 입력 이메일과 비밀번호 받기
+      console.log("🔹 로그인 요청 body:", req.body); // 디버깅 추가
+
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        return res
+          .status(400)
+          .json({ success: false, message: "이메일과 비밀번호를 입력하세요." });
+      }
 
       // 이메일로 사용자 조회
       const user = await User.findOne({ where: { email } });
@@ -125,26 +143,42 @@ module.exports = {
           .json({ success: false, message: "이메일이 존재하지 않습니다." });
       }
 
-      // 비밀번호 비교
-      const isMatch = await bcryptjs.compare(password, user.password); // 입력된 비밀번호와 DB의 비밀번호 비교
+      // 소셜 로그인 유저인지 확인
+      if (user.socialType && user.socialType !== "local") {
+        return res.status(400).json({
+          success: false,
+          message: `이메일이 ${user.socialType} 계정과 연결되어 있습니다.`,
+        });
+      }
 
+      // 비밀번호가 null이면 비교 불가능 (소셜 로그인 유저)
+      if (!user.password) {
+        return res
+          .status(400)
+          .json({
+            success: false,
+            message: "비밀번호가 설정되지 않은 계정입니다.",
+          });
+      }
+
+      // 비밀번호 비교
+      const isMatch = await bcryptjs.compare(password, user.password);
       if (!isMatch) {
         return res
           .status(400)
           .json({ success: false, message: "비밀번호가 일치하지 않습니다." });
       }
 
-      // 비밀번호가 맞으면 JWT 토큰 생성
+      // JWT 토큰 생성
       const token = jwt.sign(
-        { id: user.id, email: user.email }, // payload (사용자 정보 포함)
-        process.env.JWT_SECRET, // 환경 변수에서 JWT 비밀 키 가져오기
-        { expiresIn: "1h" } // 1시간 동안 유효
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
       );
 
-      // 성공적으로 로그인되면 토큰을 응답으로 반환
       res.json({ success: true, message: "로그인 성공!", token });
     } catch (error) {
-      console.error(error);
+      console.error("로그인 오류:", error);
       res.status(500).json({ success: false, message: "서버 오류 발생" });
     }
   },

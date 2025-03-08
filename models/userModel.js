@@ -45,16 +45,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      // 네이버 로그인 관련 필드 추가
-      naverId: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        unique: true, // 중복된 네이버 아이디는 허용하지 않음
+      socialType: {
+        type: DataTypes.STRING(50),
+        allowNull: true, // 네이버 로그인 시 'naver' 저장
       },
     },
     {
-      tableName: "users", // 테이블 이름 지정
-      timestamps: true, // createdAt, updatedAt 자동 생성 및 관리
+      tableName: "users",
+      timestamps: true,
     }
   );
 

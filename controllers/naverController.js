@@ -13,16 +13,12 @@ const redirectToNaver = (req, res) => {
 const handleNaverCallback = async (req, res) => {
   const { code, state } = req.query;
 
-  console.log("📌 네이버 콜백 도착");
-  console.log("📌 요청에서 받은 state:", state);
-  console.log("📌 서버의 환경 변수 state:", process.env.NAVER_STATE);
-
   if (state !== process.env.NAVER_STATE) {
-    console.error("❌ state 불일치! 네이버 로그인 요청이 잘못되었습니다.");
     return res.status(400).send("잘못된 요청입니다.");
   }
 
   try {
+    // 네이버 액세스 토큰 요청
     const response = await axios.post(
       "https://nid.naver.com/oauth2.0/token",
       null,
@@ -39,6 +35,7 @@ const handleNaverCallback = async (req, res) => {
 
     const { access_token } = response.data;
 
+    // 네이버 사용자 정보 요청
     const userResponse = await axios.get(
       "https://openapi.naver.com/v1/nid/me",
       {
@@ -50,21 +47,18 @@ const handleNaverCallback = async (req, res) => {
 
     const userData = userResponse.data.response;
 
+    // 이메일을 기준으로 기존 사용자 찾기
     let user = await User.findOne({ where: { email: userData.email } });
 
+    // 없으면 새로 생성
     if (!user) {
-      try {
-        user = await User.create({
-          name: userData.name,
-          email: userData.email,
-          gender: userData.gender,
-          profile_pic: userData.profile_image,
-          naver_id: userData.id,
-        });
-      } catch (error) {
-        console.error("사용자 생성 실패:", error);
-        return res.status(500).send("사용자 생성 실패");
-      }
+      user = await User.create({
+        name: userData.name,
+        email: userData.email,
+        gender: userData.gender,
+        profile_pic: userData.profile_image,
+        socialType: "naver", // 네이버 로그인 유저
+      });
     }
 
     const token = jwt.sign(
