@@ -1,6 +1,18 @@
-// 비밀번호 찾기 요청
+// 정규식
+const emailRegex = /^(?!.*\.\.)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const passwordRegex =
+  /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+
+// 이메일 확인 요청
 async function findPassword() {
   const email = document.getElementById("email").value;
+
+  if (!emailRegex.test(email)) {
+    const resultElement = document.getElementById("result");
+    resultElement.innerText = "유효한 이메일 주소를 입력해주세요.";
+    resultElement.style.color = "red";
+    return;
+  }
 
   try {
     const response = await axios.post("/user/find-password", { email });
@@ -17,7 +29,7 @@ async function findPassword() {
       if (resetPasswordFormElement) {
         resetPasswordFormElement.style.display = "block";
       }
-      document.getElementById("user-email").value = email; // 이메일을 입력 폼에 채운다
+      document.getElementById("user-email").value = email;
     } else {
       if (resultElement) {
         resultElement.innerText = "해당 이메일이 존재하지 않습니다.";
@@ -36,6 +48,14 @@ async function findPassword() {
 async function resetPassword() {
   const email = document.getElementById("user-email").value;
   const newPassword = document.getElementById("new-password").value;
+
+  if (!passwordRegex.test(newPassword)) {
+    const pwResult = document.getElementById("pwResult");
+    pwResult.innerText =
+      "비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.";
+    pwResult.style.color = "red";
+    return;
+  }
 
   try {
     const response = await axios.post("/user/reset-password", {

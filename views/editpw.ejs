@@ -15,7 +15,8 @@
         <input type="email" id="email" name="email" required />
         <button type="submit">비밀번호 찾기</button>
       </form>
-      <p id="result"></p>
+      <p>이메일 형식으로 입력해주세요.</p>
+      <p id="emailResult"></p>
     </div>
     <!-- 비밀번호 수정 폼 (기본적으로 숨겨짐) -->
     <div id="reset-password-form" style="display: none" class="findBoxWrap">
@@ -26,6 +27,8 @@
         <input type="hidden" id="user-email" name="email" />
         <button type="submit">비밀번호 변경</button>
       </form>
+      <p>영문, 숫자, 특수문자를 포함하여 8자 이상 작성해주세요.</p>
+      <p id="pwResult"></p>
     </div>
 
     <script src="/js/editpw.js"></script>

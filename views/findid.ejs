@@ -11,14 +11,18 @@
     <div class="wrapper">
       <!-- 헤더 -->
       <div class="shopHeader"><%- include('header.ejs') %></div>
-      <div class="findBoxWrap">
-        <h1>아이디 찾기</h1>
-        <form id="findIdform">
-          <label for="findPhoneNum">전화번호</label>
-          <input type="number" id="findPhoneNum" name="phone" required />
-          <button type="button" id="idFindBtn">아이디 찾기</button>
-        </form>
-        <p id="idResult"></p>
+      <div class="blackdiv"></div>
+      <div class="contentWrapBox">
+        <div class="findBoxWrap">
+          <h1>아이디 찾기</h1>
+          <form id="findIdform">
+            <label for="findPhoneNum">전화번호로 찾기</label>
+            <input type="number" id="findPhoneNum" name="phone" required />
+            <button type="button" id="idFindBtn" disabled>아이디 찾기</button>
+          </form>
+          <p>"-"을 제외한 숫자만 8자리 입력해주세요.</p>
+          <p id="idResult"></p>
+        </div>
       </div>
       <!-- 푸터 -->
       <div class="my_footer"><%- include('footer.ejs') %></div>

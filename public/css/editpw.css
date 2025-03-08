@@ -1,0 +1,80 @@
+/* 기본 설정 */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  padding-top: 58px;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.contentWrapBox {
+  flex: 1;
+  text-align: center;
+}
+
+.my_footer {
+  margin-top: auto;
+}
+/* 아이디 찾기 폼 스타일 */
+.findBoxWrap {
+  background-color: white; /* 폼의 배경색을 흰색으로 설정 */
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+  max-width: 400px; /* 폼의 최대 너비 */
+  width: 100%;
+  text-align: center;
+}
+
+/* 제목 스타일 */
+.findBoxWrap h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* 입력 필드 스타일 */
+.findBoxWrap input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* 버튼 스타일 */
+.findBoxWrap button {
+  width: 80%;
+  padding: 10px;
+  background-color: #4caf50; /* 버튼 색상 */
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.7; /* 비활성 버튼의 투명도 */
+}
+
+.findBoxWrap button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* 입력 필드가 활성화될 때 스타일 */
+.findBoxWrap input:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* 메시지 텍스트 스타일 */
+.findBoxWrap p {
+  font-size: 14px;
+  color: #555;
+}

@@ -166,3 +166,8 @@ input:-webkit-autofill {
   display: block;
   text-align: left;
 }
+.modalSignBtn,
+.modalLoginBtn,
+.modalpwButton {
+  cursor: pointer;
+}
