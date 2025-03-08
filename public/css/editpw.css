@@ -4,7 +4,6 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
 }
 body {
   padding-top: 58px;
@@ -23,6 +22,10 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 1;
+}
+.my_footer {
+  margin-top: auto;
+  z-index: 100;
 }
 
 .contentWrapBox {

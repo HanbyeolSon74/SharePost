@@ -20,14 +20,14 @@ body {
 
 .my_footer {
   margin-top: auto;
+  z-index: 100 !important;
+  position: relative;
 }
 
-/* 모달 로그인 창 */
 .btnsModal {
   display: flex;
 }
 
-/* 모달 기본 숨김 */
 .loginModal {
   display: none;
   position: fixed;
