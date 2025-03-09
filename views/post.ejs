@@ -3,26 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Main</title>
+    <title>Sign up</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/post.css" />
   </head>
   <body>
-    <div class="allWrapper">
+    <div class="wrapper">
       <!-- 헤더 만들기 -->
       <div class="shopHeader"><%- include('header.ejs') %></div>
       <!-- 본문 시작 -->
-      <div class="contentMainWrapBox">
-        <div class="categoryBox"></div>
-        <div class="mainMiddleBox">
-          <div class="mainPostsBox"></div>
-          <div class="pagesBox"><div id="pagination"></div></div>
-        </div>
+      <div class="contentWrapBox">
+        <!-- 본문 끝 -->
       </div>
       <!-- 푸터 -->
       <div class="my_footer"><%- include('footer.ejs') %></div>
     </div>
-
-    <script src="/js/main.js"></script>
+    <script src="/js/post.js"></script>
   </body>
 </html>

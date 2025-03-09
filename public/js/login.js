@@ -5,7 +5,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 모달 열기
   loginBtn.addEventListener("click", function () {
-    loginModal.style.display = "flex";
+    const token = localStorage.getItem("token");
+    if (token) {
+      window.location.href = "/editprofile";
+    } else {
+      loginModal.style.display = "flex";
+    }
   });
 
   // 모달 닫기

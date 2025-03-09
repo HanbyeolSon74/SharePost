@@ -1,13 +1,11 @@
-let data = [];
 window.onload = function () {
   // 게시물 전체 요청
   axios
     .get("/board/main")
     .then((response) => {
-      const posts = response.data.posts; // 서버에서 받아온 게시글 목록
+      const posts = response.data.posts;
       console.log(posts);
-      data = response.data.posts;
-      const mainPostsBox = document.querySelector(".mainPostsBox"); // 클래스를 선택하는 .mainPostsBox로 변경
+      const mainPostsBox = document.querySelector(".mainPostsBox");
       if (!mainPostsBox) {
         console.error("mainPostsBox를 찾을 수 없습니다.");
         return;
@@ -17,15 +15,33 @@ window.onload = function () {
         const postElement = document.createElement("div");
         postElement.classList.add("post");
 
-        // 게시글 콘텐츠와 이미지를 동적으로 추가
         postElement.innerHTML = `
-          <div class="contentHover" style="display:none">${post.content}</div>
-          <img src="${post.mainimage}" alt="${post.title}" />
-          <div>${post.title}</div>
+          <div class="postWrap">
+            
+            <div class="postItem" onclick="window.location.href='/post/${post.id}'">
+              <img src="${post.mainimage}" alt="${post.title}" />
+              <div class="contentHover" style="display:none">${post.content}</div>
+            </div>
+            <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
+              <i class="fa-regular fa-heart" id="heartIcon-${post.id}"></i>
+            </div>
+            <div>${post.title}</div>
+          </div>
         `;
 
-        // 게시글 요소를 화면에 추가
         mainPostsBox.appendChild(postElement);
+      });
+
+      // 게시물이 로드된 후에 contentHover에 이벤트 리스너를 추가
+      const postItems = document.querySelectorAll(".postItem");
+      postItems.forEach((post) => {
+        const contentHover = post.querySelector(".contentHover");
+        post.addEventListener("mouseenter", function () {
+          contentHover.style.display = "block";
+        });
+        post.addEventListener("mouseleave", function () {
+          contentHover.style.display = "none";
+        });
       });
     })
     .catch((error) => {
@@ -34,7 +50,7 @@ window.onload = function () {
 };
 
 // <p>카테고리: ${data.category_id}</p>
-
+let allCategory = [];
 // 카테고리 박스
 const categoryBox = document.querySelector(".categoryBox");
 const categories = [
@@ -80,3 +96,38 @@ cateImgBoxs.forEach((box) => {
     cateImgCircle.style.opacity = "0";
   });
 });
+
+// 좋아요 버튼
+async function toggleLike(postId) {
+  const heartIcon = document.getElementById(`heartIcon-${postId}`);
+
+  const isLiked = heartIcon.classList.contains("fa-solid");
+  const newState = !isLiked;
+
+  heartIcon.classList.toggle("fa-regular", newState);
+  heartIcon.classList.toggle("fa-solid", !newState);
+
+  try {
+    const response = await axios.post(`/post/${postId}/like`, {
+      isLiked: newState,
+    });
+    if (response.status === 200) {
+      console.log("좋아요 상태 업데이트 성공");
+    } else {
+      console.error("좋아요 상태 업데이트 실패");
+    }
+  } catch (error) {
+    console.error("좋아요 업데이트 에러:", error);
+  }
+}
+
+// 페이지네이션
+const pagination = document.querySelector("#pagination");
+pagination.innerHTML = `<div class="prev-button firstBtn" onclick="firstPage()">◁</div>
+          <div class="prev-button" onclick="prev()">◀◁</div>
+          <div class="numberBtnWrap">
+            <button class="numberBtn" id="page_" onclick="numBtn()">1</button>
+          </div>
+          <div class="next-button" onclick="next()">▷</div>
+          <div class="next-button lastBtn" onclick="lastPage()">▷▶</div>
+        </div>`;
