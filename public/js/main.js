@@ -1,56 +1,77 @@
+let selectedCategory = "ALL";
 window.onload = function () {
   // 게시물 전체 요청
+  fetchPosts();
+};
+// 게시물 가져오는 함수
+function fetchPosts() {
   axios
     .get("/board/main")
     .then((response) => {
       const posts = response.data.posts;
-      console.log(posts);
-      const mainPostsBox = document.querySelector(".mainPostsBox");
-      if (!mainPostsBox) {
-        console.error("mainPostsBox를 찾을 수 없습니다.");
-        return;
-      }
-
-      posts.forEach((post) => {
-        const postElement = document.createElement("div");
-        postElement.classList.add("post");
-
-        postElement.innerHTML = `
-          <div class="postWrap">
-            
-            <div class="postItem" onclick="window.location.href='/post/${post.id}'">
-              <img src="${post.mainimage}" alt="${post.title}" />
-              <div class="contentHover" style="display:none">${post.content}</div>
-            </div>
-            <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
-              <i class="fa-regular fa-heart" id="heartIcon-${post.id}"></i>
-            </div>
-            <div>${post.title}</div>
-          </div>
-        `;
-
-        mainPostsBox.appendChild(postElement);
-      });
-
-      // 게시물이 로드된 후에 contentHover에 이벤트 리스너를 추가
-      const postItems = document.querySelectorAll(".postItem");
-      postItems.forEach((post) => {
-        const contentHover = post.querySelector(".contentHover");
-        post.addEventListener("mouseenter", function () {
-          contentHover.style.display = "block";
-        });
-        post.addEventListener("mouseleave", function () {
-          contentHover.style.display = "none";
+      renderPosts(posts);
+      document.querySelectorAll(".allCate").forEach((cateElement, index) => {
+        cateElement.addEventListener("click", () => {
+          selectedCategory = categories[index].name;
+          filterPosts(posts);
         });
       });
     })
     .catch((error) => {
       console.error("게시물 불러오기 실패:", error);
     });
-};
+}
 
-// <p>카테고리: ${data.category_id}</p>
-let allCategory = [];
+function renderPosts(posts) {
+  const mainPostsBox = document.querySelector(".mainPostsBox");
+  if (!mainPostsBox) {
+    console.error("mainPostsBox를 찾을 수 없습니다.");
+    return;
+  }
+
+  mainPostsBox.innerHTML = "";
+
+  posts.forEach((post) => {
+    const postElement = document.createElement("div");
+    postElement.classList.add("post");
+
+    postElement.innerHTML = `
+      <div class="postWrap">
+        <div class="postItem" onclick="window.location.href='/post/${post.id}'">
+          <img src="${post.mainimage}" alt="${post.title}" />
+          <div class="contentHover" style="display:none">${post.content}</div>
+        </div>
+        <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
+          <i class="fa-regular fa-heart" id="heartIcon-${post.id}"></i>
+        </div>
+        <div>${post.title}</div>
+      </div>
+    `;
+
+    mainPostsBox.appendChild(postElement);
+  });
+
+  // Hover 효과 추가
+  document.querySelectorAll(".postItem").forEach((post) => {
+    const contentHover = post.querySelector(".contentHover");
+    post.addEventListener("mouseenter", function () {
+      contentHover.style.display = "block";
+    });
+    post.addEventListener("mouseleave", function () {
+      contentHover.style.display = "none";
+    });
+  });
+}
+
+function filterPosts(posts) {
+  const filteredPosts =
+    selectedCategory === "ALL"
+      ? posts
+      : posts.filter((post) => post.category.name === selectedCategory);
+
+  renderPosts(filteredPosts);
+}
+
 // 카테고리 박스
 const categoryBox = document.querySelector(".categoryBox");
 const categories = [
