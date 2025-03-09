@@ -18,6 +18,7 @@ module.exports = {
 
       // 필수 항목 검증
       const { title, content, categoryName } = req.body; // categoryName을 받음
+
       if (!title || !content || !categoryName) {
         return res.status(400).json({
           success: false,
@@ -26,9 +27,10 @@ module.exports = {
       }
 
       // categoryName으로 카테고리 찾기
-      const category = await Category.findOne({
-        where: { name: categoryName.trim() }, // categoryName으로 검색
-      });
+      const category = categoryName;
+      // const category = await Category.findOne({
+      //   where: { name: categoryName.trim() }, // categoryName으로 검색
+      // });
 
       if (!category) {
         return res.status(400).json({

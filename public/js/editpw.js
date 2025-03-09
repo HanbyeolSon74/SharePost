@@ -52,11 +52,13 @@ async function findPassword() {
 async function resetPassword() {
   const email = document.getElementById("user-email").value;
   const newPassword = document.getElementById("new-password").value;
+  const newpwCheck = document.getElementById("new-confirm-password").value;
+
   if (!passwordRegex.test(newPassword)) {
-    const pwResult = document.getElementById("pwResult");
-    pwResult.innerText =
-      "비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.";
-    pwResult.style.color = "red";
+    return;
+  } else if (newPassword !== newpwCheck) {
+    return;
+  } else if (newpwCheck.length < 1) {
     return;
   }
   try {
@@ -65,7 +67,6 @@ async function resetPassword() {
       newPassword,
     });
 
-    console.log(response.data.success, "??변경");
     if (response.data.success) {
       alert("비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.");
       window.location.href = "/";

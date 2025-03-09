@@ -21,7 +21,6 @@ window.onload = function () {
           <div class="contentHover" style="display:none">${post.content}</div>
           <img src="${post.mainimage}" alt="${post.title}" />
           <div>${post.title}</div>
-          <p>카테고리: ${post.categoryName}</p>
         `;
 
         // 게시글 요소를 화면에 추가
