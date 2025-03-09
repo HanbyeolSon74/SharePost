@@ -1,13 +1,3 @@
-// window.onload = function () {
-//   const editor = new toastui.Editor({
-//     el: document.querySelector("#toastEditor"),
-//     height: "400px",
-//     initialEditType: "wysiwyg",
-//     placeholder: "내용을 입력해 주세요.",
-//     previewStyle: "vertical",
-//   });
-// };
-
 let toastEditor;
 
 window.onload = function () {

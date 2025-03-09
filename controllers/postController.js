@@ -26,7 +26,7 @@ module.exports = {
         });
       }
 
-      // categoryName으로 카테고리 찾기
+      // categoryName으로 카테고리 찾기 - 여기 부분 수정해둠
       const category = categoryName;
       // const category = await Category.findOne({
       //   where: { name: categoryName.trim() }, // categoryName으로 검색

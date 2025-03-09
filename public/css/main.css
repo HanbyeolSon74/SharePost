@@ -1,4 +1,5 @@
 /* 기본 설정 */
+
 html,
 body {
   height: 100%;
@@ -7,17 +8,86 @@ body {
 }
 body {
   padding-top: 58px;
+  width: 100%;
 }
-.wrapper {
+.allWrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-.contentWrapBox {
+.contentMainWrapBox {
   flex: 1;
-  text-align: center;
 }
-
 .my_footer {
   margin-top: auto;
+}
+
+/* 카테고리 이미지 */
+.categoryBox {
+  width: 100%;
+}
+
+.cateAllBox {
+  width: 100%;
+  border-bottom: solid 1px black;
+  display: flex;
+  justify-content: center;
+}
+
+.cateBox {
+  width: 100%;
+  padding: 50px 250px 30px 250px;
+  display: flex;
+}
+
+.allCate {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+}
+
+.cateImgCircle {
+  width: 8.5vw;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 50;
+  border: 1px solid black;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.cateImgBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cateNameBox {
+  cursor: pointer;
+}
+
+.cateImg {
+  width: 8vw;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.cateImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  z-index: 100;
+}
+
+/* 기본적인 게시물 이미지 크기 설정 */
+.post img {
+  width: 100px;
+  height: 100px;
 }

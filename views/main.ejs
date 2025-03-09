@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Main</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/css/main.css" />
   </head>
   <body>
-    <div class="wrapper">
+    <div class="allWrapper">
       <!-- 헤더 만들기 -->
       <div class="shopHeader"><%- include('header.ejs') %></div>
       <!-- 본문 시작 -->
-      <div class="contentWrapBox">
+      <div class="contentMainWrapBox">
         <div class="categoryBox"></div>
         <div class="mainPostsBox"></div>
         <div class="pagesBox"><div id="pagination"></div></div>
@@ -20,7 +20,7 @@
       <!-- 푸터 -->
       <div class="my_footer"><%- include('footer.ejs') %></div>
     </div>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
     <script src="/js/main.js"></script>
   </body>
 </html>

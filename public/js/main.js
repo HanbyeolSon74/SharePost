@@ -1,3 +1,4 @@
+let data = [];
 window.onload = function () {
   // 게시물 전체 요청
   axios
@@ -5,7 +6,7 @@ window.onload = function () {
     .then((response) => {
       const posts = response.data.posts; // 서버에서 받아온 게시글 목록
       console.log(posts);
-
+      data = response.data.posts;
       const mainPostsBox = document.querySelector(".mainPostsBox"); // 클래스를 선택하는 .mainPostsBox로 변경
       if (!mainPostsBox) {
         console.error("mainPostsBox를 찾을 수 없습니다.");
@@ -33,3 +34,49 @@ window.onload = function () {
 };
 
 // <p>카테고리: ${data.category_id}</p>
+
+// 카테고리 박스
+const categoryBox = document.querySelector(".categoryBox");
+const categories = [
+  { name: "ALL", img: "/images/all_icon.webp" },
+  { name: "JENNIE COLLAB", img: "/images/jennie_icon.png" },
+  { name: "NEWJEANS COLLAB", img: "/images/nujeans_icon.webp" },
+  { name: "SINSA", img: "/images/sinsa_icon.webp" },
+  { name: "BIRTH", img: "/images/birth_icon.webp" },
+  { name: "PURPOSE", img: "/images/purpost_icon.webp" },
+];
+categoryBox.innerHTML = `
+  <div class="cateAllBox">
+    <div class="cateBox">
+      ${categories
+        .map(
+          (category) => `
+          <div class="allCate">
+            <div class="cateNameImg">
+              <div class="cateImgBox">
+                <div class="cateImgCircle"></div>
+                <div class="cateImg"><img src="${category.img}" alt="${category.name}"></div>
+              </div>
+              <div class="cateNameBox"><p>${category.name}</p></div>
+            </div>
+          </div>
+        `
+        )
+        .join("")}
+    </div>
+  </div>
+`;
+
+// 카테고리 호버 효과
+const cateImgBoxs = document.querySelectorAll(".cateImgBox");
+cateImgBoxs.forEach((box) => {
+  const cateImgCircle = box.querySelector(".cateImgCircle");
+
+  box.addEventListener("mouseenter", function () {
+    cateImgCircle.style.opacity = "1";
+  });
+
+  box.addEventListener("mouseleave", function () {
+    cateImgCircle.style.opacity = "0";
+  });
+});
