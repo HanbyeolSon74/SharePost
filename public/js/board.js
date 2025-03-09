@@ -15,7 +15,7 @@ function imageonChange() {
   const fileInput = document.getElementById("mainBoardImage");
   const file = fileInput.files[0];
   const previewImg = document.getElementById("previewImg");
-
+  const imgpreviewbox = document.getElementById("imgpreviewbox");
   if (!file) {
     previewImg.src = "";
     previewImg.style.display = "none";
@@ -28,6 +28,7 @@ function imageonChange() {
     reader.onload = function (event) {
       previewImg.src = event.target.result;
       previewImg.style.display = "block";
+      imgpreviewbox.innerHTML = `<img id="previewImg" src="${previewImg.src}" />`;
     };
 
     reader.readAsDataURL(file);

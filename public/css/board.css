@@ -29,8 +29,8 @@ p {
 .boardPostText {
   font-size: 45px;
   font-weight: bold;
-  margin-top: 100px;
   padding-bottom: 50px;
+  padding-top: 50px;
   border-bottom: #808080 1px solid;
 }
 .inputBox {
@@ -91,7 +91,7 @@ p {
   position: relative;
 }
 .formTop {
-  width: 80%;
+  width: 70%;
   display: flex;
   justify-content: space-between;
   border-top: solid 1px black;
@@ -101,7 +101,7 @@ p {
   padding-top: 10px;
 }
 .formMiddle {
-  width: 80%;
+  width: 70%;
   display: flex;
   justify-content: center;
   border: solid 1px black;
@@ -109,9 +109,9 @@ p {
   padding-top: 0.5px;
 }
 .formBottmon {
-  width: 80%;
+  width: 70%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   border-left: solid 1px black;
   border-right: solid 1px black;
   border-bottom: solid 1px black;
@@ -130,6 +130,7 @@ p {
   cursor: pointer;
   height: 25px;
   margin-top: 100px;
+  margin-left: 10px;
 }
 
 .imgRightBox {
@@ -165,7 +166,8 @@ p {
 .boardBtnWrap {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 50px;
+  margin-bottom: 70px;
 }
 
 .boardBtn {
@@ -185,4 +187,108 @@ p {
 
 .boardBtn:active {
   background-color: #3b3b3b;
+}
+
+/* 미디어 쿼리: 768px 이하 */
+@media (max-width: 768px) {
+  .boardPostText {
+    font-size: 36px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+  }
+
+  .inputBox {
+    width: 90%;
+  }
+
+  .nameBox {
+    width: 60%;
+  }
+
+  .typeSelectBox {
+    width: 40%;
+    padding-right: 5px;
+  }
+
+  #boardPostName,
+  #typeSelect {
+    font-size: 14px;
+  }
+
+  .formTop,
+  .formMiddle,
+  .formBottmon {
+    width: 100%;
+  }
+
+  #mainBoardImage {
+    margin-top: 50px;
+    width: 100%;
+  }
+
+  .imgRightInBox {
+    width: 100px;
+    height: 100px;
+  }
+
+  .boardBtnWrap {
+    margin-top: 30px;
+    margin-bottom: 50px;
+  }
+
+  .boardBtn {
+    padding: 8px 15px;
+  }
+}
+
+/* 미디어 쿼리: 480px 이하 */
+@media (max-width: 480px) {
+  .boardPostText {
+    font-size: 28px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+
+  .inputBox {
+    width: 85%;
+  }
+
+  .nameBox {
+    width: 50%;
+  }
+
+  .typeSelectBox {
+    width: 50%;
+    padding-right: 0;
+  }
+
+  #boardPostName,
+  #typeSelect {
+    font-size: 12px;
+  }
+
+  .formTop,
+  .formMiddle,
+  .formBottmon {
+    width: 100%;
+  }
+
+  #mainBoardImage {
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  .imgRightInBox {
+    width: 80px;
+    height: 80px;
+  }
+
+  .boardBtnWrap {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .boardBtn {
+    padding: 6px 12px;
+  }
 }
