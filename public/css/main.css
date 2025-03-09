@@ -32,17 +32,18 @@ body {
   border-bottom: solid 1px black;
   display: flex;
   justify-content: center;
+  padding: 30px 0px 10px 0px;
 }
 
 .cateBox {
-  width: 100%;
-  padding: 50px 250px 30px 250px;
+  width: 70%;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .allCate {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  width: 15%;
   gap: 5px;
 }
 
@@ -66,6 +67,9 @@ body {
 
 .cateNameBox {
   cursor: pointer;
+  text-align: center;
+  height: auto;
+  min-height: 50px;
 }
 
 .cateImg {
@@ -86,8 +90,58 @@ body {
   z-index: 100;
 }
 
-/* 기본적인 게시물 이미지 크기 설정 */
+/* 사진 크기 수정 예정 */
 .post img {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
+}
+
+/* ✅ 반응형 설정 */
+
+@media (max-width: 768px) {
+  .cateBox {
+    width: 75%;
+  }
+  .allCate {
+    padding-left: 15px;
+  }
+  .cateImg,
+  .cateImgCircle {
+    width: 55px;
+    height: 55px;
+  }
+  .cateAllBox {
+    width: 100%;
+    border-bottom: solid 1px black;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px 10px 0px;
+  }
+  .cateNameBox {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cateBox {
+    width: 80%;
+  }
+  .allCate {
+    padding-left: 10px;
+  }
+  .cateImg,
+  .cateImgCircle {
+    width: 45px;
+    height: 45px;
+  }
+  .cateAllBox {
+    width: 100%;
+    border-bottom: solid 1px black;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px 10px 0px;
+  }
+  .cateNameBox {
+    font-size: 10px;
+  }
 }
