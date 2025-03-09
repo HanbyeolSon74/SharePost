@@ -17,7 +17,7 @@ module.exports = {
       },
       categoryId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: "categories", // 카테고리 테이블을 "categories"로 변경
           key: "id",

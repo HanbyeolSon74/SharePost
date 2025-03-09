@@ -454,6 +454,7 @@ document.querySelector(".signBtn").addEventListener("click", async function () {
     const response = await axios.post("/user/signup", userData);
     alert("회원가입 성공!");
     resetForm();
+    window.location.href = "/";
   } catch (error) {
     alert("회원가입 실패: " + (error.response?.data?.message || error.message));
     console.error(error);

@@ -7,10 +7,14 @@ document
 
     try {
       const response = await axios.post("/user/findid", { phone });
-      console.log(response.data); // 응답 내용 출력
-      document.getElementById(
-        "idResult"
-      ).textContent = `찾으시는 아이디는 ${response.data.userId}입니다.`;
+      console.log(response.data.success);
+      if (response.data.success === false) {
+        document.getElementById("idResult").textContent = response.data.message;
+      } else {
+        document.getElementById(
+          "idResult"
+        ).textContent = `찾으시는 아이디는 ${response.data.userId}입니다.`;
+      }
     } catch (e) {
       console.error(e); // 에러 출력
       document.getElementById("idResult").textContent =

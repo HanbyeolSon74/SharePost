@@ -73,7 +73,6 @@ body {
   color: white;
   font-size: 13px;
   cursor: pointer;
-  opacity: 0.7;
 }
 
 .findBoxWrap button:disabled {

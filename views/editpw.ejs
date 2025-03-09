@@ -26,13 +26,31 @@
         <!-- 비밀번호 수정 폼 (기본적으로 숨겨짐) -->
         <div id="reset-password-form" style="display: none">
           <h2>새 비밀번호 설정</h2>
+
           <form action="javascript:void(0);" onsubmit="resetPassword()">
             <label for="new-password">새 비밀번호를 입력하세요.</label>
-            <input type="password" id="new-password" name="password" required />
-            <input type="hidden" id="user-email" name="email" />
+            <input
+              type="password"
+              id="new-password"
+              name="password"
+              oninput="newpwOninput()"
+              required
+            />
+            <div class="newpwCheckText"></div>
+            <label for="new-confirm-password"
+              >새 비밀번호를 다시 입력하세요.</label
+            >
+            <input
+              type="password"
+              id="new-confirm-password"
+              name="new-confirm-password"
+              oninput="pwCheckoninput()"
+              required
+            />
+            <div class="pwSameCheck"></div>
             <button type="submit">비밀번호 변경</button>
           </form>
-          <p>영문, 숫자, 특수문자를 포함하여 8자 이상 작성해주세요.</p>
+          <input type="hidden" id="user-email" name="email" />
           <p id="pwResult"></p>
         </div>
       </div>

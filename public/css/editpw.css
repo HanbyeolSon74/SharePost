@@ -68,7 +68,6 @@ body {
   color: white;
   font-size: 13px;
   cursor: pointer;
-  opacity: 0.7;
 }
 
 .findBoxWrap button:disabled {
@@ -90,6 +89,7 @@ body {
 #emailResult {
   font-size: 11px;
   color: red;
+  min-height: 15px;
 }
 
 /* 비밀번호 수정 폼 (기본적으로 숨겨짐) */
@@ -106,7 +106,7 @@ body {
 
 #reset-password-form h2 {
   font-size: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 #reset-password-form input {
@@ -170,4 +170,37 @@ body {
 }
 #reset-password-form {
   color: #333;
+}
+label[for="new-password"],
+label[for="new-confirm-password"] {
+  font-size: 13px;
+  color: #333;
+}
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+input {
+  margin-bottom: 12px;
+}
+
+.pwSameCheck {
+  font-size: 11px;
+  padding-bottom: 5px;
+  width: 100%;
+  min-height: 20px;
+}
+
+.yourFindEmail {
+  padding-top: 15px;
+  font-size: 11px;
+  color: #333;
+}
+
+.newpwCheckText {
+  font-size: 11px;
+  padding-bottom: 5px;
+  width: 100%;
+  min-height: 20px;
 }
