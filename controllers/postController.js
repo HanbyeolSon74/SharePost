@@ -1,7 +1,7 @@
 const { Category, Post } = require("../models");
 
-// 게시글 생성
 module.exports = {
+  // 게시글 생성
   createPost: async (req, res) => {
     try {
       console.log("Request Body:", req.body); // 텍스트 데이터
@@ -26,11 +26,10 @@ module.exports = {
         });
       }
 
-      // categoryName으로 카테고리 찾기 - 여기 부분 수정해둠
-      const category = categoryName;
-      // const category = await Category.findOne({
-      //   where: { name: categoryName.trim() }, // categoryName으로 검색
-      // });
+      // categoryName으로 카테고리 찾기
+      const category = await Category.findOne({
+        where: { name: categoryName.trim() }, // 카테고리 이름으로 검색
+      });
 
       if (!category) {
         return res.status(400).json({

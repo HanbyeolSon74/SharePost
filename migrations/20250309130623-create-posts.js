@@ -18,26 +18,27 @@ module.exports = {
       categoryId: {
         type: Sequelize.INTEGER,
         allowNull: true,
+        defaultValue: null,
         references: {
-          model: "categories", // 카테고리 테이블을 "categories"로 변경
+          model: "categories", // categories 테이블과 연결
           key: "id",
         },
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL", // 카테고리가 삭제될 때 해당 포스트의 카테고리도 NULL로 처리
+        onUpdate: "CASCADE", // 카테고리 업데이트 시 반영
+        onDelete: "SET NULL", // 카테고리가 삭제되면 카테고리 ID를 NULL로 설정
       },
       mainimage: {
         type: Sequelize.STRING,
         allowNull: true,
       },
       userId: {
-        type: Sequelize.INTEGER, // userId 외래키 추가
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "users",
+          model: "users", // users 테이블과 연결
           key: "id",
         },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        onUpdate: "CASCADE", // 사용자 업데이트 시 반영
+        onDelete: "CASCADE", // 사용자가 삭제되면 해당 게시물도 삭제
       },
       createdAt: {
         allowNull: false,
@@ -48,9 +49,5 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-  },
-
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Posts");
   },
 };
