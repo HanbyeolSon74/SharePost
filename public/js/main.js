@@ -126,8 +126,13 @@ const pagination = document.querySelector("#pagination");
 pagination.innerHTML = `<div class="prev-button firstBtn" onclick="firstPage()">◁</div>
           <div class="prev-button" onclick="prev()">◀◁</div>
           <div class="numberBtnWrap">
-            <button class="numberBtn" id="page_" onclick="numBtn()">1</button>
+            <button class="numberBtn" id="page" onclick="numBtn()">1</button>
           </div>
           <div class="next-button" onclick="next()">▷</div>
           <div class="next-button lastBtn" onclick="lastPage()">▷▶</div>
         </div>`;
+
+let currentPage = 1;
+const limit = 9;
+let totalPages = 1;
+const pagesPerGroup = 3;

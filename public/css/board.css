@@ -33,8 +33,8 @@ p {
   padding-bottom: 50px;
   border-bottom: #808080 1px solid;
 }
-.typebox {
-  width: 30%;
+.inputBox {
+  width: 95%;
 }
 .inputBox input {
   border: 1px solid #808080;
@@ -44,13 +44,23 @@ p {
   font-size: 12px;
 }
 .nameBox {
-  width: 60%;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+}
+.typeSelectBox {
+  width: 35%;
+  display: flex;
+  justify-content: center;
+  padding-right: 10px;
 }
 #boardPostName {
   width: 100%;
 }
 #typeSelect {
   color: #808080;
+  width: 100%;
+  padding-right: 10px;
 }
 .inputBox select {
   border: 1px solid #808080;
@@ -59,23 +69,57 @@ p {
   padding: 8px;
   font-size: 12px;
   height: 100%;
-  margin-left: 30px;
 }
 .forminputsBox {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-top: 30px;
+}
+.toastBox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.toastui-editor-contents {
+  text-align: left !important;
+}
+.imageUpload {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.formTop {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  border-top: solid 1px black;
+  border-left: solid 1px black;
+  border-right: solid 1px black;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.formMiddle {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  border: solid 1px black;
+  padding-bottom: 1.5px;
+  padding-top: 0.5px;
+}
+.formBottmon {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  border-left: solid 1px black;
+  border-right: solid 1px black;
+  border-bottom: solid 1px black;
+  padding-bottom: 10px;
 }
 
 .textareaBox {
-  width: 85%;
-}
-
-.toastBox {
-  display: flex;
-  justify-content: center;
+  width: 100%;
 }
 
 #mainBoardImage {
@@ -85,6 +129,7 @@ p {
   background-color: #f9f9f9;
   cursor: pointer;
   height: 25px;
+  margin-top: 100px;
 }
 
 .imgRightBox {
@@ -102,6 +147,8 @@ p {
   border: 1px solid #808080;
   overflow: hidden;
   font-size: 12px;
+  padding: 5px;
+  margin-left: 10px;
 }
 
 #previewImg {
@@ -138,9 +185,4 @@ p {
 
 .boardBtn:active {
   background-color: #3b3b3b;
-}
-
-.imageUpload {
-  display: flex;
-  justify-content: center;
 }

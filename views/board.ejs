@@ -24,61 +24,67 @@
             <form name="formName" method="post" enctype="multipart/form-data">
               <!-- 제목 -->
               <div class="forminputsBox">
-                <div class="nameBox formBoxdiv">
-                  <div class="inputBox">
-                    <input
-                      placeholder="제목을 입력해 주세요."
-                      id="boardPostName"
-                      name="boardPostName"
-                      required
-                    />
-                    <div class="nameText"></div>
+                <div class="formTop">
+                  <div class="nameBox formBoxdiv">
+                    <div class="inputBox">
+                      <input
+                        placeholder="제목을 입력해 주세요."
+                        id="boardPostName"
+                        name="boardPostName"
+                        required
+                      />
+                      <div class="nameText"></div>
+                    </div>
                   </div>
-                </div>
-                <!-- 상품 타입 선택 -->
-                <div class="formBoxdiv">
-                  <div class="inputBox typebox">
-                    <select id="typeSelect" name="boardType">
-                      <option value="" disabled selected>
-                        게시판을 선택해주세요.
-                      </option>
-                      <option value="JENNIE COLLAB">JENNIE COLLAB</option>
-                      <option value="NEWJEANS COLLAB">NEWJEANS COLLAB</option>
-                      <option value="SINSA">SINSA</option>
-                      <option value="BIRTH">BIRTH</option>
-                      <option value="PURPOSE">PURPOSE</option>
-                    </select>
+                  <!-- 타입 선택 -->
+                  <div class="typeSelectBox formBoxdiv">
+                    <div class="inputBox typebox">
+                      <select id="typeSelect" name="boardType">
+                        <option value="" disabled selected>
+                          게시판을 선택해주세요.
+                        </option>
+                        <option value="JENNIE COLLAB">JENNIE COLLAB</option>
+                        <option value="NEWJEANS COLLAB">NEWJEANS COLLAB</option>
+                        <option value="SINSA">SINSA</option>
+                        <option value="BIRTH">BIRTH</option>
+                        <option value="PURPOSE">PURPOSE</option>
+                      </select>
+                    </div>
+                    <div class="typeText"></div>
                   </div>
-                  <div class="typeText"></div>
                 </div>
               </div>
               <!-- toast editer -->
               <div class="formBoxdiv toastBox">
-                <div class="textareaBox">
-                  <div id="toastEditor"></div>
-                  <div class="contentText"></div>
+                <div class="formMiddle">
+                  <div class="textareaBox">
+                    <div id="toastEditor"></div>
+                    <div class="contentText"></div>
+                  </div>
                 </div>
               </div>
 
               <!-- 이미지 업로드 -->
               <div class="formBoxdiv imageUpload">
-                <div class="imgRightBox">
-                  <div class="imgRightInBox">
-                    <div id="imgpreviewbox">
-                      <img id="previewImg" src="" />게시글 메인 이미지를
-                      등록해주세요.
+                <div class="formBottmon">
+                  <div class="imgRightBox">
+                    <div class="imgRightInBox">
+                      <div id="imgpreviewbox">
+                        <img id="previewImg" src="" />게시글 메인 이미지를
+                        등록해주세요.
+                      </div>
                     </div>
                   </div>
+                  <input
+                    type="file"
+                    name="mainBoardImage"
+                    id="mainBoardImage"
+                    onchange="imageonChange()"
+                    accept="image/*"
+                    required
+                  />
+                  <div class="imageupText"></div>
                 </div>
-                <input
-                  type="file"
-                  name="mainBoardImage"
-                  id="mainBoardImage"
-                  onchange="imageonChange()"
-                  accept="image/*"
-                  required
-                />
-                <div class="imageupText"></div>
               </div>
 
               <!-- 버튼 -->
