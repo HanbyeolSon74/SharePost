@@ -1,12 +1,15 @@
-require("dotenv").config(); // .env 파일 로드
+require("dotenv").config();
 const express = require("express");
-const sequelize = require("./config/database");
-const userRoutes = require("./routers/userRouter"); // 회원 관련
-const authRoutes = require("./routers/authRouter"); // 로그인 관련
-const postRoutes = require("./routers/postRouter"); // 게시판 관련
-const pageRoutes = require("./routers/pageRouter"); // EJS 페이지 라우트
-const path = require("path");
 const session = require("express-session");
+const path = require("path");
+const sequelize = require("./config/database");
+const cors = require("cors");
+
+// 라우터 임포트
+const userRoutes = require("./routers/userRouter");
+const authRoutes = require("./routers/authRouter");
+const postRoutes = require("./routers/postRouter");
+const pageRoutes = require("./routers/pageRouter");
 
 const app = express();
 
@@ -22,45 +25,34 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
 
+// ✅ 세션 설정
 app.use(
   session({
-    secret: "your_secret_key", // 임의의 비밀 키
+    secret: "your_secret_key",
     resave: false,
     saveUninitialized: true,
     cookie: { secure: process.env.NODE_ENV === "production" },
   })
 );
 
+// CORS 설정 (전체 애플리케이션에 적용)
+app.use(
+  cors({
+    origin: "http://localhost:3000", // 클라이언트 도메인
+    methods: "GET,POST",
+    credentials: true, // 쿠키와 같은 자격 증명 허용
+  })
+);
+
 // ✅ 라우터 등록
 app.use("/auth", authRoutes); // 로그인/로그아웃
-app.use("/user", userRoutes); // 회원가입/프로필 수정
+app.use("/user", userRoutes); // 회원 관련
 app.use("/board", postRoutes); // 게시판 관련
 app.use("/", pageRoutes); // EJS 페이지 연결
 
 // 기본 라우트 (메인 페이지)
 app.get("/", (req, res) => {
   res.render("main");
-});
-
-// 네이버 로그인 URL 생성
-const CLIENT_ID = process.env.NAVER_CLIENT_ID;
-const CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;
-const REDIRECT_URI = process.env.NAVER_REDIRECT_URI;
-
-// 콘솔에 출력해서 확인
-console.log(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
-
-// 예시: 네이버 로그인 URL을 만들기
-const STATE = "some_random_string_for_state"; // CSRF 방지용 임의의 문자열
-const naverLoginUrl = `
-https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&state=${STATE}`;
-
-console.log("네이버 로그인 URL:", naverLoginUrl);
-
-// /get-key 라우트 추가
-app.get("/get-key", (req, res) => {
-  // 실제 키 값 반환 (임시로 설정)
-  res.json({ key: "your_key_value" });
 });
 
 // ✅ DB 연결 및 서버 실행

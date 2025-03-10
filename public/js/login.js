@@ -88,21 +88,40 @@ const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 const state = params.get("state");
 
-axios
-  .post("http://localhost:3000/auth/login/naver/callback", { code, state })
-  .then((response) => {
-    // 토큰을 localStorage에 저장
-    console.log(response.data, "???");
-    localStorage.setItem("accessToken", accessToken);
-    const { accessToken, user } = response.data;
-    // 로그인 성공 메시지 표시
-    alert(`${user.name}님, 로그인 성공! 메인 페이지로 이동합니다.`);
+// 코드와 상태가 있을 경우 서버로 전송하여 액세스 토큰을 받아옴
+// 네이버 로그인 후 콜백 처리 (클라이언트)
+if (code && state) {
+  axios
+    .post("http://localhost:3000/auth/login/naver/callback", { code, state })
+    .then((response) => {
+      const { accessToken, user } = response.data;
+      console.log("액세스 토큰:", accessToken); // 응답 확인
 
-    window.location.href = "/";
-  })
-  .catch((error) => {
-    console.error("네이버 로그인 실패:", error);
-  });
+      if (accessToken) {
+        // 액세스 토큰 로컬 스토리지에 저장
+        localStorage.setItem("accessToken", accessToken);
+        console.log("액세스 토큰 저장:", accessToken); // 디버깅 로그
+
+        // 추가적으로 필요한 데이터도 저장
+        localStorage.setItem("loginType", "naver"); // 로그인 타입 저장
+
+        alert(`${user.name}님, 로그인 성공! 메인 페이지로 이동합니다.`);
+
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000); // 2000ms 후에 리다이렉트
+      } else {
+        alert("액세스 토큰이 없습니다.");
+      }
+    })
+    .catch((error) => {
+      console.error("네이버 로그인 실패:", error);
+      alert(
+        "네이버 로그인 실패: " +
+          (error.response?.data?.message || error.message)
+      );
+    });
+}
 
 // 카카오 로그인
 // main.js
