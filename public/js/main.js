@@ -37,14 +37,14 @@ function renderPosts(posts) {
 
     postElement.innerHTML = `
       <div class="postWrap">
-        <div class="postItem" onclick="window.location.href='/post/${post.id}'">
+        <div class="postItem" onclick="window.location.href='/board/post/${post.id}'">
           <img src="${post.mainimage}" alt="${post.title}" />
           <div class="contentHover" style="display:none">${post.content}</div>
         </div>
         <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
           <i class="fa-regular fa-heart" id="heartIcon-${post.id}"></i>
         </div>
-        <div class="postTitle" onclick="window.location.href='/post/${post.id}'">${post.title}</div>
+        <div class="postTitle" onclick="window.location.href='/board/post/${post.id}'">${post.title}</div>
       </div>
     `;
 
@@ -129,7 +129,7 @@ async function toggleLike(postId) {
   heartIcon.classList.toggle("fa-solid", !newState);
 
   try {
-    const response = await axios.post(`/post/${postId}/like`, {
+    const response = await axios.post(`/borad/post/${postId}/like`, {
       isLiked: newState,
     });
     if (response.status === 200) {
