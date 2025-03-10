@@ -91,7 +91,7 @@ const handleNaverCallback = async (req, res) => {
         phone: naverUser.mobile ? naverUser.mobile.replace(/-/g, "") : null, // '-' 제거 및 예외 처리
         gender: naverUser.gender === "M" ? "M" : "F",
         birthDate: birthDate, // 🔹 형식 변환된 값 저장
-        profilePpic: naverUser.profile_image || "/images/image.jpg",
+        profilePic: naverUser.profile_image || "/images/image.jpg",
         socialType: "naver",
         password: "", // 빈 문자열로 저장하여 notNull 오류 방지
       });
@@ -118,15 +118,14 @@ const handleNaverCallback = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7일 유지
     });
 
-    res.json({
-      success: true,
-      message: "네이버 로그인 성공!",
-      accessToken,
-      user,
-    });
+    // 로그인 후 메인 페이지로 리디렉션
+    return res.redirect("/"); // 메인 페이지 경로로 리디렉션
   } catch (error) {
     console.error("네이버 로그인 오류:", error.response?.data || error);
-    res.status(500).json({ message: "네이버 로그인 처리 중 오류 발생" });
+    // 이미 응답을 보낸 경우 (중복 응답 방지)
+    if (!res.headersSent) {
+      res.status(500).json({ message: "네이버 로그인 처리 중 오류 발생" });
+    }
   }
 };
 
