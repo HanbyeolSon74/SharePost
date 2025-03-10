@@ -238,7 +238,7 @@ body {
 
 .post {
   width: 30%;
-  padding-right: 3%;
+  padding: 0px 1.5%;
   margin-bottom: 35px;
 }
 .post img {
@@ -254,6 +254,7 @@ body {
   position: absolute;
   bottom: 60px;
   right: 15px;
+  cursor: pointer;
 }
 
 .postTitle {
@@ -262,6 +263,7 @@ body {
   color: brown;
   cursor: pointer;
   font-size: 13px;
+  font-weight: bold;
 }
 
 .postBtnBox {

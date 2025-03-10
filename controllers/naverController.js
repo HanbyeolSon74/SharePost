@@ -16,9 +16,9 @@ const handleNaverCallback = async (req, res) => {
   const { code, state } = req.query;
 
   // state 값 확인 (예시: 세션에 저장한 state 값과 비교)
-  if (!state || state !== req.session.naverState) {
-    return res.status(400).json({ message: "Invalid state parameter" });
-  }
+  // if (!state || state !== req.session.naverState) {
+  //   return res.status(400).json({ message: "Invalid state parameter" });
+  // }
 
   if (!code) {
     return res

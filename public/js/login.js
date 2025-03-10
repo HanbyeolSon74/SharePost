@@ -175,3 +175,40 @@ document.getElementById("kakao-login-btn").addEventListener("click", () => {
     },
   });
 });
+
+// 네이버 로그아웃 (내 정보에서 가능하게 해야할 듯)
+// document.getElementById("logout-btn").addEventListener("click", function () {
+//   axios
+//     .post("http://localhost:3000/auth/logout") // 백엔드에서 로그아웃 처리
+//     .then((response) => {
+//       console.log("로그아웃 성공:", response.data);
+//       // 로그아웃 후, 로컬 스토리지나 쿠키를 초기화하여 클라이언트에서 로그인 상태 제거
+//       localStorage.removeItem("accessToken");
+//       // 또는 쿠키에서 토큰을 삭제할 수도 있습니다.
+//       document.location.href = "/"; // 홈 페이지로 리디렉션
+//     })
+//     .catch((error) => {
+//       console.error("로그아웃 실패:", error);
+//     });
+// });
+
+// const logout = async () => {
+//   const accessToken = localStorage.getItem("accessToken");
+
+//   try {
+//     const response = await axios.post(
+//       "https://nid.naver.com/oauth2.0/logout",
+//       null,
+//       {
+//         params: {
+//           client_id: process.env.NAVER_CLIENT_ID,
+//           client_secret: process.env.NAVER_CLIENT_SECRET,
+//           access_token: accessToken,
+//         },
+//       }
+//     );
+//     console.log("네이버 로그아웃 성공", response.data);
+//   } catch (error) {
+//     console.error("네이버 로그아웃 실패:", error);
+//   }
+// };
