@@ -10,6 +10,7 @@ const userRoutes = require("./routers/userRouter");
 const authRoutes = require("./routers/authRouter");
 const postRoutes = require("./routers/postRouter");
 const pageRoutes = require("./routers/pageRouter");
+const profileRoutes = require("./routers/profileRouter"); // 추가된 부분
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.get("/get-key", (req, res) => {
 app.use("/auth", authRoutes); // 로그인/로그아웃
 app.use("/user", userRoutes); // 회원 관련
 app.use("/board", postRoutes); // 게시판 관련
+app.use("/profile", profileRoutes); // 추가된 라우터 등록
 app.use("/", pageRoutes); // EJS 페이지 연결
 
 // 기본 라우트 (메인 페이지)

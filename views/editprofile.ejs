@@ -10,74 +10,95 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
-    />
   </head>
   <body>
-    <div class="wrapper">
-      <!-- 헤더 만들기 -->
-      <div class="shopHeader"><%- include('header.ejs') %></div>
-      <!-- 본문 시작 -->
-      <div class="contentWrapBox">
-        <form action="/admin/update-product" method="POST" enctype="multipart/form-data" onsubmit="syncDetails()">
-          <input type="hidden" name="id" value="<%= product.id %>" />
-          <input type="hidden" name="existingImage" value="<%= product.imageurl %>" />
-    
-          <label>게시글 제목:</label>
-          <input type="text" name="name" value="<%= product.name %>" required /><br />
-    
-          <!-- 카테고리 수정 -->
-          <label>카테고리:</label>
-          <select name="category" required>
-            <option value="JENNIE COLLAB" <%= product.category === 'JENNIE COLLAB' ? 'selected' : '' %>>JENNIE COLLAB</option>
-            <option value="NEWJEANS COLLAB" <%= product.category === 'NEWJEANS COLLAB' ? 'selected' : '' %>>NEWJEANS COLLAB</option>
-            <option value="SINSA" <%= product.category === 'SINSA' ? 'selected' : '' %>>SINSA</option>
-            <option value="BIRTH" <%= product.category === 'BIRTH' ? 'selected' : '' %>>BIRTH</option>
-            <option value="PURPOSE" <%= product.category === 'PURPOSE' ? 'selected' : '' %>>PURPOSE</option>
-          </select><br />
-    
-          <label>상세 내용:</label>
-          <div id="details"></div> <!-- Toast UI Editor를 적용할 div -->
-          <input type="hidden" name="details" id="detailsInput" /> <!-- 에디터 내용이 저장될 hidden input -->
-    
-          <!-- 기존 이미지 미리보기 -->
-          <label>현재 이미지:</label>
-          <div class="image-upload" onclick="document.getElementById('imageInput').click()">
-            <img id="preview" src="<%= product.imageurl %>" alt="상품 이미지" />
-          </div>
-    
-          <input type="file" id="imageInput" name="image" accept="image/*" onchange="previewImage(event)" />
-    
+    <div class="container">
+      <h2>내 정보 수정</h2>
+      <form
+        action="/profile/update"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <!-- 프로필 이미지 -->
+        <div class="profile-img">
+          <img id="preview" src="<%= user.imageurl %>" alt="프로필 사진" />
+          <input
+            type="file"
+            name="profileImage"
+            id="profileImage"
+            accept="image/*"
+          />
+        </div>
+
+        <!-- 이메일 (수정 불가) -->
+        <label>이메일</label>
+        <input type="email" name="email" value="<%= user.email %>" readonly />
+
+        <!-- 이름 -->
+        <label>이름</label>
+        <input type="text" name="name" value="<%= user.name %>" required />
+
+        <!-- 전화번호 -->
+        <label>전화번호</label>
+        <input type="text" name="phone" value="<%= user.phone %>" required />
+
+        <!-- 주소 -->
+        <label>주소</label>
+        <input type="text" name="address" value="<%= user.address || '' %>" />
+
+        <!-- 비밀번호 변경 -->
+        <label>새 비밀번호</label>
+        <input type="password" name="password" placeholder="새 비밀번호 입력" />
+
+        <!-- 생년월일 -->
+        <label>생년월일</label>
+        <input
+          type="date"
+          name="birth_date"
+          value="<%= user.birth_date %>"
+          required
+        />
+
+        <!-- 버튼들 -->
+        <div class="button-group">
+          <button type="button" onclick="location.href='/my-posts'">
+            내 게시물 보기
+          </button>
           <button type="submit">수정 완료</button>
-        </form>
-    
-      </div>
-      <!-- 푸터 -->
-      <div class="my_footer"><%- include('footer.ejs') %></div>
+          <button type="button" onclick="location.href='/logout'">
+            로그아웃
+          </button>
+          <button type="button" class="delete-btn" onclick="confirmDelete()">
+            회원 탈퇴
+          </button>
+        </div>
+      </form>
     </div>
+
+    <script>
+      // 프로필 이미지 미리보기 기능
+      document
+        .getElementById("profileImage")
+        .addEventListener("change", function (event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("preview").src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+      // 회원 탈퇴 확인
+      function confirmDelete() {
+        if (confirm("정말 회원 탈퇴하시겠습니까?")) {
+          location.href = "/profile/delete";
+        }
+      }
+    </script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script src="/js/edit.js"></script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Toast UI Editor 초기화
-        const editor = new toastui.Editor({
-          el: document.getElementById('details'), // 에디터를 적용할 div
-          height: '400px',
-          initialValue: '<%= product.details %>', // 기존 게시글 내용
-          previewStyle: 'vertical',
-          initialEditType: 'wysiwyg', // WYSIWYG(What You See Is What You Get) 에디터 사용
-        });
-
-        // 폼 제출 시 에디터 내용 동기화
-        window.syncDetails = function() {
-          const details = editor.getMarkdown(); // 에디터에서 작성한 내용 가져오기
-          document.getElementById('detailsInput').value = details; // hidden input에 내용 저장
-        };
-      });
-    </script>
   </body>
 </html>

@@ -75,7 +75,7 @@ module.exports = {
         gender,
         age,
         birthDate: formattedBirthDate.format("YYYY-MM-DD"),
-        profile_pic: profilePicPath,
+        profilePic: profilePicPath, // profilePic 컬럼이 맞는지 확인 필요
         socialType: socialType || "local",
       });
 
@@ -195,4 +195,35 @@ module.exports = {
   findIdPage: (req, res) => {
     res.render("findid");
   },
+
+  // 사용자 정보를 ID로 가져오는 함수
+  getUserById: async (userId) => {
+    try {
+      const user = await User.findOne({
+        where: { id: userId },
+        attributes: [
+          "id",
+          "name",
+          "phone",
+          "email",
+          "address",
+          "birth_date",
+          "profilePic", // 필드명이 맞는지 확인 필요
+        ],
+      });
+
+      return user; // 사용자 정보 반환
+    } catch (error) {
+      console.error("사용자 정보를 가져오는 중 오류 발생:", error);
+      return null;
+    }
+  },
+};
+// 로그인 상태 확인 API
+exports.checkLoginStatus = (req, res) => {
+  if (req.user) {
+    res.json({ success: true, message: "로그인 상태입니다.", user: req.user });
+  } else {
+    res.json({ success: false, message: "로그인 상태가 아닙니다." });
+  }
 };
