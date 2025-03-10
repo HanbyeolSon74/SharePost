@@ -6,6 +6,7 @@ const authRoutes = require("./routers/authRouter"); // 로그인 관련
 const postRoutes = require("./routers/postRouter"); // 게시판 관련
 const pageRoutes = require("./routers/pageRouter"); // EJS 페이지 라우트
 const path = require("path");
+const session = require("express-session");
 
 const app = express();
 
@@ -20,6 +21,15 @@ app.set("views", path.join(__dirname, "views"));
 // ✅ 정적 파일 제공 (CSS, JS, 이미지 등)
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
+
+app.use(
+  session({
+    secret: "your_secret_key", // 임의의 비밀 키
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: process.env.NODE_ENV === "production" },
+  })
+);
 
 // ✅ 라우터 등록
 app.use("/auth", authRoutes); // 로그인/로그아웃
@@ -46,6 +56,12 @@ const naverLoginUrl = `
 https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&state=${STATE}`;
 
 console.log("네이버 로그인 URL:", naverLoginUrl);
+
+// /get-key 라우트 추가
+app.get("/get-key", (req, res) => {
+  // 실제 키 값 반환 (임시로 설정)
+  res.json({ key: "your_key_value" });
+});
 
 // ✅ DB 연결 및 서버 실행
 sequelize
