@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      type="text/javascript"
+      src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+      charset="utf-8"
+    ></script>
+
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <link rel="stylesheet" href="/css/header.css" />
     <link rel="stylesheet" href="/css/login.css" />
 
@@ -127,17 +134,13 @@
             </div>
           </div>
           <div class="snsBtns">
-            <div class="naverLogin" id="naver-login-btn">
+            <div class="naverLogin" id="naver_id_login">
               <a
                 ><span
                   ><img src="/images/naver_btn.png" alt="naverlogin" /></span
               ></a>
             </div>
-            <div
-              class="kakaoLogin"
-              id="kakao-login-btn"
-              onclick="kakaoLogin();"
-            >
+            <div class="kakaoLogin" id="kakao-login-btn">
               <a href="javascript:void(0)"
                 ><span
                   ><img src="/images/kakao_btn.png" alt="kakaologin" /></span
@@ -151,6 +154,5 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/js/header.js"></script>
     <script src="/js/login.js"></script>
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   </body>
 </html>
