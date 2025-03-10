@@ -122,14 +122,22 @@ cateImgBoxs.forEach((box) => {
 async function toggleLike(postId) {
   const heartIcon = document.getElementById(`heartIcon-${postId}`);
 
+  if (!heartIcon) {
+    console.error("아이콘이 선택되지 않았습니다.");
+    return;
+  }
   const isLiked = heartIcon.classList.contains("fa-solid");
   const newState = !isLiked;
-
-  heartIcon.classList.toggle("fa-regular", newState);
-  heartIcon.classList.toggle("fa-solid", !newState);
+  if (newState) {
+    heartIcon.classList.remove("fa-regular");
+    heartIcon.classList.add("fa-solid");
+  } else {
+    heartIcon.classList.remove("fa-solid");
+    heartIcon.classList.add("fa-regular");
+  }
 
   try {
-    const response = await axios.post(`/borad/post/${postId}/like`, {
+    const response = await axios.post(`/board/post/${postId}/like`, {
       isLiked: newState,
     });
     if (response.status === 200) {
@@ -139,6 +147,13 @@ async function toggleLike(postId) {
     }
   } catch (error) {
     console.error("좋아요 업데이트 에러:", error);
+    if (newState) {
+      heartIcon.classList.remove("fa-solid");
+      heartIcon.classList.add("fa-regular");
+    } else {
+      heartIcon.classList.remove("fa-regular");
+      heartIcon.classList.add("fa-solid");
+    }
   }
 }
 
