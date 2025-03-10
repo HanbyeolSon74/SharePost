@@ -31,18 +31,23 @@ app.use(
     secret: "your_secret_key",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: process.env.NODE_ENV === "production" },
+    cookie: { secure: process.env.NODE_ENV === "production" ? true : false }, // 개발 환경에서는 false로 설정
   })
 );
 
 // CORS 설정 (전체 애플리케이션에 적용)
 app.use(
   cors({
-    origin: "http://localhost:3000", // 클라이언트 도메인
+    origin: "http://localhost:3000",
     methods: "GET,POST",
     credentials: true, // 쿠키와 같은 자격 증명 허용
   })
 );
+
+// 서버 코드에서 /get-key 경로 추가
+app.get("/get-key", (req, res) => {
+  res.json({ key: "your-api-key" }); // 실제 API 키 또는 데이터를 반환
+});
 
 // ✅ 라우터 등록
 app.use("/auth", authRoutes); // 로그인/로그아웃
@@ -57,7 +62,7 @@ app.get("/", (req, res) => {
 
 // ✅ DB 연결 및 서버 실행
 sequelize
-  .sync({ force: false })
+  .sync({ force: false }) // DB 테이블을 덮어쓰지 않도록 설정
   .then(() => {
     console.log("데이터베이스 연결 성공!");
     app.listen(3000, () => console.log("서버 실행 중: http://localhost:3000"));

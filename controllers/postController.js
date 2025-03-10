@@ -4,10 +4,10 @@ module.exports = {
   // 게시글 생성
   createPost: async (req, res) => {
     try {
-      console.log("Request Body:", req.body); // 텍스트 데이터
-      console.log("Uploaded File:", req.file); // 파일 데이터
+      console.log("Request Body:", req.body);
+      console.log("Uploaded File:", req.file);
 
-      const userId = req.user ? req.user.id : null; // 로그인된 사용자의 ID
+      const userId = req.user ? req.user.id : null;
 
       if (!userId) {
         return res.status(403).json({
@@ -17,7 +17,7 @@ module.exports = {
       }
 
       // 필수 항목 검증
-      const { title, content, categoryName } = req.body; // categoryName을 받음
+      const { title, content, categoryName } = req.body;
 
       if (!title || !content || !categoryName) {
         return res.status(400).json({
@@ -28,7 +28,7 @@ module.exports = {
 
       // categoryName으로 카테고리 찾기
       const category = await Category.findOne({
-        where: { name: categoryName.trim() }, // 카테고리 이름으로 검색
+        where: { name: categoryName.trim() },
       });
 
       if (!category) {
@@ -41,14 +41,14 @@ module.exports = {
       // 이미지 파일 처리
       let mainimage = null;
       if (req.file) {
-        mainimage = `/uploads/boardimages/${req.file.filename}`; // 업로드된 이미지 경로
+        mainimage = `/uploads/boardimages/${req.file.filename}`;
       }
 
       // 게시글 생성
       const newPost = await Post.create({
         title,
         content,
-        categoryId: category.id, // 카테고리 ID 사용
+        categoryId: category.id,
         userId,
         mainimage,
       });
@@ -76,11 +76,11 @@ module.exports = {
         include: [
           {
             model: Category,
-            as: "category", // alias가 "category"로 설정됨
-            attributes: ["name"], // 필요한 카테고리의 속성만 가져옴
+            as: "category",
+            attributes: ["name"],
           },
         ],
-        order: [["createdAt", "DESC"]], // 최신순으로 정렬
+        order: [["createdAt", "DESC"]],
       });
 
       res.status(200).json({
