@@ -129,7 +129,7 @@ async function toggleLike(postId) {
   heartIcon.classList.toggle("fa-solid", !newState);
 
   try {
-    const response = await axios.post(`/post/${postId}/like`, {
+    const response = await axios.post(`/borad/post/${postId}/like`, {
       isLiked: newState,
     });
     if (response.status === 200) {
