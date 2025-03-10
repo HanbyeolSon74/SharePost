@@ -157,6 +157,7 @@ body {
 
 .contentHover {
   position: absolute;
+  padding: 30px;
   top: 0;
   left: 0;
   right: 0;
@@ -165,22 +166,28 @@ body {
   border-radius: 15px;
   cursor: pointer;
   color: brown;
-  padding: 30px;
   display: none;
   z-index: 1;
   font-size: 12px;
+  overflow: hidden;
+  box-sizing: border-box;
 }
+
 .contentHover p {
   text-align: center;
   font-size: 13px;
+  line-height: 1.5;
+  max-height: calc(1.5em * 10);
   display: -webkit-box;
-  -webkit-line-clamp: 15;
+  -webkit-line-clamp: 10;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.5;
-  max-height: calc(1.5em * 15);
+  white-space: normal;
+  padding-bottom: 20px;
+  word-wrap: break-word;
 }
+
 /* 메인 게시물 */
 .mainMiddleBox {
   background-color: rgb(255, 242, 227);
@@ -231,22 +238,23 @@ body {
 }
 
 .mainPostsBox {
-  display: flex;
-  width: 95%;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+  padding: 0 20px;
 }
 
 .post {
-  width: 30%;
-  padding: 0px 1.5%;
   margin-bottom: 35px;
 }
+
 .post img {
   width: 100%;
   aspect-ratio: 1/1;
   border-radius: 15px;
+  object-fit: cover;
 }
-
 .postWrap {
   position: relative;
 }
