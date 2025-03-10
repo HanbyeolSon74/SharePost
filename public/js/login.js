@@ -43,7 +43,7 @@ document
     const logindata = { email: loginEmail, password: loginPassword };
 
     try {
-      const response = await axios.post("/user/login", logindata, {
+      const response = await axios.post("/auth/login", logindata, {
         headers: { "Content-Type": "application/json" },
       });
 
@@ -91,7 +91,14 @@ const state = params.get("state");
 axios
   .post("http://localhost:3000/auth/login/naver/callback", { code, state })
   .then((response) => {
-    console.log("네이버 로그인 성공:", response.data);
+    // 토큰을 localStorage에 저장
+    console.log(response.data, "???");
+    localStorage.setItem("accessToken", accessToken);
+    const { accessToken, user } = response.data;
+    // 로그인 성공 메시지 표시
+    alert(`${user.name}님, 로그인 성공! 메인 페이지로 이동합니다.`);
+
+    window.location.href = "/";
   })
   .catch((error) => {
     console.error("네이버 로그인 실패:", error);
@@ -160,8 +167,8 @@ document.getElementById("kakao-login-btn").addEventListener("click", () => {
               // 로그인 성공 메시지 표시
               alert(`${nickname}님 환영합니다!`);
 
-              // 메인 페이지로 이동 (예: /main 으로 이동)
-              window.location.href = "/main";
+              // 메인 페이지로 이동
+              window.location.href = "/";
             })
             .catch((error) => console.error("Error:", error));
         },
