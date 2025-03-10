@@ -2,6 +2,7 @@ require("dotenv").config(); // .env 파일 로드
 const express = require("express");
 const sequelize = require("./config/database");
 const userRoutes = require("./routers/userRouter"); // 회원 관련
+const authRoutes = require("./routers/authRouter"); // 로그인 관련
 const postRoutes = require("./routers/postRouter"); // 게시판 관련
 const pageRoutes = require("./routers/pageRouter"); // EJS 페이지 라우트
 const path = require("path");
@@ -21,7 +22,8 @@ app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
 
 // ✅ 라우터 등록
-app.use("/user", userRoutes); // 회원 관련
+app.use("/auth", authRoutes); // 로그인/로그아웃
+app.use("/user", userRoutes); // 회원가입/프로필 수정
 app.use("/board", postRoutes); // 게시판 관련
 app.use("/", pageRoutes); // EJS 페이지 연결
 

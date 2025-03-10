@@ -1,42 +1,174 @@
+const { User } = require("../models");
+const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-const refreshAccessToken = (req, res) => {
-  const refreshToken = req.cookies.refreshToken; // 쿠키에서 리프레시 토큰 가져오기
+module.exports = {
+  // 🔑 로그인
+  login: async (req, res) => {
+    try {
+      console.log("🔹 로그인 요청 body:", req.body);
 
-  if (!refreshToken) {
-    return res
-      .status(401)
-      .json({ success: false, message: "리프레시 토큰이 없습니다." });
-  }
+      const { email, password } = req.body;
 
-  try {
-    // 리프레시 토큰 검증
-    const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+      if (!email || !password) {
+        return res
+          .status(400)
+          .json({ success: false, message: "이메일과 비밀번호를 입력하세요." });
+      }
 
-    // 리프레시 토큰이 유효한 경우 새로운 액세스 토큰 생성
-    const newAccessToken = jwt.sign(
-      { id: decoded.id, email: decoded.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" } // 액세스 토큰은 1시간 유효
-    );
+      const user = await User.findOne({ where: { email } });
 
-    // 새 액세스 토큰을 클라이언트에 반환
-    res.json({ success: true, newAccessToken });
-  } catch (error) {
-    // 토큰 검증에 실패하면, 토큰 만료 또는 잘못된 토큰 처리
-    if (error.name === "TokenExpiredError") {
-      return res.status(401).json({
-        success: false,
-        message: "리프레시 토큰이 만료되었습니다. 다시 로그인해주세요.",
+      if (!user) {
+        return res
+          .status(400)
+          .json({ success: false, message: "이메일이 존재하지 않습니다." });
+      }
+
+      if (user.socialType && user.socialType !== "local") {
+        return res.status(400).json({
+          success: false,
+          message: `이메일이 ${user.socialType} 계정과 연결되어 있습니다.`,
+        });
+      }
+
+      if (!user.password) {
+        return res.status(400).json({
+          success: false,
+          message: "비밀번호가 설정되지 않은 계정입니다.",
+        });
+      }
+
+      const isMatch = await bcryptjs.compare(password, user.password);
+      if (!isMatch) {
+        return res
+          .status(400)
+          .json({ success: false, message: "비밀번호가 일치하지 않습니다." });
+      }
+
+      // 🔑 액세스 토큰 생성 (1시간)
+      const accessToken = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      // 🔄 리프레시 토큰 생성 (7일)
+      const refreshToken = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
+      );
+
+      // 🍪 리프레시 토큰을 쿠키에 저장
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       });
+
+      // ✅ 액세스 토큰 반환
+      res.json({ success: true, message: "로그인 성공!", accessToken });
+    } catch (error) {
+      console.error("로그인 오류:", error);
+      res.status(500).json({ success: false, message: "서버 오류 발생" });
+    }
+  },
+
+  // 🚪 로그아웃 (리프레시 토큰 삭제)
+  logout: (req, res) => {
+    res.clearCookie("refreshToken");
+    res.json({ success: true, message: "로그아웃 성공" });
+  },
+
+  // 🔍 액세스 토큰 검증
+  verifyAccessToken: (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      return res
+        .status(401)
+        .json({ success: false, message: "토큰이 없습니다." });
     }
 
-    // 기타 에러 처리
-    return res.status(401).json({
-      success: false,
-      message: "리프레시 토큰이 유효하지 않습니다.",
-    });
-  }
-};
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      res.json({ success: true, user: decoded });
+    } catch (error) {
+      res
+        .status(401)
+        .json({ success: false, message: "유효하지 않은 토큰입니다." });
+    }
+  },
 
-module.exports = { refreshAccessToken };
+  // ♻️ 액세스 토큰 갱신
+  refreshAccessToken: (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return res
+        .status(401)
+        .json({ success: false, message: "리프레시 토큰이 없습니다." });
+    }
+
+    try {
+      const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+      const newAccessToken = jwt.sign(
+        { id: decoded.id, email: decoded.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      res.json({ success: true, newAccessToken });
+    } catch (error) {
+      if (error.name === "TokenExpiredError") {
+        return res.status(401).json({
+          success: false,
+          message: "리프레시 토큰이 만료되었습니다. 다시 로그인해주세요.",
+        });
+      }
+      res
+        .status(401)
+        .json({
+          success: false,
+          message: "유효하지 않은 리프레시 토큰입니다.",
+        });
+    }
+  },
+
+  // 🔄 자동 토큰 갱신 (만료 임박 시)
+  autoRefreshToken: (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return res
+        .status(401)
+        .json({ success: false, message: "리프레시 토큰이 없습니다." });
+    }
+
+    try {
+      const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+
+      const expTime = decoded.exp * 1000 - Date.now();
+      if (expTime > 10 * 60 * 1000) {
+        return res.json({ success: true, message: "토큰이 아직 유효합니다." });
+      }
+
+      const newAccessToken = jwt.sign(
+        { id: decoded.id, email: decoded.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      res.json({ success: true, newAccessToken });
+    } catch (error) {
+      res
+        .status(401)
+        .json({
+          success: false,
+          message: "유효하지 않은 리프레시 토큰입니다.",
+        });
+    }
+  },
+};
