@@ -62,7 +62,6 @@ const getNaverUserProfile = async (access_token) => {
 };
 
 // ✅ 네이버 로그인 후 콜백 처리
-// ✅ 네이버 로그인 후 콜백 처리
 const handleNaverCallback = async (req, res) => {
   const { code, state } = req.query;
 

@@ -5,7 +5,7 @@ const { uploadBoardImage } = require("../config/multer"); // upload 미들웨어
 const { createPost, getPosts } = require("../controllers/postController"); // 게시글 생성 컨트롤러
 const { refreshAccessToken } = require("../controllers/authController");
 
-const BOARD_IMAGE_FIELD = "mainBoardImage"; // 상수화
+const BOARD_IMAGE_FIELD = "mainBoardImage";
 
 // 리프레시 토큰을 사용하여 새로운 액세스 토큰 발급
 router.post("/refresh-token", refreshAccessToken);
@@ -19,17 +19,17 @@ router.post("/protected-route", verifyToken, (req, res) => {
 router.post(
   "/post",
   verifyToken,
-  uploadBoardImage.single(BOARD_IMAGE_FIELD), // 상수 사용
+  uploadBoardImage.single(BOARD_IMAGE_FIELD),
   createPost
 );
 
 // 게시글 목록 조회
 router.get("/main", getPosts);
 
-// 게시글 수정 페이지 (GET) (추후 추가할 수 있음)
+// 게시글 수정 페이지 (GET)
 // router.get("/edit/:id", postController.editPostPage);
 
-// 게시글 수정 처리 (POST) (추후 추가할 수 있음)
+// 게시글 수정 처리 (POST)
 // router.post(
 //   "/edit",
 //   upload.single(BOARD_IMAGE_FIELD), // 상수화된 필드명 사용

@@ -95,6 +95,7 @@ if (code && state) {
     .post("http://localhost:3000/auth/login/naver/callback", { code, state })
     .then((response) => {
       const { accessToken, user } = response.data;
+      console.log(response);
       console.log("액세스 토큰:", accessToken); // 응답 확인
 
       if (accessToken) {
