@@ -5,6 +5,8 @@ require("dotenv").config();
 
 // 네이버 로그인 페이지로 리디렉션
 const redirectToNaver = (req, res) => {
+  // const state = Math.random().toString(36).substring(7); // 랜덤한 state 값 생성
+  // req.session.naverState = state; // session에 저장
   const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NAVER_CLIENT_ID}&redirect_uri=${process.env.NAVER_REDIRECT_URI}&state=${process.env.NAVER_STATE}`;
   res.redirect(naverAuthUrl);
 };
@@ -12,6 +14,11 @@ const redirectToNaver = (req, res) => {
 // 네이버 로그인 후 콜백 처리
 const handleNaverCallback = async (req, res) => {
   const { code, state } = req.query;
+
+  // state 값 확인 (예시: 세션에 저장한 state 값과 비교)
+  if (!state || state !== req.session.naverState) {
+    return res.status(400).json({ message: "Invalid state parameter" });
+  }
 
   if (!code) {
     return res
@@ -34,6 +41,8 @@ const handleNaverCallback = async (req, res) => {
         },
       }
     );
+
+    console.log("네이버 토큰 응답:", response.data); // 로그 추가
 
     const { access_token } = response.data;
     if (!access_token) {
