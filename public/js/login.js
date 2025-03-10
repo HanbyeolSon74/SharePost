@@ -81,7 +81,7 @@ const goToFindPasswordPage = () => {
 document
   .getElementById("naver_id_login")
   .addEventListener("click", function () {
-    window.location.href = "http://localhost:3000/user/login/naver";
+    window.location.href = "http://localhost:3000/auth/login/naver/callback";
   });
 
 const params = new URLSearchParams(window.location.search);
@@ -89,7 +89,7 @@ const code = params.get("code");
 const state = params.get("state");
 
 axios
-  .post("http://localhost:3000/user/login/naver/callback", { code, state })
+  .post("http://localhost:3000/auth/login/naver/callback", { code, state })
   .then((response) => {
     console.log("네이버 로그인 성공:", response.data);
   })
