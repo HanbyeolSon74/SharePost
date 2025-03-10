@@ -81,7 +81,7 @@ const goToFindPasswordPage = () => {
 document
   .getElementById("naver_id_login")
   .addEventListener("click", function () {
-    window.location.href = "http://localhost:3000/auth/login/naver/callback";
+    window.location.href = "http://localhost:3000/auth/login/naver";
   });
 
 const params = new URLSearchParams(window.location.search);
