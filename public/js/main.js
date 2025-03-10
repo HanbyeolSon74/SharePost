@@ -44,7 +44,7 @@ function renderPosts(posts) {
         <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
           <i class="fa-regular fa-heart" id="heartIcon-${post.id}"></i>
         </div>
-        <div>${post.title}</div>
+        <div class="postTitle" onclick="window.location.href='/post/${post.id}'">${post.title}</div>
       </div>
     `;
 
@@ -144,16 +144,24 @@ async function toggleLike(postId) {
 
 // 페이지네이션
 const pagination = document.querySelector("#pagination");
-pagination.innerHTML = `<div class="prev-button firstBtn" onclick="firstPage()">◁</div>
-          <div class="prev-button" onclick="prev()">◀◁</div>
-          <div class="numberBtnWrap">
+pagination.innerHTML = `<div class="prev-button firstBtn btnPadding" onclick="firstPage()">처음</div>
+          <div class="prev-button btnPadding" onclick="prev()">이전</div>
+          <div class="numberBtnWrap btnPadding">
             <button class="numberBtn" id="page" onclick="numBtn()">1</button>
           </div>
-          <div class="next-button" onclick="next()">▷</div>
-          <div class="next-button lastBtn" onclick="lastPage()">▷▶</div>
+          <div class="next-button btnPadding" onclick="next()">다음</div>
+          <div class="next-button lastBtn" onclick="lastPage()">마지막</div>
         </div>`;
 
 let currentPage = 1;
 const limit = 9;
 let totalPages = 1;
 const pagesPerGroup = 3;
+
+// 게시물 작성 버튼
+const postBtnBox = document.querySelector(".postBtnBox");
+postBtnBox.innerHTML = `<div class="postBoard">게시물 작성하기</div>`;
+const postBoard = document.querySelector(".postBoard");
+postBoard.addEventListener("click", function () {
+  window.location.href = "http://localhost:3000/board";
+});
