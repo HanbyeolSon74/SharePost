@@ -10,6 +10,7 @@ const {
   editPostPage,
   updatePost,
   likePost,
+  getPostPage, //렌더링이 없어서 수정
 } = require("../controllers/postController");
 
 const BOARD_IMAGE_FIELD = "mainBoardImage";
@@ -24,6 +25,7 @@ router.post(
 
 // 게시글 상세 조회
 router.get("/post/:id", getPost);
+router.get("/post/view/:id", getPostPage);
 
 // 게시글 목록 조회
 router.get("/main", getPosts);

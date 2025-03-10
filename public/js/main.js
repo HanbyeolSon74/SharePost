@@ -37,7 +37,7 @@ function renderPosts(posts) {
 
     postElement.innerHTML = `
       <div class="postWrap">
-        <div class="postItem" onclick="window.location.href='/board/post/${post.id}'">
+        <div class="postItem" onclick="window.location.href='/board/post/view/${post.id}'">
           <img src="${post.mainimage}" alt="${post.title}" />
           <div class="contentHover" style="display:none">${post.content}</div>
         </div>

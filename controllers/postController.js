@@ -132,6 +132,24 @@ module.exports = {
       });
     }
   },
+  //렌더링이 없어서 추가
+  getPostPage: async (req, res) => {
+    try {
+      const postId = req.params.id;
+      const post = await Post.findByPk(postId, {
+        include: [{ model: Category, as: "category", attributes: ["name"] }],
+      });
+
+      if (!post) {
+        return res.status(404).render("404"); // 게시글이 없으면 404 페이지
+      }
+
+      res.render("post", { post }); // post.ejs에 데이터를 전달하여 렌더링
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "서버 오류" });
+    }
+  },
 
   // 게시글 수정 (단순히 게시글을 업데이트하는 예시)
   updatePost: async (req, res) => {

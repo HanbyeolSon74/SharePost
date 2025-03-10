@@ -7,12 +7,13 @@ window.onload = async function () {
     const response = await axios.get(`/board/post/${postId}`);
 
     if (response.status === 200) {
-      const post = response.data;
-
+      console.log(response.data, "response.data??");
+      const post = response.data.post;
+      console.log(post, "??");
       document.getElementById("postTitle").textContent = post.title;
-      document.getElementById("postContent").innerHTML = post.content;
+      document.getElementById("postContent").innerHTML = `${post.content}`;
       document.getElementById("postImage").src =
-        post.imageUrl || "/images/default.jpg";
+        post.mainimage || "/images/default.jpg";
     }
   } catch (error) {
     console.error("게시물 로딩 오류:", error);
