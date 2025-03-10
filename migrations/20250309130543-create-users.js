@@ -25,7 +25,7 @@ module.exports = {
       },
       password: {
         type: Sequelize.STRING(255),
-        allowNull: false,
+        allowNull: true, // ✅ NULL 허용으로 변경
       },
       address: {
         type: Sequelize.TEXT,

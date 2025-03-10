@@ -3,11 +3,23 @@ const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+console.log("🚀 NAVER_CLIENT_ID:", process.env.NAVER_CLIENT_ID);
+console.log("🚀 NAVER_REDIRECT_URI:", process.env.NAVER_REDIRECT_URI);
+
 // 네이버 로그인 페이지로 리디렉션
 const redirectToNaver = (req, res) => {
-  // const state = Math.random().toString(36).substring(7); // 랜덤한 state 값 생성
-  // req.session.naverState = state; // session에 저장
-  const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NAVER_CLIENT_ID}&redirect_uri=${process.env.NAVER_REDIRECT_URI}&state=${process.env.NAVER_STATE}`;
+  console.log("🚀 req.session:", req.session);
+  if (!req.session) {
+    console.error("🚨 세션이 설정되지 않음!");
+    return res.status(500).json({ message: "세션이 설정되지 않았습니다." });
+  }
+
+  const state = Math.random().toString(36).substring(7);
+  req.session.naverState = state; // session에 저장
+
+  const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NAVER_CLIENT_ID}&redirect_uri=${process.env.NAVER_REDIRECT_URI}&state=${state}`;
+
+  console.log("🔹 네이버 로그인 URL:", naverAuthUrl);
   res.redirect(naverAuthUrl);
 };
 
@@ -15,10 +27,10 @@ const redirectToNaver = (req, res) => {
 const handleNaverCallback = async (req, res) => {
   const { code, state } = req.query;
 
-  // state 값 확인 (예시: 세션에 저장한 state 값과 비교)
-  // if (!state || state !== req.session.naverState) {
-  //   return res.status(400).json({ message: "Invalid state parameter" });
-  // }
+  // state 값 확인
+  if (!state || state !== req.session.naverState) {
+    return res.status(400).json({ message: "Invalid state parameter" });
+  }
 
   if (!code) {
     return res
@@ -42,7 +54,7 @@ const handleNaverCallback = async (req, res) => {
       }
     );
 
-    console.log("네이버 토큰 응답:", response.data); // 로그 추가
+    console.log("네이버 토큰 응답:", response.data);
 
     const { access_token } = response.data;
     if (!access_token) {
@@ -63,19 +75,25 @@ const handleNaverCallback = async (req, res) => {
     // 🔹 DB에서 이메일 확인
     let user = await User.findOne({ where: { email: naverUser.email } });
 
+    // 🔹 birthyear + birthday 조합 (YYYY-MM-DD 형식으로 변환)
+    let birthDate = "1900-01-01"; // 기본값 설정
+    if (naverUser.birthyear && naverUser.birthday) {
+      // birthday가 MM-DD 형식이므로 YYYY-MM-DD 형식으로 변환
+      const [month, day] = naverUser.birthday.split("-");
+      birthDate = `${naverUser.birthyear}-${month}-${day}`;
+    }
+
     if (!user) {
       // 🔹 기존 사용자가 없으면 새로 가입 처리
       user = await User.create({
         name: naverUser.name,
         email: naverUser.email,
-        phone: naverUser.mobile.replace(/-/g, ""), // '-' 제거
-        gender: naverUser.gender === "M" ? "M" : "F", // 네이버는 'M' 또는 'F'만 반환
-        birthDate: naverUser.birthyear
-          ? `${naverUser.birthyear}-${naverUser.birthday}`
-          : null, // 생년월일이 있는 경우 변환
-        profile_pic: naverUser.profile_image || "/images/image.jpg", // 프로필 이미지 없으면 기본 이미지
+        phone: naverUser.mobile ? naverUser.mobile.replace(/-/g, "") : null, // '-' 제거 및 예외 처리
+        gender: naverUser.gender === "M" ? "M" : "F",
+        birthDate: birthDate, // 🔹 형식 변환된 값 저장
+        profilePpic: naverUser.profile_image || "/images/image.jpg",
         socialType: "naver",
-        password: null, // 소셜 로그인은 비밀번호 없음
+        password: "", // 빈 문자열로 저장하여 notNull 오류 방지
       });
     }
 
