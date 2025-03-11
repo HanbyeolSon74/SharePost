@@ -10,7 +10,10 @@
   <body>
     <div class="allWrapper">
       <!-- 헤더 만들기 -->
-      <div class="shopHeader"><%- include('header.ejs') %></div>
+      <div class="shopHeader">
+        <%- include('header.ejs', { naverClientId: naverClientId,
+        naverCallbackUrl: naverCallbackUrl }) %>
+      </div>
       <!-- 본문 시작 -->
       <div class="contentMainWrapBox">
         <div class="categoryBox"></div>

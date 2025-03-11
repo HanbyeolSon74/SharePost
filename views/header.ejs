@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script
       type="text/javascript"
-      src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-      charset="utf-8"
+      src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
     ></script>
 
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -51,16 +50,16 @@
             <li class="menu-item menuItem" id="projects">
               <a href="#">BOARD</a>
               <div class="dropdownMenu" id="projects-menu">
-                <a href="#">JENNIE COLLAB </a>
-                <a href="#">NEWJEANS COLLAB </a>
-                <a href="#">SINSA STORE OPEN</a>
-                <a href="#">BIRTH CAKE</a>
-                <a href="#">PURPOSE CAKE</a>
-                <a href="#">SEONGSU STORE OPEN</a>
+                <a href="/">JENNIE COLLAB </a>
+                <a href="/">NEWJEANS COLLAB </a>
+                <a href="/">SINSA STORE OPEN</a>
+                <a href="/">BIRTH CAKE</a>
+                <a href="/">PURPOSE CAKE</a>
+                <a href="/">SEONGSU STORE OPEN</a>
               </div>
             </li>
             <li class="menu-item" id="sns">
-              <a href="#">COMMUNITY</a>
+              <a href="#" onclick="alert('준비 중입니다.')">COMMUNITY</a>
             </li>
           </ul>
         </nav>
@@ -134,7 +133,7 @@
             </div>
           </div>
           <div class="snsBtns">
-            <div class="naverLogin" id="naver_id_login">
+            <div class="naverLogin" id="naverIdLogin">
               <a
                 ><span
                   ><img src="/images/naver_btn.png" alt="naverlogin" /></span
@@ -155,4 +154,22 @@
     <script src="/js/header.js"></script>
     <script src="/js/login.js"></script>
   </body>
+  <script>
+    window.naverLogin = new naver.LoginWithNaverId({
+      clientId: "<%= naverClientId %>", // 네이버 클라이언트 ID
+      callbackUrl: "<%= naverCallbackUrl %>", // 네이버 콜백 URL
+      isPopup: false,
+      loginButton: { color: "green", type: 3, height: 60 },
+    });
+    naverLogin.init();
+
+    // 네이버 로그인 버튼 클릭 시 로그인 시작
+    naverLogin.getLoginStatus(function (status) {
+      if (status && naverLogin.user) {
+        console.log("네이버 로그인 상태: ", status);
+      } else {
+        console.log("로그인 필요");
+      }
+    });
+  </script>
 </html>

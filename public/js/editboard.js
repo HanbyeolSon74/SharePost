@@ -13,7 +13,7 @@ window.onload = function () {
     initialEditType: "wysiwyg",
     placeholder: "내용을 입력해 주세요.",
     previewStyle: "vertical",
-    initialValue: "<%= data.content %>", // 기존 내용 불러오기
+    initialValue: "<%= data.content %>",
   });
 };
 
@@ -77,7 +77,7 @@ const editData = (event) => {
     .then((res) => {
       if (res.status === 200) {
         alert("게시물이 수정되었습니다.");
-        window.location.href = "/board/main"; // 수정 후 게시판 목록 페이지로 이동
+        window.location.href = "/board/main";
       } else {
         alert("게시물 수정 실패. 다시 시도해주세요.");
       }

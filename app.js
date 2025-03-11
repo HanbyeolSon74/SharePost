@@ -59,7 +59,10 @@ app.use("/", pageRoutes); // EJS 페이지 연결
 
 // 기본 라우트 (메인 페이지)
 app.get("/", (req, res) => {
-  res.render("main");
+  res.render("main", {
+    naverClientId: process.env.NAVER_CLIENT_ID,
+    naverCallbackUrl: process.env.NAVER_CLIENT_SECRET,
+  });
 });
 
 // ✅ DB 연결 및 서버 실행

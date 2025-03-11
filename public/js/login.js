@@ -3,16 +3,60 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginBtn = document.querySelector(".loginBtn");
   const closeModal = document.getElementById("closeModal");
 
+  // 페이지 로드 후 URL에 토큰이 있는지 확인하고 로컬 스토리지에 저장
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get("token");
+
+  if (token) {
+    // 토큰이 URL에 포함되어 있으면 로컬스토리지에 저장
+    localStorage.setItem("token", token);
+  }
+  // 네이버 로그인 확인 함수
+  function checkNaverLogin(callback) {
+    if (typeof naverLogin !== "undefined") {
+      naverLogin.getLoginStatus((status) => {
+        if (status && naverLogin.user) {
+          callback(true);
+        } else {
+          callback(false);
+        }
+      });
+    } else {
+      callback(false);
+    }
+  }
+
+  function checkToken() {
+    const token = localStorage.getItem("token");
+    const cookies = document.cookie.split("; ");
+    const refreshTokenCookie = cookies.find((cookie) =>
+      cookie.startsWith("refreshToken=")
+    );
+    let refreshToken = null;
+
+    if (refreshTokenCookie) {
+      refreshToken = refreshTokenCookie.split("=")[1];
+    }
+    return { token, refreshToken };
+  }
   // 모달 열기
   loginBtn.addEventListener("click", function () {
-    const token = localStorage.getItem("token");
-    if (token) {
-      window.location.href = "/editprofile";
+    const { token, refreshToken } = checkToken();
+
+    if (token || refreshToken) {
+      // 토큰이 있으면 프로필 수정 페이지로 이동
+      window.location.href = "/profile/editprofile";
     } else {
-      loginModal.style.display = "flex";
+      checkNaverLogin(function (isNaverLoggedIn) {
+        if (isNaverLoggedIn) {
+          // 네이버 로그인 상태일 경우
+          window.location.href = "/profile/editprofile";
+        } else {
+          loginModal.style.display = "flex"; // 로그인 안 되어 있으면 모달창 열기
+        }
+      });
     }
   });
-
   // 모달 닫기
   closeModal.addEventListener("click", function () {
     loginModal.style.display = "none";
@@ -46,8 +90,6 @@ document
       const response = await axios.post("/auth/login", logindata, {
         headers: { "Content-Type": "application/json" },
       });
-
-      console.log("응답 데이터:", response.data); // 응답 데이터 확인
       if (response.status === 200 && response.data.accessToken) {
         alert("로그인 성공!");
 
@@ -78,11 +120,9 @@ const goToFindPasswordPage = () => {
 };
 
 // 네이버 로그인 axios
-document
-  .getElementById("naver_id_login")
-  .addEventListener("click", function () {
-    window.location.href = "http://localhost:3000/auth/login/naver";
-  });
+document.getElementById("naverIdLogin").addEventListener("click", function () {
+  window.location.href = "http://localhost:3000/auth/login/naver";
+});
 
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
