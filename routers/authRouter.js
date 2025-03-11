@@ -30,7 +30,7 @@ router.get("/login/naver", naverController.redirectToNaver); // 네이버 로그
 router.get("/login/naver/callback", naverController.handleNaverCallback); // 네이버 로그인 콜백 (GET 요청)
 
 // 카카오 로그인 라우트
-router.get("/kakao/callback", kakaoController.kakaoLogin); // 카카오 로그인 콜백
+router.get("/kakao/callback", kakaoController.kakaoCallback); // 카카오 로그인 콜백
 
 // 보호된 라우터 예시 (JWT 토큰 검증 필요)
 router.get("/some/protected/api", verifyToken, (req, res) => {
