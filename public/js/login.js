@@ -131,15 +131,19 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
+  // **카카오 로그인 SDK 초기화**
   Kakao.init("d81690655f6e24327425d0479d82e55f");
 
+  // 카카오 로그인 버튼 클릭 시 동작
   document
     .getElementById("kakao-login-btn")
     .addEventListener("click", function () {
       Kakao.Auth.login({
         scope: "account_email", // 이메일 권한 요청
+        throughTalk: false,
         success: function (authObj) {
           const accessToken = authObj.access_token;
+          // 로그인 후 콜백 URL로 리디렉션
           window.location.href = `/auth/kakao/callback?access_token=${accessToken}`;
         },
         fail: function (err) {
