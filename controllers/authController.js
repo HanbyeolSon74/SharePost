@@ -77,7 +77,7 @@ module.exports = {
       });
 
       // ✅ 액세스 토큰 반환
-      res.json({ success: true, message: "로그인 성공!" });
+      res.json({ success: true, message: "로그인 성공!", accessToken });
     } catch (error) {
       console.error("로그인 오류:", error);
       res.status(500).json({ success: false, message: "서버 오류 발생" });

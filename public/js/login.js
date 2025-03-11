@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // 토큰 저장 함수 (HTTPS 여부 확인)
   function saveTokenToCookie(token, refreshToken) {
     const isSecure = window.location.protocol === "https:";
-    const cookieOptions = isSecure ? "SameSite=None; Secure" : "SameSite=Lax"; // 로컬에서는 Lax 사용
+    const cookieOptions = isSecure ? "SameSite=None; Secure" : "SameSite=Lax";
 
     document.cookie = `token=${token}; path=/; ${cookieOptions}`;
     document.cookie = `refreshToken=${refreshToken}; path=/; ${cookieOptions}`;
