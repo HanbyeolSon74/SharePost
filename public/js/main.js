@@ -150,6 +150,7 @@ document.querySelectorAll(".allCate").forEach((cateElement) => {
   cateElement.addEventListener("click", function () {
     selectedCategory = cateElement.dataset.category; // 클릭한 카테고리로 변경
     console.log("선택된 카테고리:", selectedCategory); // 카테고리 변경 확인용 로그
+    currentPage = 1; // 카테고리 변경 시 첫 번째 페이지로 리셋
     fetchPosts(); // 게시물 다시 불러오기
   });
 });

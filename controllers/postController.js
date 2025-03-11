@@ -74,7 +74,11 @@ module.exports = {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 12;
       const offset = (page - 1) * limit;
-      const category = req.query.category === "ALL" ? null : req.query.category; // 카테고리 처리
+      const selectedCategory = req.query.category || "ALL"; // 카테고리가 주어지지 않으면 "ALL"
+
+      // 카테고리에 따른 조건 처리
+      const whereCondition =
+        selectedCategory !== "ALL" ? { name: selectedCategory } : {};
 
       const { count, rows } = await Post.findAndCountAll({
         include: [
@@ -82,7 +86,7 @@ module.exports = {
             model: Category,
             as: "category",
             attributes: ["name"],
-            where: category ? { name: category } : {}, // 카테고리가 있으면 필터링, 없으면 모든 게시물 반환
+            where: whereCondition, // 카테고리 필터링
           },
         ],
         order: [["createdAt", "DESC"]],
