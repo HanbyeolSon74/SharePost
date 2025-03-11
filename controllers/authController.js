@@ -128,12 +128,10 @@ module.exports = {
           message: "리프레시 토큰이 만료되었습니다. 다시 로그인해주세요.",
         });
       }
-      res
-        .status(401)
-        .json({
-          success: false,
-          message: "유효하지 않은 리프레시 토큰입니다.",
-        });
+      res.status(401).json({
+        success: false,
+        message: "유효하지 않은 리프레시 토큰입니다.",
+      });
     }
   },
 
@@ -163,12 +161,10 @@ module.exports = {
 
       res.json({ success: true, newAccessToken });
     } catch (error) {
-      res
-        .status(401)
-        .json({
-          success: false,
-          message: "유효하지 않은 리프레시 토큰입니다.",
-        });
+      res.status(401).json({
+        success: false,
+        message: "유효하지 않은 리프레시 토큰입니다.",
+      });
     }
   },
 };

@@ -3,7 +3,14 @@ const { User } = require("../models");
 
 // 토큰 검증 미들웨어
 function verifyToken(req, res, next) {
-  const token = req.headers["authorization"]?.split(" ")[1]; // Authorization 헤더에서 토큰 추출
+  const authHeader = req.headers["authorization"]; // Authorization 헤더 가져오기
+  if (!authHeader) {
+    console.log("Authorization 헤더 없음"); // 헤더가 없을 때
+    return res.status(403).json({ message: "로그인이 필요합니다." });
+  }
+
+  // "Bearer <token>" 형태에서 토큰만 추출
+  const token = authHeader.split(" ")[1];
 
   if (!token) {
     console.log("토큰 없음"); // 토큰이 없을 때 로그 출력
