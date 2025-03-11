@@ -193,7 +193,10 @@ module.exports = {
 
   // 아이디 찾기 페이지 렌더링
   findIdPage: (req, res) => {
-    res.render("findid");
+    res.render("findid", {
+      naverClientId: process.env.NAVER_CLIENT_ID,
+      naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
+    });
   },
 
   // 사용자 정보를 ID로 가져오는 함수

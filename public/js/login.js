@@ -152,3 +152,14 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 });
+const goToJoinPage = () => {
+  window.location.href = "/user/sign";
+};
+
+const goToFindIdPage = () => {
+  window.location.href = "/user/findid";
+};
+
+const goToFindPasswordPage = () => {
+  window.location.href = "/user/reset-password";
+};

@@ -165,7 +165,7 @@ body {
   background: rgba(255, 255, 255);
   border-radius: 15px;
   cursor: pointer;
-  color: brown;
+  color: black;
   display: none;
   z-index: 1;
   font-size: 12px;
@@ -195,6 +195,7 @@ body {
   display: flex;
   justify-content: center;
   padding-top: 30px;
+  padding-bottom: 80px;
 }
 
 #pagination {
@@ -223,18 +224,45 @@ body {
 .numberBtn {
   all: unset;
   display: inline-block;
-  font-size: 16px;
+  font-size: 13px;
   cursor: pointer;
   text-align: center;
   background-color: transparent;
   border: none;
-  padding: 0;
-  margin: 0;
+  padding: 0px 5px;
+  margin: 0 2px;
   color: inherit;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid black;
 }
 
 .numberBtn:hover {
   text-decoration: underline;
+  background-color: lightgray;
+  color: black;
+  border-color: darkgray;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.prev-button,
+.next-button {
+  font-size: 11px;
+  font-weight: bold;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 2px 5px;
+  margin: 0px 2px;
+}
+
+.prev-button:hover,
+.next-button:hover {
+  background-color: white;
+  background-color: lightgray;
+  color: black;
+  border-color: darkgray;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .mainPostsBox {
@@ -268,7 +296,7 @@ body {
 .postTitle {
   text-align: center;
   padding: 15px 0px;
-  color: brown;
+  color: rgb(0, 0, 0);
   cursor: pointer;
   font-size: 13px;
   font-weight: bold;
@@ -292,7 +320,4 @@ body {
   padding: 6px 10px;
   cursor: pointer;
   margin-right: 10px;
-}
-.btnPadding {
-  padding-right: 10px;
 }
