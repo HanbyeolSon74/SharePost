@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>POST</title>
-    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/css/post.css" />
   </head>
@@ -13,16 +12,9 @@
       <!-- 헤더 만들기 -->
       <div class="shopHeader"><%- include('header.ejs') %></div>
       <!-- 본문 시작 -->
-      <div class="contentWrapBox">
-        <div>
-          <h1 id="postTitle"></h1>
-          <img id="postImage" alt="Post Image" />
-          <div id="postContent"></div>
-        </div>
-        <!-- 본문 끝 -->
-      </div>
+      <div class="contentWrapBox"></div>
       <!-- 푸터 -->
-      <div class="my_footer"><%- include('footer.ejs') %></div>
+      <div class="my_post_footer"><%- include('footer.ejs') %></div>
     </div>
     <script src="/js/post.js"></script>
   </body>
