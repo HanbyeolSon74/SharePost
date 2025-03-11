@@ -1,26 +1,23 @@
-let selectedCategory = "ALL";
+let selectedCategory = "ALL"; // 기본값은 "ALL"
 let currentPage = 1;
 const limit = 12;
+let totalPages = 1; // 서버에서 받아온 전체 페이지 수
 
 window.onload = function () {
-  fetchPosts();
+  fetchPosts(); // 페이지 로드 시 게시물 불러오기
 };
 
 function fetchPosts() {
+  console.log("현재 선택된 카테고리:", selectedCategory); // 카테고리 로그 추가
   axios
-    .get(`/board/main?page=${currentPage}&limit=${limit}`)
+    .get(
+      `/board/main?page=${currentPage}&limit=${limit}&category=${selectedCategory}`
+    )
     .then((response) => {
       const posts = response.data.posts;
-      const totalPages = response.data.totalPages;
+      totalPages = response.data.totalPages; // 서버에서 받아온 totalPages 값 업데이트
       renderPosts(posts);
       renderPagination(totalPages);
-
-      document.querySelectorAll(".allCate").forEach((cateElement, index) => {
-        cateElement.addEventListener("click", () => {
-          selectedCategory = categories[index].name;
-          filterPosts(posts);
-        });
-      });
     })
     .catch((error) => {
       console.error("게시물 불러오기 실패:", error);
@@ -50,7 +47,6 @@ function renderPosts(posts) {
         <div class="postTitle" onclick="window.location.href='/board/post/view/${post.id}'">${post.title}</div>
       </div>
     `;
-
     mainPostsBox.appendChild(postElement);
   });
 
@@ -67,7 +63,7 @@ function renderPosts(posts) {
 
 function renderPagination(totalPages) {
   const pagination = document.querySelector("#pagination");
-  pagination.innerHTML = `
+  pagination.innerHTML = ` 
     <div class="prev-button firstBtn btnPadding" onclick="firstPage()">처음</div>
     <div class="prev-button btnPadding" onclick="prev()">이전</div>
     <div class="numberBtnWrap btnPadding">
@@ -84,18 +80,9 @@ function renderPagination(totalPages) {
   `;
 }
 
-function filterPosts(posts) {
-  const filteredPosts =
-    selectedCategory === "ALL"
-      ? posts
-      : posts.filter((post) => post.category.name === selectedCategory);
-
-  renderPosts(filteredPosts);
-}
-
 function goToPage(pageNumber) {
   currentPage = pageNumber;
-  fetchPosts();
+  fetchPosts(); // 페이지 변경 시 게시물 불러오기
 }
 
 function firstPage() {
@@ -112,17 +99,20 @@ function prev() {
 
 function next() {
   if (currentPage < totalPages) {
+    // currentPage가 totalPages보다 작으면 페이지를 증가시킨다.
     currentPage++;
-    fetchPosts();
+    fetchPosts(); // 페이지 변경 후 게시물 불러오기
   } else {
     alert("더 이상 게시물이 없습니다.");
   }
 }
+
 function lastPage() {
   currentPage = totalPages;
   fetchPosts();
 }
 
+// 카테고리 관련 처리
 const categoryBox = document.querySelector(".categoryBox");
 const categories = [
   { name: "ALL", img: "/images/all_icon.webp" },
@@ -132,13 +122,14 @@ const categories = [
   { name: "BIRTH", img: "/images/birth_icon.webp" },
   { name: "PURPOSE", img: "/images/purpost_icon.webp" },
 ];
+
 categoryBox.innerHTML = `
   <div class="cateAllBox">
     <div class="cateBox">
       ${categories
         .map(
           (category) => `
-          <div class="allCate">
+          <div class="allCate" data-category="${category.name}">
             <div class="cateNameImg">
               <div class="cateImgBox">
                 <div class="cateImgCircle"></div>
@@ -154,6 +145,16 @@ categoryBox.innerHTML = `
   </div>
 `;
 
+// 카테고리 클릭 시 해당 카테고리로 필터링
+document.querySelectorAll(".allCate").forEach((cateElement) => {
+  cateElement.addEventListener("click", function () {
+    selectedCategory = cateElement.dataset.category; // 클릭한 카테고리로 변경
+    console.log("선택된 카테고리:", selectedCategory); // 카테고리 변경 확인용 로그
+    fetchPosts(); // 게시물 다시 불러오기
+  });
+});
+
+// 게시물 작성 버튼
 const postBtnBox = document.querySelector(".postBtnBox");
 postBtnBox.innerHTML = `<div class="postBoard">게시물 작성하기</div>`;
 const postBoard = document.querySelector(".postBoard");
@@ -239,16 +240,3 @@ async function toggleLike(postId) {
 //           <div class="next-button btnPadding" onclick="next()">다음</div>
 //           <div class="next-button lastBtn" onclick="lastPage()">마지막</div>
 //         </div>`;
-
-// let currentPage = 1;
-// const limit = 9;
-// let totalPages = 1;
-// const pagesPerGroup = 3;
-
-// 게시물 작성 버튼
-// const postBtnBox = document.querySelector(".postBtnBox");
-// postBtnBox.innerHTML = `<div class="postBoard">게시물 작성하기</div>`;
-// const postBoard = document.querySelector(".postBoard");
-// postBoard.addEventListener("click", function () {
-//   window.location.href = "http://localhost:3000/board";
-// });
