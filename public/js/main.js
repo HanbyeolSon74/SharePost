@@ -128,6 +128,8 @@ async function toggleLike(postId) {
   }
   const isLiked = heartIcon.classList.contains("fa-solid");
   const newState = !isLiked;
+
+  // 좋아요 상태 UI 업데이트
   if (newState) {
     heartIcon.classList.remove("fa-regular");
     heartIcon.classList.add("fa-solid");
@@ -137,16 +139,23 @@ async function toggleLike(postId) {
   }
 
   try {
+    // 서버에 좋아요 상태 전송
     const response = await axios.post(`/board/post/${postId}/like`, {
       isLiked: newState,
     });
     if (response.status === 200) {
       console.log("좋아요 상태 업데이트 성공");
+
+      // 서버로부터 새로운 좋아요 수 받아오기 (null일 경우 0으로 처리)
+      console.log(response.data); // 서버 응답 확인
+      const updatedLikes = response.data.likes ?? 0;
+      console.log("새로운 좋아요 수:", updatedLikes);
     } else {
       console.error("좋아요 상태 업데이트 실패");
     }
   } catch (error) {
     console.error("좋아요 업데이트 에러:", error);
+    // 상태가 실패하면 UI 상태를 원래대로 되돌리기
     if (newState) {
       heartIcon.classList.remove("fa-solid");
       heartIcon.classList.add("fa-regular");

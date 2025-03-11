@@ -10,7 +10,7 @@ const {
   editPostPage,
   updatePost,
   likePost,
-  getPostPage, //렌더링이 없어서 수정
+  getPostPage,
 } = require("../controllers/postController");
 
 const favoriteController = require("../controllers/favoriteController");

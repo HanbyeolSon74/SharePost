@@ -203,25 +203,6 @@ module.exports = {
     }
   },
 
-  // 좋아요 처리
-  likePost: async (req, res) => {
-    try {
-      const postId = req.params.id;
-      const post = await Post.findByPk(postId);
-      if (!post) {
-        return res.status(404).send("게시물이 존재하지 않습니다.");
-      }
-
-      post.likes = post.likes + 1; // 좋아요 수 증가
-      await post.save();
-
-      res.json({ success: true });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("서버 오류");
-    }
-  },
-
   // 게시글 수정 페이지 (GET)
   editPostPage: async (req, res) => {
     const postId = req.params.id; // 수정하려는 게시글의 ID를 가져옵니다.
@@ -245,6 +226,41 @@ module.exports = {
     } catch (error) {
       console.error("게시글 수정 페이지 조회 오류:", error);
       res.status(500).json({ message: "서버 오류가 발생했습니다." });
+    }
+  },
+
+  // 좋아요 처리
+  likePost: async (req, res) => {
+    try {
+      const postId = req.params.id;
+      const post = await Post.findByPk(postId);
+
+      if (!post) {
+        return res.status(404).send("게시물이 존재하지 않습니다.");
+      }
+
+      // likes 값이 null이면 0으로 초기화
+      if (post.likes === null) {
+        post.likes = 0;
+      }
+
+      const isLiked = req.body.isLiked; // true (좋아요), false (좋아요 취소)
+
+      if (isLiked) {
+        post.likes += 1; // 좋아요 증가
+      } else {
+        post.likes = post.likes > 0 ? post.likes - 1 : 0; // 좋아요 취소
+      }
+
+      await post.save();
+
+      res.json({
+        success: true,
+        likes: post.likes, // 업데이트된 좋아요 수 반환
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("서버 오류");
     }
   },
 };
