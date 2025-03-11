@@ -131,7 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // **카카오 로그인**
   Kakao.init("d81690655f6e24327425d0479d82e55f");
 
   document
