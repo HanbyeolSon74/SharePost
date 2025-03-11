@@ -4,23 +4,26 @@ const { User } = require("../models");
 
 // 토큰 검증 미들웨어
 function verifyToken(req, res, next) {
-  console.log("요청된 쿠키:", req.cookies); // 🔥 쿠키 확인용 로그 추가
-
-  if (!req.cookies || !req.cookies.token) {
-    console.log("❌ 로그인 필요 - 쿠키 없음");
+  if (!req.cookies) {
+    console.log("쿠키 파서 미적용 또는 쿠키 없음");
     return res.status(403).json({ message: "로그인이 필요합니다." });
   }
 
-  const token = req.cookies.token;
+  const token = req.cookies.token; // req.cookies가 undefined라면 여기서 오류 발생 가능
+
+  if (!token) {
+    console.log("쿠키에 토큰 없음");
+    return res.status(403).json({ message: "로그인이 필요합니다." });
+  }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      console.log("❌ 토큰 검증 실패:", err.message);
+      console.log("토큰 검증 실패:", err);
       return res.status(401).json({ message: "유효하지 않은 토큰입니다." });
     }
 
     req.user = decoded;
-    console.log("✅ 토큰 검증 성공:", decoded);
+    console.log("토큰 검증 성공:", decoded);
     next();
   });
 }
