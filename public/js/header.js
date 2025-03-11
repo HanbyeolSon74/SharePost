@@ -46,3 +46,7 @@ document.addEventListener("click", function (event) {
     menuNav.classList.remove("open");
   }
 });
+
+document.querySelector(".likeBtn").addEventListener("click", function () {
+  window.location.href = "/board/favorites";
+});

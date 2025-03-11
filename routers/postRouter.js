@@ -13,6 +13,8 @@ const {
   getPostPage, //렌더링이 없어서 수정
 } = require("../controllers/postController");
 
+const favoriteController = require("../controllers/favoriteController");
+
 const BOARD_IMAGE_FIELD = "mainBoardImage";
 
 // 게시글 생성
@@ -32,6 +34,7 @@ router.get("/main", getPosts);
 
 // 게시글 수정 페이지
 router.get("/post/edit/:id", verifyToken, editPostPage);
+router.get("/favorites", favoriteController.getFavorites);
 
 // 게시글 수정 처리
 router.post(

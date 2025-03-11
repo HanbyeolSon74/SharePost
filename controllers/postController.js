@@ -144,7 +144,11 @@ module.exports = {
         return res.status(404).render("404"); // 게시글이 없으면 404 페이지
       }
 
-      res.render("post", { post }); // post.ejs에 데이터를 전달하여 렌더링
+      res.render("post", {
+        post,
+        naverClientId: process.env.NAVER_CLIENT_ID,
+        naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
+      });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "서버 오류" });
