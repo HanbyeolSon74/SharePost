@@ -63,13 +63,21 @@ module.exports = {
       // 🍪 리프레시 토큰을 쿠키에 저장
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "Strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        secure: process.env.NODE_ENV === "production", // HTTPS에서만 Secure 옵션 활성화
+        sameSite: "Strict", // SameSite 설정
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7일 동안 쿠키 유지
+      });
+
+      // 🍪 액세스 토큰을 쿠키에 저장
+      res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // HTTPS에서만 Secure 옵션 활성화
+        sameSite: "Strict", // SameSite 설정
+        maxAge: 1 * 60 * 60 * 1000, // 1시간 동안 쿠키 유지
       });
 
       // ✅ 액세스 토큰 반환
-      res.json({ success: true, message: "로그인 성공!", accessToken });
+      res.json({ success: true, message: "로그인 성공!" });
     } catch (error) {
       console.error("로그인 오류:", error);
       res.status(500).json({ success: false, message: "서버 오류 발생" });
@@ -79,12 +87,13 @@ module.exports = {
   // 🚪 로그아웃 (리프레시 토큰 삭제)
   logout: (req, res) => {
     res.clearCookie("refreshToken");
+    res.clearCookie("accessToken"); // 액세스 토큰도 쿠키에서 삭제
     res.json({ success: true, message: "로그아웃 성공" });
   },
 
   // 🔍 액세스 토큰 검증
   verifyAccessToken: (req, res) => {
-    const token = req.headers.authorization?.split(" ")[1];
+    const token = req.cookies.accessToken; // 쿠키에서 액세스 토큰 가져오기
 
     if (!token) {
       return res
@@ -104,7 +113,7 @@ module.exports = {
 
   // ♻️ 액세스 토큰 갱신
   refreshAccessToken: (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
+    const refreshToken = req.cookies.refreshToken; // 쿠키에서 리프레시 토큰 가져오기
 
     if (!refreshToken) {
       return res

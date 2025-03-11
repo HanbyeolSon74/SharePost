@@ -40,6 +40,10 @@ module.exports = {
         onUpdate: "CASCADE", // 사용자 업데이트 시 반영
         onDelete: "CASCADE", // 사용자가 삭제되면 해당 게시물도 삭제
       },
+      likes: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0, // 기본값을 0으로 설정
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -49,5 +53,9 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+  },
+
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable("posts");
   },
 };
