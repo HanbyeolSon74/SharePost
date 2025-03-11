@@ -137,19 +137,10 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("kakao-login-btn")
     .addEventListener("click", function () {
       Kakao.Auth.login({
+        scope: "account_email", // 이메일 권한 요청
         success: function (authObj) {
           const accessToken = authObj.access_token;
-
-          // 백엔드 서버로 액세스 토큰을 보내기 (예시: Axios 사용)
-          axios
-            .post("/kakao/callback", { accessToken })
-            .then((response) => {
-              console.log("로그인 성공:", response.data);
-              alert("카카오 로그인 성공!");
-            })
-            .catch((error) => {
-              console.error("로그인 에러:", error);
-            });
+          window.location.href = `/auth/kakao/callback?access_token=${accessToken}`;
         },
         fail: function (err) {
           console.error("카카오 로그인 실패:", err);
