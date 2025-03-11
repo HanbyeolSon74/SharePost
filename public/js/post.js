@@ -2,6 +2,11 @@
 window.onload = async function () {
   document.querySelector(".contentWrapBox").innerHTML = `
   <div class="postContentAllWrap">
+  <div class="btnsWrap">
+  
+  <div class="fixBtn">수정</div>
+  <div class="deleteBtn">삭제</div>
+  </div>
     <div class="postDetailWrap">
       <div class="postTitleUserWrap">
         <div class="titleWrap">
@@ -22,6 +27,7 @@ window.onload = async function () {
             <div class="postDate"></div>
           </div>
           </div>
+          
           <div class="postlikeBtn"></div>
           </div>
         </div>
@@ -76,14 +82,22 @@ window.onload = async function () {
       // document.querySelector(".userImage").src= post.userImage;
       document.querySelector(".userId").textContent = post.userId;
       document.querySelector(".postDate").textContent = formattedDate;
-      document.querySelector(
-        ".postlikeBtn"
-      ).innerHTML = `<div class="likeCircle">
+      document.querySelector(".postlikeBtn").innerHTML = `
+      
+      <i class="fa-solid fa-print print-icon"></i>
+      <div class="likeCircle">
   
     <i class="fa-regular fa-heart" id="heartIcon-${post.userId}"></i>
   
 </div>`;
-
+      const printIcon = document.querySelector(".print-icon");
+      if (printIcon) {
+        printIcon.addEventListener("click", function () {
+          window.print(); // 인쇄 대화상자 열기
+        });
+      } else {
+        console.log("프린트 아이콘을 찾을 수 없습니다.");
+      }
       document.getElementById("postContent").innerHTML = `${post.content}`;
       document.getElementById("postMainImage").src =
         post.mainimage || "/images/default.jpg";
