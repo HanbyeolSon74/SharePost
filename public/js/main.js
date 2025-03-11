@@ -111,12 +111,15 @@ function prev() {
 }
 
 function next() {
-  currentPage++;
-  fetchPosts();
+  if (currentPage < totalPages) {
+    currentPage++;
+    fetchPosts();
+  } else {
+    alert("더 이상 게시물이 없습니다.");
+  }
 }
-
 function lastPage() {
-  currentPage = 1000; // 임의로 큰 값으로 설정하여 마지막 페이지로 이동하게 함
+  currentPage = totalPages;
   fetchPosts();
 }
 
