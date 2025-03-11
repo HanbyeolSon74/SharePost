@@ -168,80 +168,25 @@ if (code && state) {
 // main.js
 
 // 카카오 초기화 (복사한 JavaScript 키 넣기)
-Kakao.init("KAKAO_JS_KEY");
-console.log(Kakao.isInitialized());
+Kakao.init("d81690655f6e24327425d0479d82e55f"); // .env에서 받은 카카오 JavaScript Key 사용
 
-fetch("/get-key")
-  .then((response) => response.json())
-  .then((data) => {
-    Kakao.init(data.kakaoKey);
-    console.log(Kakao.isInitialized()); // true면 초기화 성공
-  })
-  .catch((error) => console.error("Error:", error));
+document
+  .getElementById("kakao-login-btn")
+  .addEventListener("click", function () {
+    // 카카오 로그인
+    Kakao.Auth.login({
+      success: function (authObj) {
+        // 로그인 성공 시, 액세스 토큰을 서버에 전달하는 방식
+        const accessToken = authObj.access_token;
 
-// main.js
-
-fetch("/get-key")
-  .then((response) => response.json())
-  .then((data) => {
-    Kakao.init(data.kakaoKey); // 서버로부터 받은 키로 초기화
-    console.log(Kakao.isInitialized()); // true면 초기화 성공
-  })
-  .catch((error) => console.error("Error:", error));
-
-// 로그인 버튼 클릭 이벤트
-document.getElementById("kakao-login-btn").addEventListener("click", () => {
-  Kakao.Auth.login({
-    success: function (authObj) {
-      console.log(authObj); // 로그인 성공 정보 출력
-
-      // 사용자 정보 요청
-      Kakao.API.request({
-        url: "/v2/user/me",
-        success: function (res) {
-          console.log(res);
-
-          const nickname = res.properties.nickname; // 닉네임 정보
-          const email = res.kakao_account.email; // 이메일 정보
-
-          const userInfo = `
-                        <p>닉네임: ${nickname}</p>
-                        <p>이메일: ${email}</p>
-                    `;
-          document.getElementById("user-info").innerHTML = userInfo;
-
-          // 서버로 로그인 정보 보내기
-          fetch("/user/login/kakao", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              accessToken: authObj.access_token,
-              email: email,
-              nickname: nickname,
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-
-              // 로그인 성공 메시지 표시
-              alert(`${nickname}님 환영합니다!`);
-
-              // 메인 페이지로 이동
-              window.location.href = "/";
-            })
-            .catch((error) => console.error("Error:", error));
-        },
-        fail: function (error) {
-          console.error("사용자 정보 요청 실패:", error);
-        },
-      });
-    },
-    fail: function (err) {
-      console.error("로그인 실패:", err);
-    },
+        // GET 방식으로 리디렉션
+        window.location.href = `/kakao/callback?access_token=${accessToken}`;
+      },
+      fail: function (err) {
+        console.error("카카오 로그인 실패:", err);
+      },
+    });
   });
-});
 
 // 네이버 로그아웃 (내 정보에서 가능하게 해야할 듯)
 // document.getElementById("logout-btn").addEventListener("click", function () {

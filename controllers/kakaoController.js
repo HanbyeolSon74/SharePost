@@ -24,7 +24,7 @@ module.exports = {
             client_id: process.env.KAKAO_CLIENT_ID, // .env에 저장
             redirect_uri: process.env.KAKAO_REDIRECT_URI, // .env에 저장
             code,
-            client_secret: process.env.KAKAO_CLIENT_SECRET, // 보안 강화를 위해 필요
+            // client_secret: process.env.KAKAO_CLIENT_SECRET,
           },
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
