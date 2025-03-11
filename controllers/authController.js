@@ -64,7 +64,7 @@ module.exports = {
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // HTTPS에서만 Secure 옵션 활성화
-        sameSite: "Strict", // SameSite 설정
+        sameSite: "None", // SameSite 설정
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7일 동안 쿠키 유지
       });
 
@@ -72,12 +72,12 @@ module.exports = {
       res.cookie("accessToken", accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // HTTPS에서만 Secure 옵션 활성화
-        sameSite: "Strict", // SameSite 설정
+        sameSite: "None", // SameSite 설정
         maxAge: 1 * 60 * 60 * 1000, // 1시간 동안 쿠키 유지
       });
 
       // ✅ 액세스 토큰 반환
-      res.json({ success: true, message: "로그인 성공!", accessToken });
+      res.json({ success: true, message: "로그인 성공!" });
     } catch (error) {
       console.error("로그인 오류:", error);
       res.status(500).json({ success: false, message: "서버 오류 발생" });
