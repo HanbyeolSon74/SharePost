@@ -1,15 +1,20 @@
 let selectedCategory = "ALL";
+let currentPage = 1;
+const limit = 12;
+
 window.onload = function () {
-  // 게시물 전체 요청
   fetchPosts();
 };
-// 게시물 가져오는 함수
+
 function fetchPosts() {
   axios
-    .get("/board/main")
+    .get(`/board/main?page=${currentPage}&limit=${limit}`)
     .then((response) => {
       const posts = response.data.posts;
+      const totalPages = response.data.totalPages;
       renderPosts(posts);
+      renderPagination(totalPages);
+
       document.querySelectorAll(".allCate").forEach((cateElement, index) => {
         cateElement.addEventListener("click", () => {
           selectedCategory = categories[index].name;
@@ -28,13 +33,11 @@ function renderPosts(posts) {
     console.error("mainPostsBox를 찾을 수 없습니다.");
     return;
   }
-
   mainPostsBox.innerHTML = "";
 
   posts.forEach((post) => {
     const postElement = document.createElement("div");
     postElement.classList.add("post");
-
     postElement.innerHTML = `
       <div class="postWrap">
         <div class="postItem" onclick="window.location.href='/board/post/view/${post.id}'">
@@ -51,7 +54,6 @@ function renderPosts(posts) {
     mainPostsBox.appendChild(postElement);
   });
 
-  // Hover 효과 추가
   document.querySelectorAll(".postItem").forEach((post) => {
     const contentHover = post.querySelector(".contentHover");
     post.addEventListener("mouseenter", function () {
@@ -63,6 +65,25 @@ function renderPosts(posts) {
   });
 }
 
+function renderPagination(totalPages) {
+  const pagination = document.querySelector("#pagination");
+  pagination.innerHTML = `
+    <div class="prev-button firstBtn btnPadding" onclick="firstPage()">처음</div>
+    <div class="prev-button btnPadding" onclick="prev()">이전</div>
+    <div class="numberBtnWrap btnPadding">
+      ${Array.from(
+        { length: totalPages },
+        (_, i) =>
+          `<button class="numberBtn" onclick="goToPage(${i + 1})">${
+            i + 1
+          }</button>`
+      ).join("")}
+    </div>
+    <div class="next-button btnPadding" onclick="next()">다음</div>
+    <div class="next-button lastBtn" onclick="lastPage()">마지막</div>
+  `;
+}
+
 function filterPosts(posts) {
   const filteredPosts =
     selectedCategory === "ALL"
@@ -72,7 +93,33 @@ function filterPosts(posts) {
   renderPosts(filteredPosts);
 }
 
-// 카테고리 박스
+function goToPage(pageNumber) {
+  currentPage = pageNumber;
+  fetchPosts();
+}
+
+function firstPage() {
+  currentPage = 1;
+  fetchPosts();
+}
+
+function prev() {
+  if (currentPage > 1) {
+    currentPage--;
+    fetchPosts();
+  }
+}
+
+function next() {
+  currentPage++;
+  fetchPosts();
+}
+
+function lastPage() {
+  currentPage = 1000; // 임의로 큰 값으로 설정하여 마지막 페이지로 이동하게 함
+  fetchPosts();
+}
+
 const categoryBox = document.querySelector(".categoryBox");
 const categories = [
   { name: "ALL", img: "/images/all_icon.webp" },
@@ -103,6 +150,13 @@ categoryBox.innerHTML = `
     </div>
   </div>
 `;
+
+const postBtnBox = document.querySelector(".postBtnBox");
+postBtnBox.innerHTML = `<div class="postBoard">게시물 작성하기</div>`;
+const postBoard = document.querySelector(".postBoard");
+postBoard.addEventListener("click", function () {
+  window.location.href = "/board/post";
+});
 
 // 카테고리 호버 효과
 const cateImgBoxs = document.querySelectorAll(".cateImgBox");
@@ -189,9 +243,9 @@ async function toggleLike(postId) {
 // const pagesPerGroup = 3;
 
 // 게시물 작성 버튼
-const postBtnBox = document.querySelector(".postBtnBox");
-postBtnBox.innerHTML = `<div class="postBoard">게시물 작성하기</div>`;
-const postBoard = document.querySelector(".postBoard");
-postBoard.addEventListener("click", function () {
-  window.location.href = "http://localhost:3000/board";
-});
+// const postBtnBox = document.querySelector(".postBtnBox");
+// postBtnBox.innerHTML = `<div class="postBoard">게시물 작성하기</div>`;
+// const postBoard = document.querySelector(".postBoard");
+// postBoard.addEventListener("click", function () {
+//   window.location.href = "http://localhost:3000/board";
+// });

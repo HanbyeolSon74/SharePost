@@ -61,7 +61,14 @@ const createData = (event) => {
     data.append("mainBoardImage", file);
   }
 
-  const token = localStorage.getItem("token");
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  }
+
+  // 토큰 가져오기
+  const token = getCookie("token"); // 쿠키 이름이 "token"인 경우
   console.log("토큰:", token);
 
   if (!token) {
@@ -107,3 +114,7 @@ const createData = (event) => {
       }
     });
 };
+const naverClientId = "<%= naverClientId %>";
+const naverCallbackUrl = "<%= naverCallbackUrl %>";
+console.log("네이버 클라이언트 ID:", naverClientId);
+console.log("네이버 콜백 URL:", naverCallbackUrl);
