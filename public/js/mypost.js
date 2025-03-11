@@ -1,16 +1,25 @@
-getMyPosts();
+// 쿠키에서 토큰 값을 가져오는 함수
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+  return null;
+}
+
 async function getMyPosts() {
-  const token = localStorage.getItem("token");
+  const token = getCookie("token"); // 쿠키에서 토큰을 가져옴
 
   if (!token) {
     alert("로그인이 필요합니다.");
-    window.location.href = "/login";
+    window.location.href = "/login"; // 로그인 페이지로 리디렉션
     return;
   }
 
   try {
     const response = await axios.get("/posts/myposts", {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
+      },
     });
 
     const posts = response.data.posts;
@@ -33,11 +42,24 @@ function renderPosts(posts) {
   posts.forEach((post) => {
     const postElement = document.createElement("div");
     postElement.className = "post";
+
+    // 게시글 내용을 HTML로 렌더링 (이스케이프된 HTML을 다시 HTML로 변환)
     postElement.innerHTML = `
-            <h3>${post.title}</h3>
-            <p>${post.content}</p>
-            <small>작성일: ${new Date(post.createdAt).toLocaleString()}</small>
-        `;
+      <h3>${post.title}</h3>
+      <div class="post-content">${decodeHTML(
+        post.content
+      )}</div> <!-- HTML 디코딩 후 출력 -->
+      <img src="${post.mainimage}" alt="게시글 이미지" />
+      <small>작성일: ${new Date(post.createdAt).toLocaleString()}</small>
+    `;
+
     postContainer.appendChild(postElement);
   });
+}
+
+// HTML 이스케이프를 디코딩하는 함수
+function decodeHTML(str) {
+  const element = document.createElement("div");
+  element.innerHTML = str;
+  return element.textContent || element.innerText || ""; // innerText 또는 textContent 반환
 }

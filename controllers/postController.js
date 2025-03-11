@@ -233,6 +233,48 @@ module.exports = {
       res.status(500).json({ message: "서버 오류가 발생했습니다." });
     }
   },
+  // 내 게시글 조회
+  getMyPosts: async (req, res) => {
+    try {
+      const userId = req.user ? req.user.id : null;
+
+      if (!userId) {
+        return res.status(403).json({
+          success: false,
+          message: "로그인이 필요합니다.",
+        });
+      }
+
+      // 로그인한 사용자가 작성한 게시글 조회
+      const posts = await Post.findAll({
+        where: {
+          userId: userId,
+        },
+        order: [["createdAt", "DESC"]],
+      });
+
+      if (posts.length === 0) {
+        return res.status(200).json({
+          success: true,
+          posts: posts,
+          message: "작성한 게시글이 없습니다.",
+          posts: [],
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        posts,
+      });
+    } catch (error) {
+      console.error("내 게시글 조회 오류:", error);
+      res.status(500).json({
+        success: false,
+        message: "내 게시글을 조회하는 데 오류가 발생했습니다.",
+        error: error.message,
+      });
+    }
+  },
 
   // 좋아요 기능
   likePost: async (req, res) => {

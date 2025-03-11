@@ -1,7 +1,6 @@
-// routers/postRouter.js
 const express = require("express");
 const router = express.Router();
-const { verifyToken } = require("../middlewares/auth");
+const { verifyToken } = require("../middlewares/auth"); // verifyToken 미들웨어 추가
 const { uploadBoardImage } = require("../config/multer");
 const {
   createPost,
@@ -9,6 +8,7 @@ const {
   getPost,
   editPostPage,
   updatePost,
+  getMyPosts,
   likePost,
   getPostPage,
 } = require("../controllers/postController");
@@ -37,6 +37,9 @@ router.get("/post/view/:id", getPostPage);
 
 // 게시글 목록 조회
 router.get("/main", getPosts);
+
+// 내 게시글 보기
+router.get("/myposts", verifyToken, getMyPosts);
 
 // 게시글 수정 페이지
 router.get("/post/edit/:id", verifyToken, editPostPage);

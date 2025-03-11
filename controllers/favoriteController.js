@@ -1,3 +1,5 @@
+const { Favorite } = require("../models"); // Favorite 모델 임포트
+
 module.exports = {
   getFavorites: async (req, res) => {
     try {
