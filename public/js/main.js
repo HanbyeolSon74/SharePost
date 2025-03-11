@@ -121,11 +121,15 @@ cateImgBoxs.forEach((box) => {
 // 좋아요 버튼
 async function toggleLike(postId) {
   const heartIcon = document.getElementById(`heartIcon-${postId}`);
+  const likeCountElement = heartIcon
+    .closest(".post")
+    .querySelector(".likeCount"); // 좋아요 숫자 표시 요소
 
-  if (!heartIcon) {
-    console.error("아이콘이 선택되지 않았습니다.");
+  if (!heartIcon || !likeCountElement) {
+    console.error("아이콘이나 좋아요 숫자 요소가 선택되지 않았습니다.");
     return;
   }
+
   const isLiked = heartIcon.classList.contains("fa-solid");
   const newState = !isLiked;
 
@@ -147,9 +151,11 @@ async function toggleLike(postId) {
       console.log("좋아요 상태 업데이트 성공");
 
       // 서버로부터 새로운 좋아요 수 받아오기 (null일 경우 0으로 처리)
-      console.log(response.data); // 서버 응답 확인
       const updatedLikes = response.data.likes ?? 0;
       console.log("새로운 좋아요 수:", updatedLikes);
+
+      // 좋아요 수 UI 업데이트
+      likeCountElement.textContent = updatedLikes;
     } else {
       console.error("좋아요 상태 업데이트 실패");
     }
