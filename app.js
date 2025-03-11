@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const path = require("path");
 const sequelize = require("./config/database");
@@ -17,6 +18,7 @@ const app = express();
 // ✅ Body-parser 미들웨어
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // ✅ EJS 설정
 app.set("view engine", "ejs");
