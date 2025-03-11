@@ -10,22 +10,21 @@ document.addEventListener("DOMContentLoaded", function () {
   if (token) {
     // 토큰이 URL에 포함되어 있으면 로컬스토리지에 저장
     localStorage.setItem("token", token);
+    console.log("토큰 로컬스토리지에 저장:", token);
   }
-  // 네이버 로그인 확인 함수
+
+  // 네이버 로그인 상태 확인 함수
   function checkNaverLogin(callback) {
     if (typeof naverLogin !== "undefined") {
       naverLogin.getLoginStatus((status) => {
-        if (status && naverLogin.user) {
-          callback(true);
-        } else {
-          callback(false);
-        }
+        callback(status && naverLogin.user);
       });
     } else {
       callback(false);
     }
   }
 
+  // 토큰과 리프레시 토큰 가져오는 함수
   function checkToken() {
     const token = localStorage.getItem("token");
     const cookies = document.cookie.split("; ");
@@ -37,9 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (refreshTokenCookie) {
       refreshToken = refreshTokenCookie.split("=")[1];
     }
+
     return { token, refreshToken };
   }
-  // 모달 열기
+
+  // 로그인 버튼 클릭 시 동작
   loginBtn.addEventListener("click", function () {
     const { token, refreshToken } = checkToken();
 
@@ -49,14 +50,14 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       checkNaverLogin(function (isNaverLoggedIn) {
         if (isNaverLoggedIn) {
-          // 네이버 로그인 상태일 경우
-          window.location.href = "/profile/editprofile";
+          window.location.href = "/profile/editprofile"; // 네이버 로그인 상태일 경우
         } else {
           loginModal.style.display = "flex"; // 로그인 안 되어 있으면 모달창 열기
         }
       });
     }
   });
+
   // 모달 닫기
   closeModal.addEventListener("click", function () {
     loginModal.style.display = "none";
@@ -90,12 +91,28 @@ document
       const response = await axios.post("/auth/login", logindata, {
         headers: { "Content-Type": "application/json" },
       });
+
       if (response.status === 200 && response.data.accessToken) {
         alert("로그인 성공!");
 
         // JWT 토큰 저장
         localStorage.setItem("token", response.data.accessToken);
 
+        // Authorization 헤더로 토큰 포함하여 서버에 요청
+        const token = localStorage.getItem("token");
+        console.log("저장된 토큰:", token);
+        if (token) {
+          const response = await axios.get("/some/protected/api", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log(response.data);
+        } else {
+          console.log("토큰이 존재하지 않습니다.");
+        }
+
+        console.log(userResponse.data); // 서버에서 받은 응답 데이터
         document.querySelector("#loginModal").style.display = "none";
       } else {
         alert("토큰이 없습니다.");
@@ -106,51 +123,30 @@ document
     }
   });
 
-const goToJoinPage = () => {
-  window.location.href = "/user/sign";
-};
-
-const goToFindIdPage = () => {
-  window.location.href = "/user/findid";
-};
-
-// 주소 수정 필요
-const goToFindPasswordPage = () => {
-  window.location.href = "/user/reset-password";
-};
-
-// 네이버 로그인 axios
+// 네이버 로그인 처리
 document.getElementById("naverIdLogin").addEventListener("click", function () {
   window.location.href = "http://localhost:3000/auth/login/naver";
 });
 
+// 네이버 로그인 후 콜백 처리
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 const state = params.get("state");
 
-// 코드와 상태가 있을 경우 서버로 전송하여 액세스 토큰을 받아옴
-// 네이버 로그인 후 콜백 처리 (클라이언트)
 if (code && state) {
   axios
     .post("http://localhost:3000/auth/login/naver/callback", { code, state })
     .then((response) => {
       const { accessToken, user } = response.data;
-      console.log(response);
-      console.log("액세스 토큰:", accessToken); // 응답 확인
 
       if (accessToken) {
-        // 액세스 토큰 로컬 스토리지에 저장
         localStorage.setItem("accessToken", accessToken);
-        console.log("액세스 토큰 저장:", accessToken); // 디버깅 로그
-
-        // 추가적으로 필요한 데이터도 저장
-        localStorage.setItem("loginType", "naver"); // 로그인 타입 저장
-
-        alert(`${user.name}님, 로그인 성공! 메인 페이지로 이동합니다.`);
+        console.log("네이버 로그인 후 토큰 저장:", accessToken);
+        alert(`${user.name}님, 로그인 성공!`);
 
         setTimeout(() => {
           window.location.href = "/";
-        }, 2000); // 2000ms 후에 리다이렉트
+        }, 2000); // 로그인 후 2초 뒤 메인 페이지로 이동
       } else {
         alert("액세스 토큰이 없습니다.");
       }

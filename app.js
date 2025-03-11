@@ -39,8 +39,9 @@ app.use(
 // CORS 설정 (전체 애플리케이션에 적용)
 app.use(
   cors({
-    origin: "http://localhost:3000",
-    methods: "GET,POST",
+    origin: "http://localhost:3000", // 클라이언트 URL
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"], // Authorization 헤더를 허용
     credentials: true, // 쿠키와 같은 자격 증명 허용
   })
 );
