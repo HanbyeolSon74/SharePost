@@ -131,7 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // **카카오 로그인**
   Kakao.init("d81690655f6e24327425d0479d82e55f");
 
   document
@@ -140,7 +139,17 @@ document.addEventListener("DOMContentLoaded", function () {
       Kakao.Auth.login({
         success: function (authObj) {
           const accessToken = authObj.access_token;
-          window.location.href = `/kakao/callback?access_token=${accessToken}`;
+
+          // 백엔드 서버로 액세스 토큰을 보내기 (예시: Axios 사용)
+          axios
+            .post("/kakao/callback", { accessToken })
+            .then((response) => {
+              console.log("로그인 성공:", response.data);
+              alert("카카오 로그인 성공!");
+            })
+            .catch((error) => {
+              console.error("로그인 에러:", error);
+            });
         },
         fail: function (err) {
           console.error("카카오 로그인 실패:", err);

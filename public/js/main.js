@@ -167,20 +167,20 @@ async function toggleLike(postId) {
 }
 
 // 페이지네이션
-const pagination = document.querySelector("#pagination");
-pagination.innerHTML = `<div class="prev-button firstBtn btnPadding" onclick="firstPage()">처음</div>
-          <div class="prev-button btnPadding" onclick="prev()">이전</div>
-          <div class="numberBtnWrap btnPadding">
-            <button class="numberBtn" id="page" onclick="numBtn()">1</button>
-          </div>
-          <div class="next-button btnPadding" onclick="next()">다음</div>
-          <div class="next-button lastBtn" onclick="lastPage()">마지막</div>
-        </div>`;
+// const pagination = document.querySelector("#pagination");
+// pagination.innerHTML = `<div class="prev-button firstBtn btnPadding" onclick="firstPage()">처음</div>
+//           <div class="prev-button btnPadding" onclick="prev()">이전</div>
+//           <div class="numberBtnWrap btnPadding">
+//             <button class="numberBtn" id="page" onclick="numBtn()">1</button>
+//           </div>
+//           <div class="next-button btnPadding" onclick="next()">다음</div>
+//           <div class="next-button lastBtn" onclick="lastPage()">마지막</div>
+//         </div>`;
 
-let currentPage = 1;
-const limit = 9;
-let totalPages = 1;
-const pagesPerGroup = 3;
+// let currentPage = 1;
+// const limit = 9;
+// let totalPages = 1;
+// const pagesPerGroup = 3;
 
 // 게시물 작성 버튼
 const postBtnBox = document.querySelector(".postBtnBox");

@@ -263,4 +263,41 @@ module.exports = {
       res.status(500).send("서버 오류");
     }
   },
+  getPosts: async (req, res) => {
+    try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 12;
+      const offset = (page - 1) * limit;
+
+      const { count, rows } = await Post.findAndCountAll({
+        include: [
+          {
+            model: Category,
+            as: "category",
+            attributes: ["name"],
+          },
+        ],
+        order: [["createdAt", "DESC"]],
+        limit,
+        offset,
+      });
+
+      const totalPages = Math.ceil(count / limit);
+
+      res.status(200).json({
+        success: true,
+        posts: rows,
+        totalItems: count,
+        totalPages,
+        currentPage: page,
+      });
+    } catch (error) {
+      console.error("게시글 조회 오류:", error);
+      res.status(500).json({
+        success: false,
+        message: "게시글 목록을 가져오는 데 오류가 발생했습니다.",
+        error: error.message,
+      });
+    }
+  },
 };
