@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginBtn = document.querySelector(".loginBtn");
   const closeModal = document.getElementById("closeModal");
   const saveIdCheckbox = document.querySelector("#saveIdCheckbox");
+  const ONE_WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
 
   // 쿠키에서 값을 읽는 함수
   function getCookie(name) {
@@ -44,6 +45,14 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = "/profile/editprofile";
     } else {
       loginModal.style.display = "flex";
+      // 로그인 모달이 열릴 때 저장된 이메일과 체크박스 상태 확인
+      const savedEmail = loadEmailFromLocalStorage();
+      if (savedEmail) {
+        document.querySelector("#loginEmail").value = savedEmail;
+        saveIdCheckbox.checked = true; // 체크박스 체크 상태로 설정
+      } else {
+        saveIdCheckbox.checked = false; // 체크박스 체크 해제
+      }
     }
   });
 
@@ -57,7 +66,22 @@ document.addEventListener("DOMContentLoaded", function () {
       loginModal.style.display = "none";
     }
   });
+  // 로컬스토리지에서 이메일 불러오기
+  function loadEmailFromLocalStorage() {
+    const data = localStorage.getItem("savedEmail");
+    if (data) {
+      const parsedData = JSON.parse(data);
+      const now = new Date().getTime();
 
+      // 일주일이 지나면 삭제
+      if (now - parsedData.timestamp > ONE_WEEK_IN_MS) {
+        localStorage.removeItem("savedEmail");
+        return null;
+      }
+      return parsedData.email;
+    }
+    return null;
+  }
   // **로그인 처리**
   document
     .querySelector(".loginBtnModal")
@@ -79,7 +103,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // '아이디 저장' 체크박스가 선택되었으면 로컬 스토리지에 저장
       if (saveIdChecked) {
-        localStorage.setItem("savedEmail", loginEmail);
+        const now = new Date().getTime();
+        const data = { email: loginEmail, timestamp: now };
+        localStorage.setItem("savedEmail", JSON.stringify(data));
       }
 
       try {
@@ -106,18 +132,11 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // 페이지 로드 시 자동 이메일 입력
-      const savedEmail = localStorage.getItem("savedEmail");
-      if (savedEmail) {
-        loginEmail.value = savedEmail;
-        saveIdCheckbox.checked = true; // 로컬 스토리지에서 이메일이 있으면 체크박스도 체크
-      }
-    });
-
-  // 로그아웃 시 로컬 스토리지에서 이메일 삭제
-  document
-    .querySelector(".deleteSavedEmailBtn")
-    .addEventListener("click", function () {
-      localStorage.removeItem("savedEmail");
+      // const savedEmail = localStorage.getItem("savedEmail");
+      // if (savedEmail) {
+      //   loginEmail.value = savedEmail;
+      //   saveIdCheckbox.checked = true;
+      // }
     });
 
   // **네이버 로그인**
