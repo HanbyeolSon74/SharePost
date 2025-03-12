@@ -16,7 +16,7 @@ async function getMyPosts() {
   }
 
   try {
-    const response = await axios.get("/profile/myposts", {
+    const response = await axios.get("/profile/myposts-json", {
       params: {
         token: accessToken,
       },

@@ -72,7 +72,7 @@ exports.getUserPosts = async (req, res) => {
   try {
     const posts = await Post.findAll({
       where: { userId: req.user.id }, // 현재 로그인한 사용자의 게시글만 조회
-      order: [["createdAt", "DESC"]],
+      order: [["createdAt", "DESC"]], // 최신순으로 정렬
     });
 
     console.log("게시글 데이터:", posts); // 서버에서 받은 게시글 데이터 확인
@@ -80,14 +80,8 @@ exports.getUserPosts = async (req, res) => {
     const plainPosts = posts.map((post) => post.toJSON()); // JSON 형식으로 변환
     console.log("plainPosts 데이터:", plainPosts); // 변환된 데이터 확인
 
-    const naverClientId = process.env.NAVER_CLIENT_ID;
-    const naverCallbackUrl = process.env.NAVER_CALLBACK_URL;
-
-    res.render("myposts", {
-      posts: plainPosts, // 변환된 데이터를 클라이언트로 전달
-      naverClientId,
-      naverCallbackUrl,
-    });
+    // JSON 형식으로 응답 반환
+    res.json({ posts: plainPosts });
   } catch (error) {
     console.error("게시글 불러오기 실패:", error);
     res.status(500).send("서버 오류 발생");
