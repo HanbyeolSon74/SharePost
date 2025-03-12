@@ -1,13 +1,13 @@
 // footer.js (예시)
 window.onload = function () {
   // 쿠키에서 토큰 가져오기
-  const token = getCookie("token");
+  const accessToken = getCookie("accessToken");
 
-  if (token) {
+  if (accessToken) {
     // 토큰이 있으면 백엔드에 요청하여 유효성 검사
     axios
       .get("/api/verify-token", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${accessToken}` },
         withCredentials: true, // 쿠키 포함 요청
       })
       .then((response) => {
@@ -17,7 +17,7 @@ window.onload = function () {
         if (error.response && error.response.status === 401) {
           // 토큰 만료 또는 유효하지 않은 토큰
           document.cookie =
-            "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/"; // 쿠키에서 토큰 삭제
+            "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/"; // 쿠키에서 토큰 삭제
           alert("로그아웃 되었습니다.");
           window.location.href = "/"; // 로그인 페이지로 리디렉션
         }

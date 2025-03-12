@@ -107,7 +107,7 @@ const editData = (event) => {
   for (let pair of data.entries()) {
     console.log(pair[0] + ": " + pair[1]); // FormData에서 보내는 데이터 확인
   }
-  const token = getTokenFromCookie();
+  const accessToken = getTokenFromCookie();
 
   axios({
     method: "post",
@@ -115,7 +115,7 @@ const editData = (event) => {
     data: data,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   })
     .then((res) => {

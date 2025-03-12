@@ -7,9 +7,9 @@ function getCookie(name) {
 }
 
 async function getMyPosts() {
-  const token = getCookie("token"); // 쿠키에서 토큰을 가져옴
+  const accessToken = getCookie("accessToken"); // 쿠키에서 토큰을 가져옴
 
-  if (!token) {
+  if (!accessToken) {
     alert("로그인이 필요합니다.");
     window.location.href = "/login"; // 로그인 페이지로 리디렉션
     return;
@@ -18,7 +18,7 @@ async function getMyPosts() {
   try {
     const response = await axios.get("/profile/myposts", {
       headers: {
-        Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
+        Authorization: `Bearer ${accessToken}`, // Authorization 헤더에 토큰 추가
       },
     });
     console.log(response.data, "data?");

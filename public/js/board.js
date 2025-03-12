@@ -67,10 +67,10 @@ const createData = (event) => {
   }
 
   // 토큰 가져오기
-  const token = getCookie("token");
-  console.log("토큰:", token);
+  const accessToken = getCookie("accessToken");
+  console.log("토큰:", accessToken);
 
-  if (!token) {
+  if (!accessToken) {
     alert("로그인 후 다시 시도해 주세요.");
     return;
   }
@@ -82,7 +82,7 @@ const createData = (event) => {
     data: data,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
+      Authorization: `Bearer ${accessToken}`, // Authorization 헤더에 토큰 추가
     },
   })
     .then((res) => {

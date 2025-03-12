@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", function () {
       // 쿠키에서 토큰 삭제
-      document.cookie = "token=; path=/; max-age=0;";
+      document.cookie = "accessToken=; path=/; max-age=0;";
       document.cookie = "refreshToken=; path=/; max-age=0;";
 
       // 로그아웃 완료 메시지 및 페이지 리디렉션
