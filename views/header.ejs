@@ -75,7 +75,10 @@
           <br />
           <div class="searchInput">
             &nbsp;<i class="fa-solid fa-magnifying-glass"></i>&nbsp;
-            <input type="text" placeholder="SEARCH" />
+            <input type="text" placeholder="SEARCH" oninput="searchOninput()" />
+          </div>
+          <div class="postListBox">
+            <ul id="postList"></ul>
           </div>
         </div>
         <!-- 사이드바 버튼 -->
@@ -157,19 +160,10 @@
   <script>
     window.naverLogin = new naver.LoginWithNaverId({
       clientId: "<%= naverClientId %>", // 네이버 클라이언트 ID
-      callbackUrl: "<%= naverCallbackUrl %>", // 네이버 콜백 URL
+      callbackUrl: "<%= naverCallbackUrl %>",
       isPopup: false,
       loginButton: { color: "green", type: 3, height: 60 },
     });
     naverLogin.init();
-
-    // 네이버 로그인 버튼 클릭 시 로그인 시작
-    // naverLogin.getLoginStatus(function (status) {
-    //   if (status && naverLogin.user) {
-    //     console.log("네이버 로그인 상태: ", status);
-    //   } else {
-    //     console.log("로그인 필요");
-    //   }
-    // });
   </script>
 </html>
