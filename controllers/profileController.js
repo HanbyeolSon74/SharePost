@@ -76,7 +76,24 @@ module.exports = {
 
       await user.save();
 
-      res.json({ success: true, message: "회원 정보가 수정되었습니다." });
+      // 네이버 로그인 관련 값 추가
+      const naverClientId = process.env.NAVER_CLIENT_ID; // 환경변수에서 가져오기
+      const naverCallbackUrl = process.env.NAVER_CALLBACK_URL; // 환경변수에서 가져오기
+
+      // 수정된 사용자 정보를 렌더링하여 profile 페이지로 전달
+      res.render("editprofile", {
+        success: true,
+        message: "회원 정보가 수정되었습니다.",
+        user: {
+          email: user.email,
+          name: user.name,
+          phone: user.phone,
+          birthdate: user.birthDate,
+          profileImage: user.profilePic,
+        },
+        naverClientId, // 네이버 클라이언트 ID 전달
+        naverCallbackUrl, // 네이버 콜백 URL 전달
+      });
     } catch (error) {
       console.error("회원 정보 수정 오류:", error);
       res.status(500).json({ success: false, message: "서버 오류 발생" });
