@@ -17,6 +17,7 @@ const {
 const favoriteController = require("../controllers/favoriteController");
 
 const BOARD_IMAGE_FIELD = "mainBoardImage";
+
 router.get("/post", (req, res) => {
   res.render("board", {
     naverClientId: process.env.NAVER_CLIENT_ID,

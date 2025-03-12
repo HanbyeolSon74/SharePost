@@ -3,7 +3,7 @@ const router = express.Router();
 const { verifyToken } = require("../middlewares/auth");
 const { uploadProfilePic } = require("../config/multer");
 const {
-  getProfilePage,
+  getProfile,
   updateProfile,
   deleteProfile,
   getUserPosts,
@@ -12,7 +12,7 @@ const {
 } = require("../controllers/profileController");
 
 // 내 정보 수정 페이지 라우터
-router.get("/editprofile", verifyToken, getProfilePage); // 수정된 부분
+router.get("/editprofile", verifyToken, getProfile); // 수정된 부분
 
 // 로그인 상태 확인 라우트
 router.get("/check-login", (req, res) => {

@@ -4,130 +4,98 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-body {
-  padding-top: 58px;
-}
-
-/* 모달 배경 */
-.modal {
-  display: none; /* 기본적으로 숨겨두기 */
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* 반투명 배경 */
+  font-family: "Arial", sans-serif;
+  background-color: #f6f7f9;
 }
 
-/* 모달 콘텐츠 */
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  margin: 15% auto;
-  width: 300px;
-  border-radius: 8px;
-  text-align: center;
-}
-
-/* 모달 닫기 버튼 */
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 30px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* 비밀번호 입력 필드 스타일 */
-input[type="password"] {
-  width: 100%;
-  padding: 8px;
-  margin: 10px 0;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
+/* 전체 래퍼 */
 .wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-.contentWrapBox {
-  flex: 1;
-  text-align: center;
+  padding: 0 20px;
 }
 
-.my_footer {
-  margin-top: auto;
-}
-
+/* 폼 */
 form {
   background-color: #fff;
-  padding: 40px;
+  padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  width: 60%;
-  margin: 50px auto;
+  width: 100%;
+  max-width: 600px;
+  margin: 40px auto;
   border: 1px solid #ddd;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* 입력 필드 */
 label {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: #333;
+  margin-bottom: 8px;
   display: block;
-  margin-bottom: 10px;
-  text-align: left;
 }
 
 input[type="text"],
-select,
+input[type="email"],
 input[type="file"],
+input[type="password"],
 button[type="submit"] {
   width: 100%;
   padding: 12px;
+  margin-bottom: 20px;
   border-radius: 6px;
   border: 1px solid #ddd;
-  background-color: #f9f9f9;
+  background-color: #f7f7f7;
   font-size: 16px;
-  margin-bottom: 15px;
+  box-sizing: border-box;
   transition: all 0.3s ease;
 }
 
+/* 포커스 스타일 */
 input[type="text"]:focus,
-select:focus,
+input[type="email"]:focus,
 input[type="file"]:focus,
+input[type="password"]:focus,
 button[type="submit"]:focus {
   outline: none;
-  border-color: #111;
+  border-color: #4d90fe;
   background-color: #fff;
 }
 
+/* 수정 완료 버튼 */
 button[type="submit"] {
-  background-color: #111;
+  background-color: #4d90fe;
   color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  padding: 15px 0;
-  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
   border: none;
+  cursor: pointer;
+  padding: 15px 0;
+  border-radius: 6px;
   transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {
-  background-color: #333;
+  background-color: #357ae8;
 }
 
-/* 이미지 미리보기 */
+/* 수정 완료 버튼 비활성화 */
+button[type="submit"]:disabled {
+  background-color: #b5d0fe;
+  cursor: not-allowed;
+}
+
+/* 프로필 이미지 */
 #preview {
-  display: block;
-  max-width: 200px;
-  height: auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
   margin: 20px auto;
-  border-radius: 8px;
+  border: 3px solid #ddd;
 }
 
 /* 이미지 업로드 버튼 */
@@ -140,30 +108,98 @@ button[type="submit"]:hover {
   border-radius: 6px;
   cursor: pointer;
   border: 2px dashed #ddd;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .image-upload:hover {
   background-color: #fff;
-  border-color: #111;
+  border-color: #4d90fe;
 }
 
-.image-upload img {
-  max-width: 100%;
-  height: auto;
+/* 주소 입력 */
+#sample6_postcode {
+  width: 48%;
+  display: inline-block;
+}
+
+#sample6_address,
+#sample6_detailAddress,
+#sample6_extraAddress {
+  width: 48%;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+/* 비밀번호 변경 버튼 */
+#changePasswordBtn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: #f7f7f7;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#changePasswordBtn:hover {
+  background-color: #4d90fe;
+  color: white;
+}
+
+/* 버튼 그룹 */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.button-group button {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: #f0f0f0;
+  width: 48%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-group button:hover {
+  background-color: #4d90fe;
+  color: white;
+}
+
+/* 모달 배경 */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+/* 모달 콘텐츠 */
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
   border-radius: 8px;
+  width: 400px;
+  text-align: center;
 }
 
-/* 에러 메시지 */
-#name-error {
-  font-size: 14px;
-  color: #e74c3c;
-  font-weight: 600;
-}
-
-/* 상세 내용 편집기 */
-#details {
-  margin-bottom: 20px;
+/* 모달 닫기 버튼 */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* 반응형 디자인 */
@@ -173,8 +209,8 @@ button[type="submit"]:hover {
     width: 90%;
   }
 
-  button[type="submit"] {
-    font-size: 16px;
-    padding: 12px 0;
+  .button-group button {
+    width: 100%;
+    margin-top: 10px;
   }
 }

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Board</title>
+    <title>Profile Update</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/css/editprofile.css" />
     <link
@@ -12,101 +12,114 @@
     />
   </head>
   <body>
-    <div class="container">
-      <h2>내 정보 수정</h2>
-      <form
-        action="/profile/update"
-        method="POST"
-        enctype="multipart/form-data"
-      >
-        <!-- 프로필 이미지 -->
-        <div class="profile-img">
-          <img id="preview" src="<%= user.imageurl %>" alt="프로필 사진" />
+    <div class="wrapper">
+      <!-- 헤더 -->
+      <div class="shopHeader"><%- include('header.ejs') %></div>
+
+      <!-- 본문 시작 -->
+      <div class="container">
+        <h2>내 정보 수정</h2>
+        <form
+          action="/profile/update"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <!-- 프로필 이미지 -->
+          <div class="profile-img">
+            <img id="preview" src="<%= user.imageurl %>" alt="프로필 사진" />
+            <input
+              type="file"
+              name="profileImage"
+              id="profileImage"
+              accept="image/*"
+            />
+          </div>
+
+          <!-- 이메일 (수정 불가) -->
+          <label>이메일</label>
+          <input type="email" name="email" value="<%= user.email %>" readonly />
+
+          <!-- 이름 -->
+          <label>이름</label>
+          <input type="text" name="name" value="<%= user.name %>" required />
+
+          <!-- 전화번호 -->
+          <label>전화번호</label>
+          <input type="text" name="phone" value="<%= user.phone %>" required />
+
+          <!-- 주소 -->
+          <label>주소</label>
+          <input type="text" id="sample6_postcode" placeholder="우편번호" />
           <input
-            type="file"
-            name="profileImage"
-            id="profileImage"
-            accept="image/*"
+            type="button"
+            onclick="sample6_execDaumPostcode()"
+            value="우편번호 찾기"
+          /><br />
+          <input type="text" id="sample6_address" placeholder="주소" /><br />
+          <input
+            type="text"
+            id="sample6_detailAddress"
+            placeholder="상세주소"
           />
-        </div>
+          <input type="text" id="sample6_extraAddress" placeholder="참고항목" />
 
-        <!-- 이메일 (수정 불가) -->
-        <label>이메일</label>
-        <input type="email" name="email" value="<%= user.email %>" readonly />
+          <!-- 비밀번호 변경 버튼 -->
+          <button type="button" id="changePasswordBtn">비밀번호 변경</button>
 
-        <!-- 이름 -->
-        <label>이름</label>
-        <input type="text" name="name" value="<%= user.name %>" required />
+          <!-- 생년월일 -->
+          <label>생년월일</label>
+          <input
+            type="date"
+            name="birthDate"
+            id="birthDate"
+            value="<%= user.birthDate ? user.birthDate.split('T')[0] : '' %>"
+          />
 
-        <!-- 전화번호 -->
-        <label>전화번호</label>
-        <input type="text" name="phone" value="<%= user.phone %>" required />
-
-        <!-- 주소 -->
-        <label>주소</label>
-        <input type="text" id="sample6_postcode" placeholder="우편번호" />
-        <input
-          type="button"
-          onclick="sample6_execDaumPostcode()"
-          value="우편번호 찾기"
-        /><br />
-        <input type="text" id="sample6_address" placeholder="주소" /><br />
-        <input type="text" id="sample6_detailAddress" placeholder="상세주소" />
-        <input type="text" id="sample6_extraAddress" placeholder="참고항목" />
-
-        <!-- 비밀번호 변경 버튼 -->
-        <button type="button" id="changePasswordBtn">비밀번호 변경</button>
-
-        <!-- 생년월일 -->
-        <label>생년월일</label>
-        <input
-          type="text"
-          name="birthDate"
-          id="birthDate"
-          value="<%= user.birthDate ? user.birthDate.split('T')[0] : '' %>"
-        />
-
-        <!-- 버튼들 -->
-        <div class="button-group">
-          <button type="button" onclick="location.href='/profile/myposts'">
-            내 게시물 보기
-          </button>
-          <button type="submit">수정 완료</button>
-          <button type="button" id="logoutBtn">로그아웃</button>
-          <button type="button" id="deleteBtn">회원 탈퇴</button>
-        </div>
-      </form>
-
-      <!-- 비밀번호 변경 모달 -->
-      <div id="changePasswordModal" class="modal">
-        <div class="modal-content">
-          <span class="close-btn" id="closeModalBtn">&times;</span>
-          <h2>비밀번호 변경</h2>
-          <form id="passwordChangeForm">
-            <label for="newPassword">새 비밀번호</label>
-            <input
-              type="password"
-              id="newPassword"
-              name="newPassword"
-              required
-            />
-
-            <label for="confirmNewPassword">새 비밀번호 확인</label>
-            <input
-              type="password"
-              id="confirmNewPassword"
-              name="confirmNewPassword"
-              required
-            />
-            <!-- 비밀번호 일치 메시지를 표시할 span 요소 추가 -->
-            <span class="confirmNewPasswordText" style="color: red"></span>
-
-            <button type="submit" id="passwordChangeBtn" disabled>
-              비밀번호 변경
+          <!-- 버튼들 -->
+          <div class="button-group">
+            <button type="button" onclick="location.href='/profile/myposts'">
+              내 게시물 보기
             </button>
-          </form>
+            <button type="submit">수정 완료</button>
+            <button type="button" id="logoutBtn">로그아웃</button>
+            <button type="button" id="deleteBtn">회원 탈퇴</button>
+          </div>
+        </form>
+
+        <!-- 비밀번호 변경 모달 -->
+        <div id="changePasswordModal" class="modal">
+          <div class="modal-content">
+            <span class="close-btn" id="closeModalBtn">&times;</span>
+            <h2>비밀번호 변경</h2>
+            <form id="passwordChangeForm">
+              <label for="newPassword">새 비밀번호</label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                required
+              />
+
+              <label for="confirmNewPassword">새 비밀번호 확인</label>
+              <input
+                type="password"
+                id="confirmNewPassword"
+                name="confirmNewPassword"
+                required
+              />
+              <!-- 비밀번호 일치 메시지를 표시할 span 요소 추가 -->
+              <span class="confirmNewPasswordText" style="color: red"></span>
+
+              <button type="submit" id="passwordChangeBtn" disabled>
+                비밀번호 변경
+              </button>
+            </form>
+          </div>
         </div>
       </div>
+
+      <!-- 푸터 -->
+      <div class="my_footer"><%- include('footer.ejs') %></div>
     </div>
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
