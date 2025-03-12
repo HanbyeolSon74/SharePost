@@ -11,6 +11,7 @@ const {
   likePost,
   getPostPage,
   deletePost,
+  searchPosts,
 } = require("../controllers/postController");
 
 const favoriteController = require("../controllers/favoriteController");
@@ -49,6 +50,9 @@ router.post(
   uploadBoardImage.single(BOARD_IMAGE_FIELD),
   updatePost
 );
+
+// 게시물 검색
+router.post("/search", searchPosts);
 
 // 좋아요 처리
 router.post("/post/:id/like", likePost);

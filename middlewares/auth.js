@@ -26,13 +26,13 @@ function verifyToken(req, res, next) {
 
 // 게시물 확인 미들웨어
 function verifyTokenAndProceed(req, res, next) {
-  const token = req.cookies.token;
-  if (!token) {
+  const accessToken = req.cookies.accessToken;
+  if (!accessToken) {
     console.log("토큰 없음 - 인증 없이 진행");
     req.user = null; // 토큰이 없을 경우, 인증 없이 진행
     return next();
   }
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  jwt.verify(accessToken, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       console.log("토큰 검증 실패:", err);
       req.user = null; // 토큰이 만료된 경우, 인증 없이 진행

@@ -141,7 +141,7 @@ const handleNaverCallback = async (req, res) => {
 
     // 로그인 성공 후 리디렉션
     const redirectUrl = process.env.REDIRECT_URL || "http://localhost:3000";
-    return res.redirect(`${redirectUrl}?token=${accessToken}`);
+    return res.redirect(`${redirectUrl}?accessToken=${accessToken}`);
   } catch (error) {
     console.error("네이버 로그인 처리 중 오류 발생:", error.message);
     return res.status(500).json({ message: "네이버 로그인 처리 중 오류 발생" });

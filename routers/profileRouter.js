@@ -7,6 +7,7 @@ const {
   updateProfile,
   deleteProfile,
   getUserPosts,
+  renderPosts,
 } = require("../controllers/profileController");
 
 // 내 정보 수정 페이지 라우터
@@ -38,5 +39,9 @@ router.post("/profile/delete", verifyToken, deleteProfile);
 
 // 내 게시물 보기
 router.get("/myposts", verifyToken, getUserPosts);
+
+// 내 게시물 렌더링
+// router.post("/myposts/render", renderPosts); // 이 경로에서 데이터를 받아서 렌더링한 HTML을 클라이언트로 반환
+router.post("/myposts/render", renderPosts);
 
 module.exports = router;

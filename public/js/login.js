@@ -73,6 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      // 로그인 성공 시 이메일을 로컬 스토리지에 저장
+      localStorage.setItem("savedEmail", loginEmail);
+
       try {
         const response = await axios.post("/auth/login", {
           email: loginEmail,
@@ -95,6 +98,19 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         console.error("로그인 에러:", error);
       }
+
+      // 페이지가 로드될 때 자동으로 이메일 입력
+      const savedEmail = localStorage.getItem("savedEmail");
+      if (savedEmail) {
+        document.querySelector("#loginEmail").value = savedEmail; // 로컬 스토리지에서 이메일을 가져와 자동 입력
+      }
+    });
+
+  // 로그아웃 시 로컬 스토리지에서 이메일 삭제
+  document
+    .querySelector(".deleteSavedEmailBtn")
+    .addEventListener("click", function () {
+      localStorage.removeItem("savedEmail"); // 로컬 스토리지에서 삭제
     });
 
   // **네이버 로그인**
