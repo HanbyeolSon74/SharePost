@@ -75,16 +75,26 @@ const searchOninput = () => {
       } else {
         posts.forEach((post) => {
           const li = document.createElement("li");
-          li.textContent = post.title;
+
+          // 게시글 제목 추가
+          const title = document.createElement("h3");
+          title.textContent = post.title;
+
+          // 게시글 카테고리 추가
+          const category = document.createElement("p");
+          category.textContent = `카테고리: ${post.category}`;
+
+          // 게시글 이미지 추가 (이미지가 있다면)
           const imageContainer = document.createElement("div");
           if (post.mainImage) {
             const image = document.createElement("img");
             image.src = post.mainImage;
-            image.alt = post.title;
-            image.style.width = "100px";
+            image.alt = post.title; // 이미지에 대한 설명 추가
+            image.style.width = "100px"; // 이미지 크기 조정
             imageContainer.appendChild(image);
           }
 
+          // 게시글 항목에 제목, 카테고리, 이미지 포함
           li.appendChild(title);
           li.appendChild(category);
           li.appendChild(imageContainer);
