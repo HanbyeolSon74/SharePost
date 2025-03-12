@@ -309,4 +309,32 @@ module.exports = {
       res.status(500).send("서버 오류");
     }
   },
+  deletePost: async (req, res) => {
+    const postId = req.body.id;
+    const userId = req.user.id; // 로그인된 사용자 ID
+
+    try {
+      // 게시글 조회
+      const post = await Post.findByPk(postId);
+      if (!post) {
+        return res.status(404).json({ message: "게시글을 찾을 수 없습니다." });
+      }
+
+      // 게시글 소유자가 맞는지 확인
+      if (post.userId !== userId) {
+        return res
+          .status(403)
+          .json({ message: "게시글 삭제 권한이 없습니다." });
+      }
+
+      // 게시글 삭제
+      await post.destroy();
+      return res
+        .status(200)
+        .json({ success: true, message: "게시글이 삭제되었습니다." });
+    } catch (error) {
+      console.error("게시글 삭제 오류:", error);
+      return res.status(500).json({ message: "서버 오류가 발생했습니다." });
+    }
+  },
 };

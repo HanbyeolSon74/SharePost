@@ -54,6 +54,11 @@ window.onload = async function () {
         <a href="/"><div class="mainPageGo">다른 게시물 보기</div><a>
       </div>
     </div>
+    <div class="bottomBtnsWrap">
+      <div class="sharePostBtn">📢 신고</div>
+      <div class="reportPostBtn">📂 공유</div>
+      <div class="topBtn">△ top</div>
+    </div>
   </div>
 `;
 
@@ -110,4 +115,43 @@ window.onload = async function () {
     console.error("게시물 로딩 오류:", error);
     alert("게시물 데이터를 가져오는 중 오류가 발생했습니다.");
   }
+  document.querySelector(".topBtn").addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+
+  // 게시물 삭제
+  document
+    .querySelector(".deleteBtn")
+    .addEventListener("click", async function () {
+      if (confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
+        try {
+          const response = await axios.post(
+            "/board/post/delete",
+            {
+              id: postId,
+            },
+            {
+              withCredentials: true, // 쿠키를 자동으로 포함시킴
+            }
+          );
+          if (response.data.success) {
+            alert(response.data.message);
+            window.location.href = "/";
+          } else {
+            alert(response.data.message);
+          }
+        } catch (error) {
+          if (error.response) {
+            console.error("게시글 삭제 오류:", error.response.data.message);
+            alert(`${error.response.data.message}`);
+          } else {
+            console.error("네트워크 오류:", error.message);
+            alert("네트워크 오류가 발생했습니다.");
+          }
+        }
+      }
+    });
 };

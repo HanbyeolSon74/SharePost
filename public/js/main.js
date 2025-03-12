@@ -8,16 +8,40 @@ window.onload = function () {
 };
 
 function fetchPosts() {
-  console.log("현재 선택된 카테고리:", selectedCategory); // 카테고리 로그 추가
+  console.log("현재 선택된 카테고리:", selectedCategory);
   axios
     .get(
       `/board/main?page=${currentPage}&limit=${limit}&category=${selectedCategory}`
     )
     .then((response) => {
       const posts = response.data.posts;
-      totalPages = response.data.totalPages; // 서버에서 받아온 totalPages 값 업데이트
-      renderPosts(posts);
-      renderPagination(totalPages);
+      totalPages = response.data.totalPages;
+
+      if (posts.length === 0) {
+        // 게시물이 없을 때 처리
+        const mainPostsBox = document.querySelector(".mainPostsBox");
+        // mainPostsBox.innerHTML =
+        //   "<div class='noPostsMessage'>게시물이 없습니다.</div>";
+        mainPostsBox.innerHTML = "";
+
+        // 게시물이 없을 때 메시지 표시를 위한 새로운 요소 추가
+        const noPostsMessage = document.createElement("div");
+        noPostsMessage.className = "noPostsMessage";
+        noPostsMessage.textContent = "게시물이 없습니다.";
+
+        // 메시지를 부모 요소에 추가
+        mainPostsBox.appendChild(noPostsMessage);
+        // 페이지네이션 버튼 숨기기
+        const pagination = document.querySelector("#pagination");
+        pagination.style.display = "none";
+      } else {
+        renderPosts(posts);
+        renderPagination(totalPages);
+
+        // 페이지네이션 버튼 보이기
+        const pagination = document.querySelector("#pagination");
+        pagination.style.display = "flex";
+      }
     })
     .catch((error) => {
       console.error("게시물 불러오기 실패:", error);
@@ -82,7 +106,7 @@ function renderPagination(totalPages) {
 
 function goToPage(pageNumber) {
   currentPage = pageNumber;
-  fetchPosts(); // 페이지 변경 시 게시물 불러오기
+  fetchPosts();
 }
 
 function firstPage() {
@@ -99,17 +123,20 @@ function prev() {
 
 function next() {
   if (currentPage < totalPages) {
-    // currentPage가 totalPages보다 작으면 페이지를 증가시킨다.
     currentPage++;
-    fetchPosts(); // 페이지 변경 후 게시물 불러오기
+    fetchPosts();
   } else {
     alert("더 이상 게시물이 없습니다.");
   }
 }
 
 function lastPage() {
-  currentPage = totalPages;
-  fetchPosts();
+  if (currentPage === totalPages) {
+    alert("마지막 페이지입니다.");
+  } else {
+    currentPage = totalPages;
+    fetchPosts();
+  }
 }
 
 // 카테고리 관련 처리
@@ -148,10 +175,10 @@ categoryBox.innerHTML = `
 // 카테고리 클릭 시 해당 카테고리로 필터링
 document.querySelectorAll(".allCate").forEach((cateElement) => {
   cateElement.addEventListener("click", function () {
-    selectedCategory = cateElement.dataset.category; // 클릭한 카테고리로 변경
-    console.log("선택된 카테고리:", selectedCategory); // 카테고리 변경 확인용 로그
-    currentPage = 1; // 카테고리 변경 시 첫 번째 페이지로 리셋
-    fetchPosts(); // 게시물 다시 불러오기
+    selectedCategory = cateElement.dataset.category;
+    console.log("선택된 카테고리:", selectedCategory);
+    currentPage = 1;
+    fetchPosts();
   });
 });
 
