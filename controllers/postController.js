@@ -127,10 +127,13 @@ module.exports = {
           message: "게시글을 찾을 수 없습니다.",
         });
       }
+      const userIdFromToken = req.user.id;
+      const canEdit = post.userId === userIdFromToken;
 
       res.status(200).json({
         success: true,
         post,
+        canEdit,
       });
     } catch (error) {
       console.error("게시글 조회 오류:", error);
@@ -215,18 +218,22 @@ module.exports = {
   // 게시글 수정 페이지 렌더링
   editPostPage: async (req, res) => {
     const postId = req.params.id;
-
+    console.log(postId, "찍히나??");
     try {
       const post = await Post.findByPk(postId);
+      console.log(post, "???post");
       if (!post) {
         return res.status(404).json({ message: "게시글을 찾을 수 없습니다." });
       }
 
       const categories = await Category.findAll();
-
-      res.render("editPost", {
+      const naverClientId = process.env.NAVER_CLIENT_ID;
+      const naverCallbackUrl = process.env.NAVER_CALLBACK_URL;
+      res.render("editboard", {
         post,
         categories,
+        naverClientId,
+        naverCallbackUrl,
       });
     } catch (error) {
       console.error("게시글 수정 페이지 조회 오류:", error);

@@ -4,7 +4,8 @@ window.onload = async function () {
   <div class="postContentAllWrap">
   <div class="btnsWrap">
   
-  <div class="fixBtn">수정</div>
+  <div class="fixBtn" data-post-id="<%= post.id %>" data-post-user-id="<%= post.userId %>"
+  >수정</div>
   <div class="deleteBtn">삭제</div>
   </div>
     <div class="postDetailWrap">
@@ -77,10 +78,13 @@ window.onload = async function () {
     return date.toLocaleString("ko-KR", options);
   }
   try {
-    const response = await axios.get(`/board/post/${postId}`);
+    const response = await axios.get(`/board/post/${postId}`, {
+      withCredentials: true,
+    });
 
     if (response.status === 200) {
-      const post = response.data.post;
+      const { post, canEdit } = response.data;
+      // const post = response.data.post;
 
       const formattedDate = formatDate(post.updatedAt);
       document.getElementById("postTitle").textContent = post.title;
@@ -105,11 +109,20 @@ window.onload = async function () {
       document.getElementById("postContent").innerHTML = `${post.content}`;
       document.getElementById("postMainImage").src =
         post.mainimage || "/images/default.jpg";
-      console.log(window.FontAwesome);
+
       if (window.FontAwesome) {
         window.FontAwesome.dom.i2svg();
       }
-      console.log(window.FontAwesome);
+      const fixBtn = document.querySelector(".fixBtn");
+      const deleteBtn = document.querySelector(".deleteBtn");
+
+      if (canEdit) {
+        fixBtn.classList.add("show");
+        deleteBtn.classList.add("show");
+      } else {
+        fixBtn.classList.remove("show");
+        deleteBtn.classList.remove("show");
+      }
     }
   } catch (error) {
     console.error("게시물 로딩 오류:", error);
@@ -154,4 +167,9 @@ window.onload = async function () {
         }
       }
     });
+  // 게시물 수정
+  document.querySelector(".fixBtn").addEventListener("click", function () {
+    const postId = window.location.pathname.split("/").pop(); // URL에서 postId를 추출
+    window.location.href = `/board/post/edit/${encodeURIComponent(postId)}`;
+  });
 };

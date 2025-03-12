@@ -23,7 +23,7 @@
                     placeholder="제목을 입력해 주세요."
                     id="boardPostName"
                     name="boardPostName"
-                    value="<%= data.title %>"
+                    value="<%= post.title %>"
                     required
                   />
                   <div class="nameText"></div>
@@ -36,11 +36,11 @@
                     <option value="" disabled selected>
                       게시판을 선택해주세요.
                     </option>
-                    <option value="JENNIE COLLAB" <%= data.category_id === 'JENNIE COLLAB' ? 'selected' : '' %>>JENNIE COLLAB</option>
-                    <option value="NEWJEANS COLLAB" <%= data.category_id === 'NEWJEANS COLLAB' ? 'selected' : '' %>>NEWJEANS COLLAB</option>
-                    <option value="SINSA" <%= data.category_id === 'SINSA' ? 'selected' : '' %>>SINSA</option>
-                    <option value="BIRTH" <%= data.category_id === 'BIRTH' ? 'selected' : '' %>>BIRTH</option>
-                    <option value="PURPOSE" <%= data.category_id === 'PURPOSE' ? 'selected' : '' %>>PURPOSE</option>
+                    <option value="JENNIE COLLAB" <%= post.category_id === 'JENNIE COLLAB' ? 'selected' : '' %>>JENNIE COLLAB</option>
+                    <option value="NEWJEANS COLLAB" <%= post.category_id === 'NEWJEANS COLLAB' ? 'selected' : '' %>>NEWJEANS COLLAB</option>
+                    <option value="SINSA" <%= post.category_id === 'SINSA' ? 'selected' : '' %>>SINSA</option>
+                    <option value="BIRTH" <%= post.category_id === 'BIRTH' ? 'selected' : '' %>>BIRTH</option>
+                    <option value="PURPOSE" <%= post.category_id === 'PURPOSE' ? 'selected' : '' %>>PURPOSE</option>
                   </select>
                 </div>
                 <div class="typeText"></div>
@@ -70,7 +70,7 @@
                     <div id="imgpreviewbox">
                       <img
                         id="previewImg"
-                        src="<%= data.mainimage %>"
+                        src="<%= post.mainimage %>"
                         alt="preview"
                       />
                     </div>
@@ -94,7 +94,7 @@
           </div>
         </div>
       </div>
-      <input type="hidden" name="postId" value="<%= data.id %>" />
+      <input type="hidden" name="postId" value="<%= post.id %>" />
       <!-- 푸터 -->
       <div class="my_footer"><%- include('footer.ejs') %></div>
     </div>

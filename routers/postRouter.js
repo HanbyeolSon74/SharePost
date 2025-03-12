@@ -33,7 +33,7 @@ router.post(
 );
 
 // 게시글 상세 조회
-router.get("/post/:id", getPost);
+router.get("/post/:id", verifyToken, getPost);
 router.get("/post/view/:id", getPostPage);
 
 // 게시글 목록 조회

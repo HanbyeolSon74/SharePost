@@ -8,7 +8,6 @@ window.onload = function () {
 };
 
 function fetchPosts() {
-  console.log("현재 선택된 카테고리:", selectedCategory);
   axios
     .get(
       `/board/main?page=${currentPage}&limit=${limit}&category=${selectedCategory}`
@@ -176,7 +175,7 @@ categoryBox.innerHTML = `
 document.querySelectorAll(".allCate").forEach((cateElement) => {
   cateElement.addEventListener("click", function () {
     selectedCategory = cateElement.dataset.category;
-    console.log("선택된 카테고리:", selectedCategory);
+
     currentPage = 1;
     fetchPosts();
   });

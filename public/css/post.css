@@ -365,6 +365,7 @@ a {
   color: white;
   background-color: black;
   cursor: pointer;
+  visibility: hidden;
 }
 .fixBtn:hover {
   background-color: #333;
@@ -378,8 +379,13 @@ a {
   color: white;
   background-color: black;
   cursor: pointer;
+  visibility: hidden;
 }
 
+.fixBtn.show,
+.deleteBtn.show {
+  visibility: visible;
+}
 .deleteBtn:hover {
   background-color: #333;
 }
