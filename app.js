@@ -5,6 +5,7 @@ const session = require("express-session");
 const path = require("path");
 const sequelize = require("./config/database");
 const cors = require("cors");
+const { verifyToken } = require("./middlewares/auth");
 
 // 라우터 임포트
 const userRoutes = require("./routers/userRouter");
@@ -53,6 +54,9 @@ app.get("/get-key", (req, res) => {
   res.json({ key: "your-api-key" }); // 실제 API 키 또는 데이터를 반환
 });
 
+app.get("/api/verify-token", verifyToken, (req, res) => {
+  res.status(200).json({ message: "토큰이 유효합니다." });
+});
 // ✅ 라우터 등록
 app.use("/auth", authRoutes); // 로그인/로그아웃
 app.use("/user", userRoutes); // 회원 관련

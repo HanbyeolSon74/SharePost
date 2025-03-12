@@ -19,6 +19,13 @@ function verifyToken(req, res, next) {
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       console.log("토큰 검증 실패:", err);
+      if (err.name === "TokenExpiredError") {
+        console.log("토큰 만료 - 로그아웃 처리");
+        res.clearCookie("token");
+        return res
+          .status(401)
+          .json({ message: "토큰이 만료되었습니다. 다시 로그인 해주세요." });
+      }
       return res.status(401).json({ message: "유효하지 않은 토큰입니다." });
     }
 
@@ -44,4 +51,32 @@ function isNotLoggedIn(req, res, next) {
   res.redirect("/editprofile"); // 로그인 되어 있으면, 프로필 수정 페이지로 리디렉션
 }
 
-module.exports = { verifyToken, isLoggedIn, isNotLoggedIn };
+//게시물 확인 미들웨어
+function verifyTokenAndProceed(req, res, next) {
+  const token = req.cookies.token;
+
+  if (!token) {
+    console.log("토큰 없음 - 인증 없이 진행");
+    req.user = null; // 토큰이 없을 경우, 인증 없이 진행
+    return next();
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      console.log("토큰 검증 실패:", err);
+      req.user = null; // 토큰이 만료된 경우, 인증 없이 진행
+      return next(); // 에러를 발생시키지 않고 통과시킴
+    }
+
+    req.user = decoded;
+    console.log("토큰 검증 성공:", decoded);
+    next();
+  });
+}
+
+module.exports = {
+  verifyToken,
+  isLoggedIn,
+  isNotLoggedIn,
+  verifyTokenAndProceed,
+};

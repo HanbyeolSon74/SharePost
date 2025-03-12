@@ -454,3 +454,28 @@ a {
     margin-left: 0;
   }
 }
+
+/* 하단 버튼들 반응형 */
+@media (max-width: 1024px) {
+  .bottomBtnsWrap {
+    right: 80px;
+  }
+}
+@media (max-width: 768px) {
+  .bottomBtnsWrap {
+    right: 50px;
+  }
+
+  .sharePostBtn,
+  .reportPostBtn,
+  .topBtn {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bottomBtnsWrap {
+    right: 30px;
+  }
+}

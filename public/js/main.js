@@ -256,14 +256,3 @@ async function toggleLike(postId) {
     }
   }
 }
-
-// 페이지네이션
-// const pagination = document.querySelector("#pagination");
-// pagination.innerHTML = `<div class="prev-button firstBtn btnPadding" onclick="firstPage()">처음</div>
-//           <div class="prev-button btnPadding" onclick="prev()">이전</div>
-//           <div class="numberBtnWrap btnPadding">
-//             <button class="numberBtn" id="page" onclick="numBtn()">1</button>
-//           </div>
-//           <div class="next-button btnPadding" onclick="next()">다음</div>
-//           <div class="next-button lastBtn" onclick="lastPage()">마지막</div>
-//         </div>`;

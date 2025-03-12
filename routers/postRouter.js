@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { verifyToken } = require("../middlewares/auth"); // verifyToken 미들웨어 추가
+const { verifyToken, verifyTokenAndProceed } = require("../middlewares/auth"); // verifyToken 미들웨어 추가
 const { uploadBoardImage } = require("../config/multer");
 const {
   createPost,
@@ -33,7 +33,7 @@ router.post(
 );
 
 // 게시글 상세 조회
-router.get("/post/:id", verifyToken, getPost);
+router.get("/post/:id", verifyTokenAndProceed, getPost);
 router.get("/post/view/:id", getPostPage);
 
 // 게시글 목록 조회
