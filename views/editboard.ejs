@@ -3,8 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>editBoard</title>
+    <title>Edit Post</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
+    />
     <link rel="stylesheet" href="/css/editboard.css" />
   </head>
   <body>
@@ -14,77 +19,81 @@
       <!-- 본문 시작 -->
       <div class="contentWrapBox">
         <div class="addBox">
-          <div class="boardPostText"><p>게시물 수정</p></div>
+          <div class="boardPostText"><p>Edit Post</p></div>
           <div class="formBox">
             <form name="formName" method="post" enctype="multipart/form-data">
-              <div class="nameBox formBoxdiv">
-                <div class="inputBox">
-                  <input
-                    placeholder="제목을 입력해 주세요."
-                    id="boardPostName"
-                    name="boardPostName"
-                    value="<%= post.title %>"
-                    required
-                  />
-                  <div class="nameText"></div>
-                </div>
-              </div>
-              <!-- 상품 타입 선택 -->
-              <div class="formBoxdiv">
-                <div class="inputBox typebox">
-                  <select id="typeSelect" name="boardType">
-                    <option value="" disabled selected>
-                      게시판을 선택해주세요.
-                    </option>
-                    <option value="JENNIE COLLAB" <%= post.category_id === 'JENNIE COLLAB' ? 'selected' : '' %>>JENNIE COLLAB</option>
-                    <option value="NEWJEANS COLLAB" <%= post.category_id === 'NEWJEANS COLLAB' ? 'selected' : '' %>>NEWJEANS COLLAB</option>
-                    <option value="SINSA" <%= post.category_id === 'SINSA' ? 'selected' : '' %>>SINSA</option>
-                    <option value="BIRTH" <%= post.category_id === 'BIRTH' ? 'selected' : '' %>>BIRTH</option>
-                    <option value="PURPOSE" <%= post.category_id === 'PURPOSE' ? 'selected' : '' %>>PURPOSE</option>
-                  </select>
-                </div>
-                <div class="typeText"></div>
-              </div>
-              <!-- toast editer -->
-              <div class="contentBox formBoxdiv">
-                <div class="textareaBox">
-                  <div id="toastEditor"></div>
-                  <div class="contentText"></div>
-                </div>
-              </div>
-
-              <!-- 이미지 업로드 -->
-              <div class="formBoxdiv">
-                <div class="labelBox">
-                  <label for="mainBoardImage">게시글 메인 이미지 수정</label>
-                </div>
-                <input
-                  type="file"
-                  name="mainBoardImage"
-                  id="mainBoardImage"
-                  accept="image/*"
-                  required
-                />
-                <div class="imgRightBox">
-                  <div class="imgRightInBox">
-                    <div id="imgpreviewbox">
-                      <img
-                        id="previewImg"
-                        src="<%= post.mainimage %>"
-                        alt="preview"
+              <!-- 제목 -->
+              <div class="forminputsBox">
+                <div class="formTop">
+                  <div class="nameBox formBoxdiv">
+                    <div class="inputBox">
+                      <input
+                        placeholder="제목을 입력해 주세요."
+                        id="boardPostName"
+                        name="boardPostName"
+                        value="<%= post.title %>"
+                        required
                       />
+                      <div class="nameText"></div>
                     </div>
                   </div>
+                  <!-- 타입 선택 -->
+                  <div class="typeSelectBox formBoxdiv">
+                    <div class="inputBox typebox">
+                      <select id="typeSelect" name="boardType">
+                        <option value="" disabled>
+                          게시판을 선택해주세요.
+                        </option>
+                        <option value="JENNIE COLLAB" <%= post.category_id === 'JENNIE COLLAB' ? 'selected' : '' %>>JENNIE COLLAB</option>
+                        <option value="NEWJEANS COLLAB" <%= post.category_id === 'NEWJEANS COLLAB' ? 'selected' : '' %>>NEWJEANS COLLAB</option>
+                        <option value="SINSA" <%= post.category_id === 'SINSA' ? 'selected' : '' %>>SINSA</option>
+                        <option value="BIRTH" <%= post.category_id === 'BIRTH' ? 'selected' : '' %>>BIRTH</option>
+                        <option value="PURPOSE" <%= post.category_id === 'PURPOSE' ? 'selected' : '' %>>PURPOSE</option>
+                      </select>
+                    </div>
+                    <div class="typeText"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- toast editer -->
+              <div class="formBoxdiv toastBox">
+                <div class="formMiddle">
+                  <div class="textareaBox">
+                    <div id="toastEditor"><%= post.content %></div>
+                    <div class="contentText"></div>
+                    <div id="postContent" style="display: none;"><%= post.content %></div>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" name="postId" value="<%= post.id %>" />
+              <!-- 이미지 업로드 -->
+              <div class="formBoxdiv imageUpload">
+                <div class="formBottmon">
+                  <div class="imgRightBox">
+                    <div class="imgRightInBox">
+                      <div id="imgpreviewbox">
+                        <img id="previewImg" src="<%= post.mainimage %>" alt="preview" />게시글 메인 이미지를<br />
+                        등록해주세요.
+                      </div>
+                    </div>
+                  </div>
+                  <input
+                    type="file"
+                    name="mainBoardImage"
+                    id="mainBoardImage"
+                    onchange="imageonChange()"
+                    accept="image/*"
+                  />
                   <div class="imageupText"></div>
                 </div>
               </div>
 
               <!-- 버튼 -->
-              <div class="editBoardBtnWrap">
+              <div class="boardBtnWrap">
                 <button
                   type="submit"
-                  id="editBoardBtn"
-                  class="editBoardBtn"
+                  id="boardBtn"
+                  class="boardBtn"
                   onclick="editData(event)"
                 >
                   저장
@@ -94,11 +103,11 @@
           </div>
         </div>
       </div>
-      <input type="hidden" name="postId" value="<%= post.id %>" />
       <!-- 푸터 -->
       <div class="my_footer"><%- include('footer.ejs') %></div>
     </div>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
     <script src="/js/editboard.js"></script>
   </body>
 </html>

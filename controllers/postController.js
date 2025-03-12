@@ -127,8 +127,11 @@ module.exports = {
           message: "게시글을 찾을 수 없습니다.",
         });
       }
-      const userIdFromToken = req.user.id;
-      const canEdit = post.userId === userIdFromToken;
+      let canEdit = false;
+      if (req.user) {
+        const userIdFromToken = req.user.id;
+        canEdit = post.userId === userIdFromToken;
+      }
 
       res.status(200).json({
         success: true,
@@ -173,10 +176,10 @@ module.exports = {
   // 게시글 수정
   updatePost: async (req, res) => {
     try {
-      const postId = req.body.id;
-      const { title, content, categoryName } = req.body;
-
+      const postId = req.params.id; // URL 파라미터에서 postId 가져오기
+      const { title, content, category_id } = req.body; // 클라이언트에서 전달된 데이터 받기
       const post = await Post.findByPk(postId);
+
       if (!post) {
         return res.status(404).json({
           success: false,
@@ -185,8 +188,9 @@ module.exports = {
       }
 
       const category = await Category.findOne({
-        where: { name: categoryName.trim() },
+        where: { name: category_id },
       });
+
       if (!category) {
         return res.status(400).json({
           success: false,
@@ -194,10 +198,20 @@ module.exports = {
         });
       }
 
+      // 이미지 처리 (파일 업로드 부분)
+      let imageUrl = post.mainimage; // 기존 이미지 URL
+
+      if (req.file) {
+        // 새 이미지를 업로드한 경우
+        imageUrl = req.file.path;
+      }
+
+      // 게시글 업데이트
       await post.update({
         title,
         content,
         categoryId: category.id,
+        mainimage: imageUrl,
       });
 
       res.status(200).json({
@@ -218,10 +232,9 @@ module.exports = {
   // 게시글 수정 페이지 렌더링
   editPostPage: async (req, res) => {
     const postId = req.params.id;
-    console.log(postId, "찍히나??");
     try {
       const post = await Post.findByPk(postId);
-      console.log(post, "???post");
+
       if (!post) {
         return res.status(404).json({ message: "게시글을 찾을 수 없습니다." });
       }

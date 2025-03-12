@@ -78,9 +78,7 @@ window.onload = async function () {
     return date.toLocaleString("ko-KR", options);
   }
   try {
-    const response = await axios.get(`/board/post/${postId}`, {
-      withCredentials: true,
-    });
+    const response = await axios.get(`/board/post/${postId}`);
 
     if (response.status === 200) {
       const { post, canEdit } = response.data;
@@ -147,7 +145,7 @@ window.onload = async function () {
               id: postId,
             },
             {
-              withCredentials: true, // 쿠키를 자동으로 포함시킴
+              withCredentials: true,
             }
           );
           if (response.data.success) {

@@ -46,7 +46,6 @@ const createData = (event) => {
 
   // 데이터 추가
   data.append("title", form["boardPostName"].value);
-  // data.append("categoryId", form["boardType"].value);
 
   data.append("categoryName", form["boardType"].value);
 
@@ -68,7 +67,7 @@ const createData = (event) => {
   }
 
   // 토큰 가져오기
-  const token = getCookie("token"); // 쿠키 이름이 "token"인 경우
+  const token = getCookie("token");
   console.log("토큰:", token);
 
   if (!token) {
@@ -116,5 +115,3 @@ const createData = (event) => {
 };
 const naverClientId = "<%= naverClientId %>";
 const naverCallbackUrl = "<%= naverCallbackUrl %>";
-console.log("네이버 클라이언트 ID:", naverClientId);
-console.log("네이버 콜백 URL:", naverCallbackUrl);

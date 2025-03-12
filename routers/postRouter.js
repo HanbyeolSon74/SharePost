@@ -48,7 +48,7 @@ router.get("/favorites", favoriteController.getFavorites);
 
 // 게시글 수정 처리
 router.post(
-  "/edit",
+  "/post/update/:id",
   verifyToken,
   uploadBoardImage.single(BOARD_IMAGE_FIELD),
   updatePost
