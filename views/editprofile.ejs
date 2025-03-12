@@ -54,17 +54,16 @@
         <input type="text" id="sample6_detailAddress" placeholder="상세주소" />
         <input type="text" id="sample6_extraAddress" placeholder="참고항목" />
 
-        <!-- 비밀번호 변경 -->
-        <label>새 비밀번호</label>
-        <input type="password" name="password" placeholder="새 비밀번호 입력" />
+        <!-- 비밀번호 변경 버튼 -->
+        <button type="button" id="changePasswordBtn">비밀번호 변경</button>
 
         <!-- 생년월일 -->
         <label>생년월일</label>
         <input
-          type="date"
-          name="birth_date"
-          value="<%= user.birth_date %>"
-          required
+          type="text"
+          name="birthDate"
+          id="birthDate"
+          value="<%= user.birthDate ? user.birthDate.split('T')[0] : '' %>"
         />
 
         <!-- 버튼들 -->
@@ -77,6 +76,37 @@
           <button type="button" id="deleteBtn">회원 탈퇴</button>
         </div>
       </form>
+
+      <!-- 비밀번호 변경 모달 -->
+      <div id="changePasswordModal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" id="closeModalBtn">&times;</span>
+          <h2>비밀번호 변경</h2>
+          <form id="passwordChangeForm">
+            <label for="newPassword">새 비밀번호</label>
+            <input
+              type="password"
+              id="newPassword"
+              name="newPassword"
+              required
+            />
+
+            <label for="confirmNewPassword">새 비밀번호 확인</label>
+            <input
+              type="password"
+              id="confirmNewPassword"
+              name="confirmNewPassword"
+              required
+            />
+            <!-- 비밀번호 일치 메시지를 표시할 span 요소 추가 -->
+            <span class="confirmNewPasswordText" style="color: red"></span>
+
+            <button type="submit" id="passwordChangeBtn" disabled>
+              비밀번호 변경
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

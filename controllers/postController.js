@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Category, Post } = require("../models");
+const { Favorite, Category, Post } = require("../models");
 
 module.exports = {
   // 게시글 생성
@@ -265,7 +265,8 @@ module.exports = {
         return res.status(404).send("게시물이 존재하지 않습니다.");
       }
 
-      if (post.likes === null) {
+      // likes가 null일 경우 0으로 설정
+      if (post.likes === null || post.likes === undefined) {
         post.likes = 0;
       }
 
@@ -279,6 +280,8 @@ module.exports = {
 
       await post.save();
 
+      console.log("좋아요 수가 DB에 저장되었습니다:", post.likes); // 좋아요 수 로그 추가
+
       res.json({
         success: true,
         likes: post.likes,
@@ -286,36 +289,6 @@ module.exports = {
     } catch (error) {
       console.error("좋아요 처리 오류:", error);
       res.status(500).send("서버 오류");
-    }
-  },
-
-  // 게시글 삭제
-  deletePost: async (req, res) => {
-    const postId = req.body.id;
-    const userId = req.user.id; // 로그인된 사용자 ID
-
-    try {
-      // 게시글 조회
-      const post = await Post.findByPk(postId);
-      if (!post) {
-        return res.status(404).json({ message: "게시글을 찾을 수 없습니다." });
-      }
-
-      // 게시글 소유자가 맞는지 확인
-      if (post.userId !== userId) {
-        return res
-          .status(403)
-          .json({ message: "게시글 삭제 권한이 없습니다." });
-      }
-
-      // 게시글 삭제
-      await post.destroy();
-      return res
-        .status(200)
-        .json({ success: true, message: "게시글이 삭제되었습니다." });
-    } catch (error) {
-      console.error("게시글 삭제 오류:", error);
-      return res.status(500).json({ message: "서버 오류가 발생했습니다." });
     }
   },
 
@@ -367,6 +340,37 @@ module.exports = {
       });
     } catch (error) {
       console.error("게시글 검색 오류:", error);
+      res.status(500).json({
+        success: false,
+        message: "서버 오류가 발생했습니다.",
+        error: error.message,
+      });
+    }
+  },
+  // 게시물 삭제 처리
+  deletePost: async (req, res) => {
+    try {
+      const postId = req.body.id; // 게시물 ID를 body에서 가져옵니다.
+
+      // 게시물 찾기
+      const post = await Post.findByPk(postId);
+
+      if (!post) {
+        return res.status(404).json({
+          success: false,
+          message: "게시글을 찾을 수 없습니다.",
+        });
+      }
+
+      // 게시물 삭제
+      await post.destroy();
+
+      res.status(200).json({
+        success: true,
+        message: "게시글이 성공적으로 삭제되었습니다.",
+      });
+    } catch (error) {
+      console.error("게시글 삭제 오류:", error);
       res.status(500).json({
         success: false,
         message: "서버 오류가 발생했습니다.",

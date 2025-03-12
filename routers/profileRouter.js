@@ -8,6 +8,7 @@ const {
   deleteProfile,
   getUserPosts,
   renderPosts,
+  changePassword,
 } = require("../controllers/profileController");
 
 // 내 정보 수정 페이지 라우터
@@ -28,7 +29,7 @@ router.get("/check-login", (req, res) => {
 
 // 회원 정보 수정
 router.post(
-  "/profile/update",
+  "/update",
   verifyToken,
   uploadProfilePic.single("profileImage"), // 프로필 이미지 업로드 처리
   updateProfile
@@ -40,15 +41,17 @@ router.post("/profile/delete", verifyToken, deleteProfile);
 // 내 게시물 보기
 router.get("/myposts-json", verifyToken, getUserPosts);
 
+// 비밀번호 변경
+router.post("/changePassword", changePassword);
+
+// 내 게시물 렌더링
 router.get("/myposts", verifyToken, (req, res) => {
-  // EJS 템플릿을 렌더링하면서 필요 데이터 추가
   res.render("myposts", {
     naverClientId: process.env.NAVER_CLIENT_ID,
     naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
   });
 });
-// 내 게시물 렌더링
-// router.post("/myposts/render", renderPosts); // 이 경로에서 데이터를 받아서 렌더링한 HTML을 클라이언트로 반환
+
 router.post("/myposts/render", renderPosts);
 
 module.exports = router;

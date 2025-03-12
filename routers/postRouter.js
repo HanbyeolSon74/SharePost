@@ -55,7 +55,7 @@ router.post(
 router.get("/search", searchPosts);
 
 // 좋아요 처리
-router.post("/post/:id/like", likePost);
+router.post("/post/:id/like", verifyToken, likePost); // 수정된 부분
 
 // 게시물 삭제 처리
 router.post("/post/delete", verifyToken, deletePost);
