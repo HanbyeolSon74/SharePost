@@ -64,7 +64,7 @@ module.exports = {
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // HTTPS에서만 Secure 옵션 활성화
-        sameSite: "None", // SameSite 설정
+        sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7일 동안 쿠키 유지
       });
 
@@ -93,16 +93,16 @@ module.exports = {
 
   // 🔍 액세스 토큰 검증
   verifyAccessToken: (req, res) => {
-    const token = req.cookies.accessToken; // 쿠키에서 액세스 토큰 가져오기
+    const accessToken = req.cookies.accessToken; // 쿠키에서 액세스 토큰 가져오기
 
-    if (!token) {
+    if (!accessToken) {
       return res
         .status(401)
         .json({ success: false, message: "토큰이 없습니다." });
     }
 
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
       res.json({ success: true, user: decoded });
     } catch (error) {
       res
@@ -174,6 +174,43 @@ module.exports = {
         success: false,
         message: "유효하지 않은 리프레시 토큰입니다.",
       });
+    }
+  },
+
+  // 🗑️ 회원 탈퇴
+  deleteAccount: async (req, res) => {
+    const accessToken = req.cookies.accessToken;
+    console.log(accessToken);
+    if (!accessToken) {
+      return res
+        .status(401)
+        .json({ success: false, message: "로그인 후 시도해주세요." });
+    }
+
+    try {
+      const decoded = jwt.verify(accessToken, process.env.JWT_SECRET); // 토큰 검증
+      const userId = decoded.id;
+
+      // 사용자가 존재하는지 확인하고 삭제
+      const user = await User.findOne({ where: { id: userId } });
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, message: "사용자를 찾을 수 없습니다." });
+      }
+
+      await User.destroy({ where: { id: userId } }); // 해당 사용자 삭제
+
+      // 쿠키 삭제
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
+
+      res.json({ success: true, message: "회원 탈퇴가 완료되었습니다." });
+    } catch (error) {
+      console.error("회원 탈퇴 오류:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "회원 탈퇴 중 오류가 발생했습니다." });
     }
   },
 };

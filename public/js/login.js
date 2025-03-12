@@ -11,35 +11,35 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // 토큰 저장 함수 (HTTPS 여부 확인)
-  function saveTokenToCookie(token, refreshToken) {
+  function saveTokenToCookie(accessToken, refreshToken) {
     const isSecure = window.location.protocol === "https:";
     const cookieOptions = isSecure ? "SameSite=None; Secure" : "SameSite=Lax";
 
-    document.cookie = `token=${token}; path=/; ${cookieOptions}`;
+    document.cookie = `accessToken=${accessToken}; path=/; ${cookieOptions}`;
     document.cookie = `refreshToken=${refreshToken}; path=/; ${cookieOptions}`;
   }
 
   // URL에서 토큰 가져와 저장
   const urlParams = new URLSearchParams(window.location.search);
-  const tokenFromUrl = urlParams.get("token");
-  if (tokenFromUrl) {
-    saveTokenToCookie(tokenFromUrl, "");
-    console.log("URL에서 가져온 토큰 쿠키에 저장:", tokenFromUrl);
+  const accessTokenFromUrl = urlParams.get("accessToken");
+  if (accessTokenFromUrl) {
+    saveTokenToCookie(accessTokenFromUrl, "");
+    console.log("URL에서 가져온 액세스 토큰 쿠키에 저장:", accessTokenFromUrl);
   }
 
-  // 쿠키에서 토큰과 리프레시 토큰 확인
+  // 쿠키에서 액세스 토큰과 리프레시 토큰 확인
   function checkToken() {
-    const token = getCookie("token");
+    const accessToken = getCookie("accessToken");
     const refreshToken = getCookie("refreshToken");
-    console.log("쿠키에서 읽은 토큰:", token);
+    console.log("쿠키에서 읽은 액세스 토큰:", accessToken);
     console.log("쿠키에서 읽은 리프레시 토큰:", refreshToken);
-    return { token, refreshToken };
+    return { accessToken, refreshToken };
   }
 
   // 로그인 버튼 클릭 시 동작
   loginBtn.addEventListener("click", function () {
-    const { token, refreshToken } = checkToken();
-    if (token || refreshToken) {
+    const { accessToken, refreshToken } = checkToken();
+    if (accessToken || refreshToken) {
       window.location.href = "/profile/editprofile";
     } else {
       loginModal.style.display = "flex";
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
           alert("로그인 성공!");
           window.location.href = "/profile/editprofile";
         } else {
-          alert("로그인 실패: 토큰이 없습니다.");
+          alert("로그인 실패: 액세스 토큰이 없습니다.");
         }
       } catch (error) {
         alert(
@@ -152,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 });
+
 const goToJoinPage = () => {
   window.location.href = "/user/sign";
 };

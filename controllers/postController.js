@@ -2,6 +2,7 @@ const { Category, Post } = require("../models");
 
 module.exports = {
   // 게시글 생성
+  // 게시글 생성
   createPost: async (req, res) => {
     try {
       console.log("Request Body:", req.body);
@@ -253,6 +254,7 @@ module.exports = {
       res.status(500).json({ message: "서버 오류가 발생했습니다." });
     }
   },
+
   // 내 게시글 조회
   getMyPosts: async (req, res) => {
     try {
@@ -329,6 +331,8 @@ module.exports = {
       res.status(500).send("서버 오류");
     }
   },
+
+  // 게시글 삭제
   deletePost: async (req, res) => {
     const postId = req.body.id;
     const userId = req.user.id; // 로그인된 사용자 ID

@@ -19,6 +19,9 @@ router.post("/login", authController.login); // 로그인 처리
 // 로그아웃
 router.post("/logout", authController.logout);
 
+// 회원 탈퇴
+router.post("/profile/delete", verifyToken, authController.deleteAccount); // 여기 수정
+
 // 액세스 토큰 검증
 router.get("/verify", authController.verifyAccessToken);
 

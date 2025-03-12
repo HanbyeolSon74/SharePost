@@ -66,35 +66,11 @@
           </button>
           <button type="submit">수정 완료</button>
           <button type="button" id="logoutBtn">로그아웃</button>
-          <button type="button" class="delete-btn" onclick="confirmDelete()">
-            회원 탈퇴
-          </button>
+          <button type="button" id="deleteBtn">회원 탈퇴</button>
         </div>
       </form>
     </div>
 
-    <script>
-      // 프로필 이미지 미리보기 기능
-      document
-        .getElementById("profileImage")
-        .addEventListener("change", function (event) {
-          const file = event.target.files[0];
-          if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-              document.getElementById("preview").src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-          }
-        });
-
-      // 회원 탈퇴 확인
-      function confirmDelete() {
-        if (confirm("정말 회원 탈퇴하시겠습니까?")) {
-          location.href = "/profile/delete";
-        }
-      }
-    </script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script src="/js/editprofile.js"></script>
