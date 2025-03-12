@@ -74,9 +74,12 @@ exports.getUserPosts = async (req, res) => {
       where: { userId: req.user.id },
       order: [["createdAt", "DESC"]],
     });
-
-    // 사용자의 게시물 목록 렌더링
-    res.render("myposts", { posts });
+    const plainPosts = posts.map((post) => post.toJSON());
+    res.render("myposts", {
+      posts: plainPosts,
+      naverClientId: process.env.NAVER_CLIENT_ID,
+      naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
+    });
   } catch (error) {
     console.error("내 게시물 불러오기 실패:", error);
     res.status(500).send("서버 오류 발생");

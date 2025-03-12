@@ -21,7 +21,7 @@ async function getMyPosts() {
         Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
       },
     });
-
+    console.log(response.data, "data?");
     const posts = response.data.posts;
     renderPosts(posts);
   } catch (error) {
@@ -61,5 +61,5 @@ function renderPosts(posts) {
 function decodeHTML(str) {
   const element = document.createElement("div");
   element.innerHTML = str;
-  return element.textContent || element.innerText || ""; // innerText 또는 textContent 반환
+  return element.textContent || element.innerText || "";
 }

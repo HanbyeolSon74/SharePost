@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign up</title>
+    <title>My posts</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/css/mypost.css" />
   </head>
@@ -13,7 +13,7 @@
       <div class="shopHeader"><%- include('header.ejs') %></div>
       <!-- 본문 시작 -->
       <div class="contentWrapBox">
-        <div id="postContainer"></div>
+        <div id="postContainer"><%= posts[0] %></div>
         <!-- 본문 끝 -->
       </div>
       <!-- 푸터 -->
