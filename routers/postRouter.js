@@ -8,7 +8,6 @@ const {
   getPost,
   editPostPage,
   updatePost,
-  getMyPosts,
   likePost,
   getPostPage,
   deletePost,
@@ -38,9 +37,6 @@ router.get("/post/view/:id", getPostPage);
 
 // 게시글 목록 조회
 router.get("/main", getPosts);
-
-// 내 게시글 보기
-router.get("/myposts", verifyToken, getMyPosts);
 
 // 게시글 수정 페이지
 router.get("/post/edit/:id", verifyToken, editPostPage);

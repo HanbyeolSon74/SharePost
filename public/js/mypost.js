@@ -16,7 +16,7 @@ async function getMyPosts() {
   }
 
   try {
-    const response = await axios.get("/posts/myposts", {
+    const response = await axios.get("/profile/myposts", {
       headers: {
         Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
       },

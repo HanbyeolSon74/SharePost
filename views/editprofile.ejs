@@ -61,13 +61,11 @@
 
         <!-- 버튼들 -->
         <div class="button-group">
-          <button type="button" onclick="location.href='/my-posts'">
+          <button type="button" onclick="location.href='/profile/myposts'">
             내 게시물 보기
           </button>
           <button type="submit">수정 완료</button>
-          <button type="button" onclick="location.href='/logout'">
-            로그아웃
-          </button>
+          <button type="button" id="logoutBtn">로그아웃</button>
           <button type="button" class="delete-btn" onclick="confirmDelete()">
             회원 탈퇴
           </button>
@@ -99,6 +97,6 @@
     </script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-    <script src="/js/edit.js"></script>
+    <script src="/js/editprofile.js"></script>
   </body>
 </html>
