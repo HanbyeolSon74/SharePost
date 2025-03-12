@@ -121,9 +121,15 @@ body {
   .mainMiddleBox {
     min-height: unset !important;
   }
+  .contentHover {
+    font-size: 11px;
+  }
 }
 
 @media (max-width: 480px) {
+  .contentHover {
+    font-size: 10px;
+  }
   .mainMiddleBox {
     min-height: unset !important;
   }
@@ -209,16 +215,9 @@ body {
   display: flex;
   justify-content: center;
   padding-top: 30px;
-  padding-bottom: 80px;
+  /* padding-bottom: 80px; */
 }
 
-#pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 13px;
-  cursor: pointer;
-}
 .pagesBox {
   padding-top: 30px;
 }
@@ -228,13 +227,28 @@ body {
   position: relative;
 }
 #pagination {
-  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  cursor: pointer;
   bottom: 0;
   left: 0;
   width: 100%;
   padding: 10px 0;
+  margin-top: auto;
+}
+@media (max-width: 768px) {
+  #pagination {
+    margin-top: 20px;
+  }
 }
 
+@media (max-width: 480px) {
+  #pagination {
+    margin-top: 15px;
+  }
+}
 .numberBtn {
   all: unset;
   display: inline-block;
@@ -288,6 +302,7 @@ body {
   border-radius: 15px;
   object-fit: cover;
   border: 1px solid rgb(225, 225, 225);
+  box-sizing: border-box;
 }
 .postWrap {
   position: relative;

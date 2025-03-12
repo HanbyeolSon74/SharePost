@@ -94,7 +94,7 @@ window.onload = async function () {
       <i class="fa-solid fa-print print-icon"></i>
       <div class="likeCircle">
   
-    <i class="fa-regular fa-heart" id="heartIcon-${post.userId}"></i>
+    <i class="fa-regular fa-heart fa-heart2" id="heartIcon-${post.userId}"></i>
 </div>`;
       const printIcon = document.querySelector(".print-icon");
       if (printIcon) {
