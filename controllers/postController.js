@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Category, Post } = require("../models");
 
 module.exports = {
@@ -318,15 +319,59 @@ module.exports = {
     }
   },
 
+  // 게시글 검색
   searchPosts: async (req, res) => {
     try {
-      const searchQuery = req.body.searchQuery || req.query.searchQuery;
-      const posts = await Post.find({
-        title: { $regex: searchQuery, $options: "i" }, // 대소문자 구분 없이 검색
+      // 클라이언트에서 쿼리 파라미터로 받은 searchQuery
+      const searchQuery = req.query.searchQuery || "";
+
+      // 검색어가 없거나 빈 문자열일 경우, 400 응답
+      if (!searchQuery.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: "검색어를 입력하세요.",
+        });
+      }
+
+      // 게시글 검색 쿼리: 제목에 검색어가 포함된 게시글 찾기
+      const posts = await Post.findAll({
+        where: {
+          title: {
+            [Op.like]: `%${searchQuery}%`, // 제목에서 searchQuery 포함된 게시글 검색
+          },
+        },
+        include: [
+          {
+            model: Category,
+            as: "category",
+            attributes: ["name"], // 카테고리 이름 포함
+          },
+        ],
+        order: [["createdAt", "DESC"]], // 최신순 정렬
       });
-      res.json(posts);
+
+      // 검색된 게시글이 없다면
+      if (posts.length === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "검색된 게시글이 없습니다.",
+          posts: [], // 빈 배열 반환
+        });
+      }
+
+      // 검색된 게시글 반환
+      res.status(200).json({
+        success: true,
+        posts, // 검색된 게시글 목록
+        message: `${posts.length}개의 게시글이 검색되었습니다.`,
+      });
     } catch (error) {
-      res.status(500).send("서버 에러");
+      console.error("게시글 검색 오류:", error);
+      res.status(500).json({
+        success: false,
+        message: "서버 오류가 발생했습니다.",
+        error: error.message,
+      });
     }
   },
 };

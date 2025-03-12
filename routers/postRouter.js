@@ -52,7 +52,7 @@ router.post(
 );
 
 // 게시물 검색
-router.post("/search", searchPosts);
+router.get("/search", searchPosts);
 
 // 좋아요 처리
 router.post("/post/:id/like", likePost);

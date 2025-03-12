@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginModal = document.getElementById("loginModal");
   const loginBtn = document.querySelector(".loginBtn");
   const closeModal = document.getElementById("closeModal");
+  const saveIdCheckbox = document.querySelector("#saveIdCheckbox");
 
   // 쿠키에서 값을 읽는 함수
   function getCookie(name) {
@@ -68,13 +69,18 @@ document.addEventListener("DOMContentLoaded", function () {
         .querySelector("#loginPassword")
         .value.trim();
 
+      // '아이디 저장' 체크박스가 선택되었는지 확인
+      const saveIdChecked = saveIdCheckbox.checked; // 'saveIdChecked' 변수 정의
+
       if (!loginEmail || !loginPassword) {
         alert("이메일과 비밀번호를 입력하세요.");
         return;
       }
 
-      // 로그인 성공 시 이메일을 로컬 스토리지에 저장
-      localStorage.setItem("savedEmail", loginEmail);
+      // '아이디 저장' 체크박스가 선택되었으면 로컬 스토리지에 저장
+      if (saveIdChecked) {
+        localStorage.setItem("savedEmail", loginEmail);
+      }
 
       try {
         const response = await axios.post("/auth/login", {
@@ -99,11 +105,12 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("로그인 에러:", error);
       }
 
-      // // 페이지가 로드될 때 자동으로 이메일 입력
-      // const savedEmail = localStorage.getItem("savedEmail");
-      // if (savedEmail) {
-      //   document.querySelector("#loginEmail").value = savedEmail; // 로컬 스토리지에서 이메일을 가져와 자동 입력
-      // }
+      // 페이지 로드 시 자동 이메일 입력
+      const savedEmail = localStorage.getItem("savedEmail");
+      if (savedEmail) {
+        loginEmail.value = savedEmail;
+        saveIdCheckbox.checked = true; // 로컬 스토리지에서 이메일이 있으면 체크박스도 체크
+      }
     });
 
   // 로그아웃 시 로컬 스토리지에서 이메일 삭제
