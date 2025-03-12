@@ -71,17 +71,41 @@ exports.deleteProfile = async (req, res) => {
 exports.getUserPosts = async (req, res) => {
   try {
     const posts = await Post.findAll({
-      where: { userId: req.user.id },
+      where: { userId: req.user.id }, // 현재 로그인한 사용자의 게시글만 조회
       order: [["createdAt", "DESC"]],
     });
-    const plainPosts = posts.map((post) => post.toJSON());
+
+    console.log("게시글 데이터:", posts); // 서버에서 받은 게시글 데이터 확인
+
+    const plainPosts = posts.map((post) => post.toJSON()); // JSON 형식으로 변환
+    console.log("plainPosts 데이터:", plainPosts); // 변환된 데이터 확인
+
+    const naverClientId = process.env.NAVER_CLIENT_ID;
+    const naverCallbackUrl = process.env.NAVER_CALLBACK_URL;
+
     res.render("myposts", {
-      posts: plainPosts,
-      naverClientId: process.env.NAVER_CLIENT_ID,
-      naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
+      posts: plainPosts, // 변환된 데이터를 클라이언트로 전달
+      naverClientId,
+      naverCallbackUrl,
     });
   } catch (error) {
-    console.error("내 게시물 불러오기 실패:", error);
+    console.error("게시글 불러오기 실패:", error);
+    res.status(500).send("서버 오류 발생");
+  }
+};
+
+// 클라이언트에서 받은 게시물 데이터를 렌더링
+exports.renderPosts = async (req, res) => {
+  const posts = req.body.posts || [];
+
+  try {
+    // ejs 템플릿 렌더링
+    const html = await res.render("myposts", { posts });
+
+    // 렌더링된 HTML을 클라이언트로 전송
+    res.send(html);
+  } catch (error) {
+    console.error("게시글 렌더링 실패:", error);
     res.status(500).send("서버 오류 발생");
   }
 };

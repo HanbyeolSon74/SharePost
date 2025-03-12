@@ -2,7 +2,6 @@ const { Category, Post } = require("../models");
 
 module.exports = {
   // 게시글 생성
-  // 게시글 생성
   createPost: async (req, res) => {
     try {
       console.log("Request Body:", req.body);
@@ -255,49 +254,6 @@ module.exports = {
     }
   },
 
-  // 내 게시글 조회
-  getMyPosts: async (req, res) => {
-    try {
-      const userId = req.user ? req.user.id : null;
-
-      if (!userId) {
-        return res.status(403).json({
-          success: false,
-          message: "로그인이 필요합니다.",
-        });
-      }
-
-      // 로그인한 사용자가 작성한 게시글 조회
-      const posts = await Post.findAll({
-        where: {
-          userId: userId,
-        },
-        order: [["createdAt", "DESC"]],
-      });
-
-      if (posts.length === 0) {
-        return res.status(200).json({
-          success: true,
-          posts: posts,
-          message: "작성한 게시글이 없습니다.",
-          posts: [],
-        });
-      }
-
-      res.status(200).json({
-        success: true,
-        posts,
-      });
-    } catch (error) {
-      console.error("내 게시글 조회 오류:", error);
-      res.status(500).json({
-        success: false,
-        message: "내 게시글을 조회하는 데 오류가 발생했습니다.",
-        error: error.message,
-      });
-    }
-  },
-
   // 좋아요 기능
   likePost: async (req, res) => {
     try {
@@ -359,6 +315,18 @@ module.exports = {
     } catch (error) {
       console.error("게시글 삭제 오류:", error);
       return res.status(500).json({ message: "서버 오류가 발생했습니다." });
+    }
+  },
+
+  searchPosts: async (req, res) => {
+    try {
+      const searchQuery = req.body.searchQuery || req.query.searchQuery;
+      const posts = await Post.find({
+        title: { $regex: searchQuery, $options: "i" }, // 대소문자 구분 없이 검색
+      });
+      res.json(posts);
+    } catch (error) {
+      res.status(500).send("서버 에러");
     }
   },
 };
