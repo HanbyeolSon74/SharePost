@@ -98,7 +98,7 @@ window.onload = async function () {
       document.querySelector(".postlikeBtn").innerHTML = ` 
       <i class="fa-solid fa-print print-icon"></i>
       <div class="likeCircle">
-      <i class="fa-regular fa-heart fa-heart2" id="heartIcon-${post.userId}" onclick="toggleLike(${post.id})"></i>
+      <i class="fa-regular fa-heart fa-heart2" id="heartIcon-${post.id}" onclick="toggleLike(${post.id})"></i>
       <span class="detailLikeCount">0</span>
 </div>`;
       const printIcon = document.querySelector(".print-icon");
@@ -197,22 +197,22 @@ window.onload = async function () {
   sharePostBtn.addEventListener("click", function () {
     alert("신고 기능은 준비중입니다");
   });
+
+  function restoreLikedPosts() {
+    const likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
+    likedPosts.forEach((postId) => {
+      const heartIcon = document.getElementById(`heartIcon-${postId}`);
+      if (heartIcon) {
+        heartIcon.classList.remove("fa-regular");
+        heartIcon.classList.add("fa-solid");
+      }
+    });
+  }
 };
-function restoreLikedPosts() {
-  const likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
-  likedPosts.forEach((postId) => {
-    const heartIcon = document.getElementById(`heartIcon-${postId}`);
-    if (heartIcon) {
-      heartIcon.classList.remove("fa-regular");
-      heartIcon.classList.add("fa-solid");
-    }
-  });
-}
 // 좋아요 버튼
 async function toggleLike(postId) {
   const heartIcon = document.getElementById(`heartIcon-${postId}`);
-  const postElement = heartIcon?.closest(".post");
-  const likeCountElement = postElement?.querySelector(".detailLikeCount");
+  const likeCountElement = document.querySelector(".detailLikeCount");
 
   if (!heartIcon || !likeCountElement) {
     console.error("아이콘이나 좋아요 숫자 요소가 선택되지 않았습니다.");
@@ -223,7 +223,7 @@ async function toggleLike(postId) {
 
   try {
     const response = await axios.post(
-      `/board/post/${postId}/like`,
+      `/board/postdetail/${postId}/like`,
       {},
       { withCredentials: true }
     );
@@ -247,12 +247,10 @@ async function toggleLike(postId) {
       let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
 
       if (liked) {
-        // 좋아요 추가
         if (!likedPosts.includes(postId)) {
           likedPosts.push(postId);
         }
       } else {
-        // 좋아요 취소
         likedPosts = likedPosts.filter((id) => id !== postId);
       }
 
