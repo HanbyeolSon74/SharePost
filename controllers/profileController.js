@@ -198,7 +198,6 @@ module.exports = {
   // 클라이언트에서 받은 게시물 데이터를 렌더링
   renderPosts: (req, res) => {
     const posts = req.body.posts || [];
-
     try {
       // ejs 템플릿 렌더링
       res.render("myposts", { posts });

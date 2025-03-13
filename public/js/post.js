@@ -1,40 +1,41 @@
 window.onload = async function () {
   document.querySelector(".contentWrapBox").innerHTML = `
   <div class="postContentAllWrap">
-    <div class="btnsWrap">
+  <div class="btnsWrap">
+  
   <div class="fixBtn" data-post-id="<%= post.id %>" data-post-user-id="<%= post.userId %>"
   >수정</div>
-      <div class="deleteBtn">삭제</div>
-    </div>
+  <div class="deleteBtn">삭제</div>
+  </div>
     <div class="postDetailWrap">
       <div class="postTitleUserWrap">
         <div class="titleWrap">
           <h1 id="postTitle"></h1>
         </div>
         <div class="postTitleBottom">
-          <div class="userIdDateWrap">
-            <div class="userLeft">
-              <div class="userImageWrap">
-                 <img
+        <div class="userIdDateWrap">
+        <div class="userLeft">
+          <div class="userImageWrap">
+            <img
               src="/uploads/profilepics/profile.png"
               alt="userImage"
               class="userImage"
             />
-              </div>
-              <div class="idDateWrap">
-                <div class="userId"></div>
-                <div class="firstPostDate"></div>
-                <div class="postDate"></div>
-              </div>
-            </div>
-            <div class="postlikeBtn"></div>
+          </div>
+          <div class="idDateWrap">
+            <div class="userId"></div>
+            <div class="firstPostDate"></div>
+            <div class="postDate"></div>
+          </div>
+          </div>
+          
+          <div class="postlikeBtn"></div>
           </div>
         </div>
       </div>
       <div class="mainContentWrap">
-        <div class="postMainImgWrap">
-          <img id="postMainImage" alt="PostMainImage"/>
-        </div>
+      <div class="postMainImgWrap">
+        <img id="postMainImage" alt="PostMainImage" /></div>
         <div id="postContent"></div>
       </div>
       <div class="postBottomWrap">
@@ -49,9 +50,9 @@ window.onload = async function () {
           </a>
           <span class="bottomLine"></span>
         </div>
-        <a href="/"><div class="bakezyName">BAKEZY</div></a>
+        <a href="/"><div class="bakezyName">BAKEZY</div><a>
         <div class="bakezyex">세상의 모든 빵집 후기</div>
-        <a href="/"><div class="mainPageGo">다른 게시물 보기</div></a>
+        <a href="/"><div class="mainPageGo">다른 게시물 보기</div><a>
       </div>
     </div>
     <div class="bottomBtnsWrap">
@@ -94,8 +95,9 @@ window.onload = async function () {
     const response = await axios.get(`/board/post/${postId}`);
 
     if (response.status === 200) {
-      const { post, canEdit, likes, liked } = response.data;
-
+      console.log(response.data, "??전체");
+      const { post, canEdit, likes, liked, likeCount } = response.data;
+      console.log(likeCount, "ajdi");
       document.getElementById("postTitle").textContent = post.title;
       document.querySelector(".userId").textContent = post.user.name;
       document.querySelector(
@@ -113,10 +115,10 @@ window.onload = async function () {
           } fa-heart fa-heart2" id="heartIcon-${post.id}" onclick="toggleLike(${
         post.id
       })"></i>
-          <span class="detailLikeCount">${likes}</span>
+          <span class="detailLikeCount">${likeCount}</span>
         </div>`;
-
-      restoreLikedPosts(likes);
+      console.log(likeCount, "??");
+      restoreLikedPosts(likeCount);
 
       const printIcon = document.querySelector(".print-icon");
       if (printIcon) {

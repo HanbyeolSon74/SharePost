@@ -148,9 +148,8 @@ module.exports = {
         const userIdFromToken = req.user.id;
         canEdit = post.userId === userIdFromToken;
       }
-
       // 좋아요 수 계산
-      const likeCount = post.likes ? post.likes.length : 0;
+      const likeCount = typeof post.likes === "number" ? post.likes : 0;
 
       // 사용자 이름과 아이디 포함
       const postWithUser = {
