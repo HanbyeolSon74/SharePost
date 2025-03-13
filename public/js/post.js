@@ -209,11 +209,15 @@ window.onload = async function () {
     });
   }
 };
+
 // 좋아요 버튼
 async function toggleLike(postId) {
   const heartIcon = document.getElementById(`heartIcon-${postId}`);
-  const likeCountElement = document.querySelector(".detailLikeCount");
+  const postElement = heartIcon?.closest(".");
+  const likeCountElement = document.querySelector(`.detailLikeCount-${postId}`);
 
+  console.log(heartIcon); // 요소가 선택되는지 확인
+  console.log(likeCountElement); // 요소가 선택되는지 확인
   if (!heartIcon || !likeCountElement) {
     console.error("아이콘이나 좋아요 숫자 요소가 선택되지 않았습니다.");
     return;
