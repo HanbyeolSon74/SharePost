@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!query) {
       document.getElementById("postList").innerHTML = "";
+      document.querySelector(".searchResult").style.display = "none";
       return;
     }
 

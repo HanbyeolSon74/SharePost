@@ -67,7 +67,7 @@ function renderPosts(posts) {
         <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
           <i class="fa-regular fa-heart" id="heartIcon-${post.id}"></i>
         </div>
-        <div class="postTitle" onclick="window.location.href='/board/post/view/${post.id}'">${post.title}</div>
+        <div class="postTitle" onclick="window.location.href='/board/post/view/${post.id}'"><span>[${post.category.name}]</span> ${post.title}
       </div>
     `;
     mainPostsBox.appendChild(postElement);

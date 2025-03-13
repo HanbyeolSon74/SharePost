@@ -42,7 +42,7 @@ router.get("/main", getPosts);
 
 // 게시글 수정 페이지
 router.get("/post/edit/:id", verifyToken, editPostPage);
-router.get("/favorites", favoriteController.getFavorites);
+router.get("/post/:id/like", favoriteController.getFavorites);
 
 // 게시글 수정 처리
 router.post(
@@ -51,7 +51,12 @@ router.post(
   uploadBoardImage.single(BOARD_IMAGE_FIELD),
   updatePost
 );
-
+router.get("/favorites", (req, res) => {
+  res.render("mylike", {
+    naverClientId: process.env.NAVER_CLIENT_ID,
+    naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
+  });
+});
 // 게시물 검색
 router.get("/search", searchPosts);
 

@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = "/profile/editprofile";
     } else {
       loginModal.style.display = "flex";
-      // 로그인 모달이 열릴 때 저장된 이메일과 체크박스 상태 확인
       const savedEmail = loadEmailFromLocalStorage();
       if (savedEmail) {
         document.querySelector("#loginEmail").value = savedEmail;
@@ -130,13 +129,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         console.error("로그인 에러:", error);
       }
-
-      // 페이지 로드 시 자동 이메일 입력
-      // const savedEmail = localStorage.getItem("savedEmail");
-      // if (savedEmail) {
-      //   loginEmail.value = savedEmail;
-      //   saveIdCheckbox.checked = true;
-      // }
     });
 
   // **네이버 로그인**

@@ -17,6 +17,9 @@ body {
 }
 .contentMainWrapBox {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .my_footer {
   margin-top: auto;
@@ -161,6 +164,9 @@ body {
   .cateNameBox {
     font-size: 10px;
   }
+  .postTitle span {
+    font-size: 10px !important;
+  }
 }
 
 .likeHeartWrap {
@@ -191,6 +197,7 @@ body {
   font-size: 12px;
   overflow: hidden;
   box-sizing: border-box;
+  height: 100%;
 }
 
 .contentHover p {
@@ -259,9 +266,6 @@ body {
   padding: 0px 5px;
   margin: 0 2px;
   color: inherit;
-  /* background-color: white; */
-  /* border-radius: 5px; */
-  /* border: 1px solid black; */
 }
 
 .numberBtn:hover {
@@ -272,9 +276,6 @@ body {
 .next-button {
   font-size: 12px;
   font-weight: bold;
-  /* background-color: white;
-  border-radius: 5px;
-  border: 1px solid black; */
   padding: 2px 5px;
   margin: 0px 2px;
 }
@@ -315,22 +316,26 @@ body {
 }
 
 .postTitle {
-  text-align: center;
-  padding: 15px 0;
+  display: -webkit-box;
+  padding: 15px 10px;
   color: rgb(0, 0, 0);
   cursor: pointer;
   font-size: 13px;
   line-height: 1.5em;
   overflow: hidden;
-  display: -webkit-box;
-  line-clamp: 2;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
   width: 100%;
   max-height: 4em;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
+  text-overflow: ellipsis;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: #3b3b3b;
+}
+.postTitle span {
+  color: rgb(0, 0, 0);
+  font-size: 14px;
 }
 .postBtnBox {
   width: 100%;
