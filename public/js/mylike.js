@@ -38,7 +38,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const postId = e.target.dataset.postId;
 
         try {
-          const response = await axios.post(`/favorites/toggle/${postId}`);
+          const response = await axios.post(
+            `/profile/favorites/toggle/${postId}`
+          );
           if (response.data.success) {
             alert("좋아요가 취소되었습니다!");
             postContainer.innerHTML = ""; // 기존 목록 초기화
@@ -61,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 // 좋아요한 게시물 목록 다시 가져오는 함수
 async function getLikedPosts() {
   try {
-    const response = await axios.get("/favorites/posts/json");
+    const response = await axios.get("/profile/favorites/posts/json");
     const { success, posts } = response.data;
 
     const postContainer = document.getElementById("postContainer");
