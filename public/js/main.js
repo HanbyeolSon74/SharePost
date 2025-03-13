@@ -66,6 +66,7 @@ function renderPosts(posts) {
         </div>
         <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
           <i class="fa-regular fa-heart" id="heartIcon-${post.id}"></i>
+          <span class="likeCount">0</span>
         </div>
         <div class="postTitle" onclick="window.location.href='/board/post/view/${post.id}'"><span>[${post.category.name}]</span> ${post.title}
       </div>
@@ -206,9 +207,8 @@ cateImgBoxs.forEach((box) => {
 // 좋아요 버튼
 async function toggleLike(postId) {
   const heartIcon = document.getElementById(`heartIcon-${postId}`);
-  const likeCountElement = heartIcon
-    .closest(".post")
-    .querySelector(".likeCount"); // 좋아요 숫자 표시 요소
+  const postElement = heartIcon?.closest(".post");
+  const likeCountElement = postElement?.querySelector(".likeCount");
 
   if (!heartIcon || !likeCountElement) {
     console.error("아이콘이나 좋아요 숫자 요소가 선택되지 않았습니다.");
@@ -222,20 +222,23 @@ async function toggleLike(postId) {
   if (newState) {
     heartIcon.classList.remove("fa-regular");
     heartIcon.classList.add("fa-solid");
+    likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
   } else {
     heartIcon.classList.remove("fa-solid");
     heartIcon.classList.add("fa-regular");
+    likeCountElement.textContent = parseInt(likeCountElement.textContent) - 1;
   }
 
   try {
     // 서버에 좋아요 상태 전송
-    const response = await axios.post(`/board/post/${postId}/like`, {
-      isLiked: newState,
-    });
+    const response = await axios.post(
+      `/board/post/${postId}/like`,
+      { isLiked: newState },
+      { withCredentials: true }
+    );
     if (response.status === 200) {
       console.log("좋아요 상태 업데이트 성공");
 
-      // 서버로부터 새로운 좋아요 수 받아오기 (null일 경우 0으로 처리)
       const updatedLikes = response.data.likes ?? 0;
       console.log("새로운 좋아요 수:", updatedLikes);
 
@@ -246,13 +249,18 @@ async function toggleLike(postId) {
     }
   } catch (error) {
     console.error("좋아요 업데이트 에러:", error);
-    // 상태가 실패하면 UI 상태를 원래대로 되돌리기
+    if (error.response && error.response.status === 403) {
+      alert("로그인이 필요한 기능입니다. 로그인 후 다시 시도해주세요.");
+    }
+
     if (newState) {
       heartIcon.classList.remove("fa-solid");
       heartIcon.classList.add("fa-regular");
+      likeCountElement.textContent = parseInt(likeCountElement.textContent) - 1;
     } else {
       heartIcon.classList.remove("fa-regular");
       heartIcon.classList.add("fa-solid");
+      likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
     }
   }
 }
