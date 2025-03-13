@@ -1,6 +1,67 @@
 const { Favorite, Post, sequelize } = require("../models");
 
 module.exports = {
+  // 사용자가 좋아요한 게시물 조회
+  getLikedPosts: async (req, res) => {
+    try {
+      const userId = req.user.id; // 로그인된 사용자 ID
+      console.log("로그인된 사용자 ID:", userId); // 디버깅: 로그인된 사용자 ID 출력
+
+      // 사용자 ID로 좋아요한 게시물 조회
+      const favorites = await Favorite.findAll({
+        where: { userId },
+        include: [
+          {
+            model: Post,
+            as: "post", // Post 모델과 연관되어 있는지 확인
+            attributes: ["id", "title", "content", "mainimage"],
+          },
+        ],
+      });
+
+      console.log("조회된 좋아요 데이터:", favorites); // 디버깅: 쿼리로 조회된 데이터 확인
+
+      // 좋아요한 게시물이 없으면
+      if (favorites.length === 0) {
+        return res.status(200).json({
+          success: true,
+          message: "좋아요한 게시물이 없습니다.!!!!!1",
+          posts: [],
+
+          naverClientId: process.env.NAVER_CLIENT_ID, // 네이버 클라이언트 ID 추가
+          naverCallbackUrl: process.env.NAVER_CALLBACK_URL, // 네이버 콜백 URL 추가
+        });
+      }
+
+      // 좋아요한 게시물 목록 생성
+      const likedPosts = favorites.map((favorite) => favorite.post); // 첫 번째 Post 객체로 변경
+
+      console.log("좋아요한 게시물 목록:", likedPosts);
+
+      // res.json({
+      //   success: true,
+      //   posts: likedPosts, // 좋아요한 게시물 목록만 반환
+      // });
+
+      // mylike.ejs 렌더링
+      res.render("mylike", {
+        success: true,
+        posts: likedPosts,
+        message: "좋아요한 게시물 목록",
+        naverClientId: process.env.NAVER_CLIENT_ID, // 네이버 클라이언트 ID 추가
+        naverCallbackUrl: process.env.NAVER_CALLBACK_URL, // 네이버 콜백 URL 추가
+      });
+    } catch (error) {
+      console.error("좋아요한 게시물 조회 오류:", error);
+      res.status(500).json({
+        success: false,
+        message: "좋아요한 게시물을 조회하는 데 오류가 발생했습니다.",
+        error: error.message,
+      });
+    }
+  },
+
+  // 좋아요 추가 및 취소
   toggleLike: async (req, res) => {
     const transaction = await sequelize.transaction(); // 트랜잭션 시작
 
