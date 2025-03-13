@@ -25,6 +25,7 @@ window.onload = async function () {
           </div>
           <div class="idDateWrap">
             <div class="userId"></div>
+            <div class="firstPostDate"></div>
             <div class="postDate"></div>
           </div>
           </div>
@@ -82,19 +83,23 @@ window.onload = async function () {
 
     if (response.status === 200) {
       const { post, canEdit } = response.data;
-      // const post = response.data.post;
-
+      console.log(post, "post,???");
+      const createdAtdDate = formatDate(post.createdAt);
       const formattedDate = formatDate(post.updatedAt);
       document.getElementById("postTitle").textContent = post.title;
       // document.querySelector(".userImage").src= post.userImage;
-      document.querySelector(".userId").textContent = post.userId;
-      document.querySelector(".postDate").textContent = formattedDate;
-      document.querySelector(".postlikeBtn").innerHTML = `
-      
+      document.querySelector(".userId").textContent = post.name;
+      document.querySelector(
+        ".firstPostDate"
+      ).textContent = `작성일 : ${createdAtdDate}`;
+      document.querySelector(
+        ".postDate"
+      ).textContent = `수정일 : ${formattedDate}`;
+      document.querySelector(".postlikeBtn").innerHTML = ` 
       <i class="fa-solid fa-print print-icon"></i>
       <div class="likeCircle">
-  
-    <i class="fa-regular fa-heart fa-heart2" id="heartIcon-${post.userId}"></i>
+      <i class="fa-regular fa-heart fa-heart2" id="heartIcon-${post.userId}" onclick="toggleLike(${post.id})"></i>
+      <span class="detailLikeCount">0</span>
 </div>`;
       const printIcon = document.querySelector(".print-icon");
       if (printIcon) {
@@ -187,4 +192,78 @@ window.onload = async function () {
 
       html2pdf().from(contentElement).set(opt).save();
     });
+  const sharePostBtn = document.querySelector(".sharePostBtn");
+
+  sharePostBtn.addEventListener("click", function () {
+    alert("신고 기능은 준비중입니다");
+  });
 };
+function restoreLikedPosts() {
+  const likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
+  likedPosts.forEach((postId) => {
+    const heartIcon = document.getElementById(`heartIcon-${postId}`);
+    if (heartIcon) {
+      heartIcon.classList.remove("fa-regular");
+      heartIcon.classList.add("fa-solid");
+    }
+  });
+}
+// 좋아요 버튼
+async function toggleLike(postId) {
+  const heartIcon = document.getElementById(`heartIcon-${postId}`);
+  const postElement = heartIcon?.closest(".post");
+  const likeCountElement = postElement?.querySelector(".detailLikeCount");
+
+  if (!heartIcon || !likeCountElement) {
+    console.error("아이콘이나 좋아요 숫자 요소가 선택되지 않았습니다.");
+    return;
+  }
+
+  const isLiked = heartIcon.classList.contains("fa-solid");
+
+  try {
+    const response = await axios.post(
+      `/board/post/${postId}/like`,
+      {},
+      { withCredentials: true }
+    );
+
+    if (response.status === 200) {
+      const { likes, liked } = response.data;
+
+      // 좋아요 상태 UI 업데이트
+      if (liked) {
+        heartIcon.classList.remove("fa-regular");
+        heartIcon.classList.add("fa-solid");
+      } else {
+        heartIcon.classList.remove("fa-solid");
+        heartIcon.classList.add("fa-regular");
+      }
+
+      // 좋아요 수 업데이트
+      likeCountElement.textContent = likes;
+
+      // 로컬스토리지에 좋아요 상태 업데이트
+      let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
+
+      if (liked) {
+        // 좋아요 추가
+        if (!likedPosts.includes(postId)) {
+          likedPosts.push(postId);
+        }
+      } else {
+        // 좋아요 취소
+        likedPosts = likedPosts.filter((id) => id !== postId);
+      }
+
+      localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 403) {
+      alert("로그인 후 좋아요가 가능합니다. 로그인을 해주세요.");
+      window.location.href = "/";
+    } else {
+      console.error("좋아요 상태 업데이트 실패:", error);
+    }
+  }
+}

@@ -198,6 +198,12 @@ a {
   font-size: 11px;
   color: rgb(73, 73, 73);
 }
+.firstPostDate {
+  text-align: left;
+  font-size: 11px;
+  color: rgb(73, 73, 73);
+  padding-top: 10px;
+}
 .userLeft {
   display: flex;
   align-items: center;
@@ -482,4 +488,14 @@ a {
   .bottomBtnsWrap {
     right: 30px;
   }
+}
+.likeCircle {
+  position: relative;
+}
+
+.detailLikeCount {
+  font-size: 9px;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
 }
