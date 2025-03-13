@@ -1,3 +1,4 @@
+// models/Post.js
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define(
     "Post",
@@ -54,10 +55,16 @@ module.exports = (sequelize, DataTypes) => {
       as: "category",
     });
 
-    // Favorite과의 관계 추가
+    // Favorite과의 관계
     Post.hasMany(models.Favorite, {
       foreignKey: "postId",
       as: "favorites",
+    });
+
+    // User와의 관계 설정 (Post는 하나의 User에 속함)
+    Post.belongsTo(models.User, {
+      foreignKey: "userId", // Post 모델의 userId 필드와 연결
+      as: "user", // 가져올 때 사용할 alias 이름
     });
   };
 
