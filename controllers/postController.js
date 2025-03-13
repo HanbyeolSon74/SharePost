@@ -75,9 +75,8 @@ module.exports = {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 12;
       const offset = (page - 1) * limit;
-      const selectedCategory = req.query.category || "ALL"; // 카테고리가 주어지지 않으면 "ALL"
+      const selectedCategory = req.query.category || "ALL";
 
-      // 카테고리에 따른 조건 처리
       const whereCondition =
         selectedCategory !== "ALL" ? { name: selectedCategory } : {};
 
@@ -87,7 +86,12 @@ module.exports = {
             model: Category,
             as: "category",
             attributes: ["name"],
-            where: whereCondition, // 카테고리 필터링
+            where: whereCondition,
+          },
+          {
+            model: Favorite,
+            as: "favorites",
+            attributes: ["id"], // 좋아요 수를 구하기 위해 ID만 가져옴
           },
         ],
         order: [["createdAt", "DESC"]],
@@ -95,11 +99,17 @@ module.exports = {
         offset,
       });
 
+      // 좋아요 수 계산
+      const postsWithLikeCount = rows.map((post) => ({
+        ...post.toJSON(),
+        likeCount: post.likes ? post.likes.length : 0,
+      }));
+
       const totalPages = Math.ceil(count / limit);
 
       res.status(200).json({
         success: true,
-        posts: rows,
+        posts: postsWithLikeCount,
         totalItems: count,
         totalPages,
         currentPage: page,
@@ -119,7 +129,10 @@ module.exports = {
     try {
       const postId = req.params.id;
       const post = await Post.findByPk(postId, {
-        include: [{ model: Category, as: "category", attributes: ["name"] }],
+        include: [
+          { model: Category, as: "category", attributes: ["name"] },
+          { model: Favorite, as: "favorites", attributes: ["id"] }, // 좋아요 수를 가져오기 위해 추가
+        ],
       });
 
       if (!post) {
@@ -128,15 +141,20 @@ module.exports = {
           message: "게시글을 찾을 수 없습니다.",
         });
       }
+
       let canEdit = false;
       if (req.user) {
         const userIdFromToken = req.user.id;
         canEdit = post.userId === userIdFromToken;
       }
 
+      // 좋아요 수 계산
+      const likeCount = post.likes ? post.likes.length : 0;
+
       res.status(200).json({
         success: true,
         post,
+        likeCount,
         canEdit,
       });
     } catch (error) {
@@ -252,43 +270,6 @@ module.exports = {
     } catch (error) {
       console.error("게시글 수정 페이지 조회 오류:", error);
       res.status(500).json({ message: "서버 오류가 발생했습니다." });
-    }
-  },
-
-  // 좋아요 기능
-  likePost: async (req, res) => {
-    try {
-      const postId = req.params.id;
-      const post = await Post.findByPk(postId);
-
-      if (!post) {
-        return res.status(404).send("게시물이 존재하지 않습니다.");
-      }
-
-      // likes가 null일 경우 0으로 설정
-      if (post.likes === null || post.likes === undefined) {
-        post.likes = 0;
-      }
-
-      const isLiked = req.body.isLiked;
-
-      if (isLiked) {
-        post.likes += 1;
-      } else {
-        post.likes = post.likes > 0 ? post.likes - 1 : 0;
-      }
-
-      await post.save();
-
-      console.log("좋아요 수가 DB에 저장되었습니다:", post.likes); // 좋아요 수 로그 추가
-
-      res.json({
-        success: true,
-        likes: post.likes,
-      });
-    } catch (error) {
-      console.error("좋아요 처리 오류:", error);
-      res.status(500).send("서버 오류");
     }
   },
 

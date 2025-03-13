@@ -50,7 +50,7 @@ module.exports = {
       const accessToken = jwt.sign(
         { id: user.id, email: user.email },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "5h" }
       );
 
       // 🔄 리프레시 토큰 생성 (7일)

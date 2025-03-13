@@ -8,13 +8,12 @@ const {
   getPost,
   editPostPage,
   updatePost,
-  likePost,
   getPostPage,
   deletePost,
   searchPosts,
 } = require("../controllers/postController");
 
-const favoriteController = require("../controllers/favoriteController");
+const { toggleLike } = require("../controllers/favoriteController");
 
 const BOARD_IMAGE_FIELD = "mainBoardImage";
 
@@ -42,7 +41,6 @@ router.get("/main", getPosts);
 
 // 게시글 수정 페이지
 router.get("/post/edit/:id", verifyToken, editPostPage);
-router.get("/post/:id/like", favoriteController.getFavorites);
 
 // 게시글 수정 처리
 router.post(
@@ -61,7 +59,7 @@ router.get("/favorites", (req, res) => {
 router.get("/search", searchPosts);
 
 // 좋아요 처리
-router.post("/post/:id/like", verifyToken, likePost); // 수정된 부분
+router.post("/post/:postId/like", verifyToken, toggleLike); // 수정된 부분
 
 // 게시물 삭제 처리
 router.post("/post/delete", verifyToken, deletePost);

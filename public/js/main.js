@@ -1,10 +1,11 @@
-let selectedCategory = "ALL"; // 기본값은 "ALL"
+let selectedCategory = "ALL";
 let currentPage = 1;
 const limit = 12;
-let totalPages = 1; // 서버에서 받아온 전체 페이지 수
+let totalPages = 1;
 
 window.onload = function () {
   fetchPosts(); // 페이지 로드 시 게시물 불러오기
+  restoreLikedPosts(); // 로컬스토리지에서 좋아요 상태 복원
 };
 
 function fetchPosts() {
@@ -17,27 +18,20 @@ function fetchPosts() {
       totalPages = response.data.totalPages;
 
       if (posts.length === 0) {
-        // 게시물이 없을 때 처리
         const mainPostsBox = document.querySelector(".mainPostsBox");
-        // mainPostsBox.innerHTML =
-        //   "<div class='noPostsMessage'>게시물이 없습니다.</div>";
         mainPostsBox.innerHTML = "";
 
-        // 게시물이 없을 때 메시지 표시를 위한 새로운 요소 추가
         const noPostsMessage = document.createElement("div");
         noPostsMessage.className = "noPostsMessage";
         noPostsMessage.textContent = "게시물이 없습니다.";
-
-        // 메시지를 부모 요소에 추가
         mainPostsBox.appendChild(noPostsMessage);
-        // 페이지네이션 버튼 숨기기
+
         const pagination = document.querySelector("#pagination");
         pagination.style.display = "none";
       } else {
         renderPosts(posts);
         renderPagination(totalPages);
 
-        // 페이지네이션 버튼 보이기
         const pagination = document.querySelector("#pagination");
         pagination.style.display = "flex";
       }
@@ -66,12 +60,19 @@ function renderPosts(posts) {
         </div>
         <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
           <i class="fa-regular fa-heart" id="heartIcon-${post.id}"></i>
-          <span class="likeCount">0</span>
+          <span class="likeCount">${post.likes}</span>
         </div>
-        <div class="postTitle" onclick="window.location.href='/board/post/view/${post.id}'"><span>[${post.category.name}]</span> ${post.title}
+        <div class="postTitle" onclick="window.location.href='/board/post/view/${post.id}'"><span>[${post.category.name}]</span> ${post.title}</div>
       </div>
     `;
     mainPostsBox.appendChild(postElement);
+
+    // 서버에서 받은 isLiked 값을 통해 하트 색상 설정
+    const heartIcon = document.getElementById(`heartIcon-${post.id}`);
+    if (post.isLiked) {
+      heartIcon.classList.remove("fa-regular");
+      heartIcon.classList.add("fa-solid");
+    }
   });
 
   document.querySelectorAll(".postItem").forEach((post) => {
@@ -83,6 +84,9 @@ function renderPosts(posts) {
       contentHover.style.display = "none";
     });
   });
+
+  // 로컬스토리지에서 좋아요 상태 복원
+  restoreLikedPosts(posts);
 }
 
 function renderPagination(totalPages) {
@@ -204,6 +208,18 @@ cateImgBoxs.forEach((box) => {
   });
 });
 
+// 로컬스토리지에서 좋아요 상태 복원
+function restoreLikedPosts() {
+  const likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
+  likedPosts.forEach((postId) => {
+    const heartIcon = document.getElementById(`heartIcon-${postId}`);
+    if (heartIcon) {
+      heartIcon.classList.remove("fa-regular");
+      heartIcon.classList.add("fa-solid");
+    }
+  });
+}
+
 // 좋아요 버튼
 async function toggleLike(postId) {
   const heartIcon = document.getElementById(`heartIcon-${postId}`);
@@ -216,51 +232,45 @@ async function toggleLike(postId) {
   }
 
   const isLiked = heartIcon.classList.contains("fa-solid");
-  const newState = !isLiked;
-
-  // 좋아요 상태 UI 업데이트
-  if (newState) {
-    heartIcon.classList.remove("fa-regular");
-    heartIcon.classList.add("fa-solid");
-    likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
-  } else {
-    heartIcon.classList.remove("fa-solid");
-    heartIcon.classList.add("fa-regular");
-    likeCountElement.textContent = parseInt(likeCountElement.textContent) - 1;
-  }
 
   try {
-    // 서버에 좋아요 상태 전송
     const response = await axios.post(
       `/board/post/${postId}/like`,
-      { isLiked: newState },
+      {},
       { withCredentials: true }
     );
+
     if (response.status === 200) {
-      console.log("좋아요 상태 업데이트 성공");
+      const { likes, liked } = response.data;
 
-      const updatedLikes = response.data.likes ?? 0;
-      console.log("새로운 좋아요 수:", updatedLikes);
+      // 좋아요 상태 UI 업데이트
+      if (liked) {
+        heartIcon.classList.remove("fa-regular");
+        heartIcon.classList.add("fa-solid");
+      } else {
+        heartIcon.classList.remove("fa-solid");
+        heartIcon.classList.add("fa-regular");
+      }
 
-      // 좋아요 수 UI 업데이트
-      likeCountElement.textContent = updatedLikes;
-    } else {
-      console.error("좋아요 상태 업데이트 실패");
+      // 좋아요 수 업데이트
+      likeCountElement.textContent = likes;
+
+      // 로컬스토리지에 좋아요 상태 업데이트
+      let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
+
+      if (liked) {
+        // 좋아요 추가
+        if (!likedPosts.includes(postId)) {
+          likedPosts.push(postId);
+        }
+      } else {
+        // 좋아요 취소
+        likedPosts = likedPosts.filter((id) => id !== postId);
+      }
+
+      localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
     }
   } catch (error) {
-    console.error("좋아요 업데이트 에러:", error);
-    if (error.response && error.response.status === 403) {
-      alert("로그인이 필요한 기능입니다. 로그인 후 다시 시도해주세요.");
-    }
-
-    if (newState) {
-      heartIcon.classList.remove("fa-solid");
-      heartIcon.classList.add("fa-regular");
-      likeCountElement.textContent = parseInt(likeCountElement.textContent) - 1;
-    } else {
-      heartIcon.classList.remove("fa-regular");
-      heartIcon.classList.add("fa-solid");
-      likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
-    }
+    console.error("좋아요 상태 업데이트 실패:", error);
   }
 }
