@@ -97,7 +97,7 @@ window.onload = async function () {
     if (response.status === 200) {
       console.log(response.data, "??전체");
       const { post, canEdit, likes, liked, likeCount } = response.data;
-      console.log(likeCount, "ajdi");
+
       document.getElementById("postTitle").textContent = post.title;
       document.querySelector(".userId").textContent = post.user.name;
       document.querySelector(
@@ -117,7 +117,6 @@ window.onload = async function () {
       })"></i>
           <span class="detailLikeCount">${likeCount}</span>
         </div>`;
-      console.log(likeCount, "??");
       restoreLikedPosts(likeCount);
 
       const printIcon = document.querySelector(".print-icon");
@@ -240,16 +239,7 @@ async function toggleLike(postId) {
     return;
   }
 
-  let isLiked = heartIcon.classList.contains("fa-solid");
-  let likeCount = parseInt(likeCountElement.textContent, 10) || 0;
-
-  // ✅ 1️⃣ UI 즉시 변경
-  heartIcon.classList.toggle("fa-solid", !isLiked);
-  heartIcon.classList.toggle("fa-regular", isLiked);
-  likeCountElement.textContent = isLiked ? likeCount - 1 : likeCount + 1;
-
   try {
-    // ✅ 2️⃣ 서버 요청
     const response = await axios.post(
       `/board/postdetail/${postId}/like`,
       {},
@@ -257,14 +247,14 @@ async function toggleLike(postId) {
     );
 
     if (response.status === 200) {
-      const { likes, liked } = response.data;
+      const { likeCount, liked } = response.data;
 
-      // ✅ 3️⃣ 서버 응답을 UI에 반영
+      // ✅ 서버 응답에 따라 UI 업데이트
       heartIcon.classList.toggle("fa-solid", liked);
       heartIcon.classList.toggle("fa-regular", !liked);
-      likeCountElement.textContent = likes;
+      likeCountElement.textContent = likeCount;
 
-      // ✅ 4️⃣ localStorage 업데이트
+      // ✅ localStorage 업데이트
       let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
       if (liked) {
         if (!likedPosts.includes(postId)) likedPosts.push(postId);
@@ -275,11 +265,6 @@ async function toggleLike(postId) {
     }
   } catch (error) {
     console.error("좋아요 상태 업데이트 실패:", error);
-
-    // ✅ 5️⃣ 요청 실패 시 원래 상태로 복구
-    heartIcon.classList.toggle("fa-solid", isLiked);
-    heartIcon.classList.toggle("fa-regular", !isLiked);
-    likeCountElement.textContent = isLiked ? likeCount + 1 : likeCount - 1;
 
     if (error.response?.status === 403) {
       alert("로그인 후 좋아요가 가능합니다. 로그인을 해주세요.");
