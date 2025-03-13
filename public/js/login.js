@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
             response.data.refreshToken
           );
           alert("로그인 성공!");
-          window.location.href = "/";
+          window.location.href = "/"; // X
         } else {
           alert("로그인 실패: 액세스 토큰이 없습니다.");
         }
@@ -186,15 +186,15 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 });
-
 const goToJoinPage = () => {
-  window.location.href = "/user/sign";
+  console.log("찍히나?");
+  window.location.href = "http://localhost:3000/user/sign";
 };
 
 const goToFindIdPage = () => {
-  window.location.href = "/user/findid";
+  location.replace("/user/findid");
 };
 
 const goToFindPasswordPage = () => {
-  window.location.href = "/user/reset-password";
+  location.replace("/user/reset-password");
 };
