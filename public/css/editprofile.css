@@ -5,201 +5,217 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Arial", sans-serif;
-  background-color: #f6f7f9;
 }
 
-/* 전체 래퍼 */
+/* 전체 Wrapper 스타일 */
 .wrapper {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  padding: 0 20px;
+  align-items: center;
 }
 
-/* 폼 */
-form {
-  background-color: #fff;
+/* 본문 컨테이너 */
+.container {
+  width: 80%;
+  background-color: #f5f5f5;
   padding: 30px;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 600px;
-  margin: 40px auto;
-  border: 1px solid #ddd;
   box-sizing: border-box;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  border-radius: 10px;
 }
 
-/* 입력 필드 */
-label {
-  font-size: 14px;
-  font-weight: 600;
+/* 제목 스타일 */
+h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 30px;
   color: #333;
-  margin-bottom: 8px;
+}
+
+/* 프로필 이미지 */
+.profile-img {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profile-img img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.profile-img input {
+  display: none;
+}
+
+/* 라벨 및 입력 필드 */
+label {
   display: block;
+  margin: 10px 0;
+  font-size: 16px;
+  color: #333;
 }
 
 input[type="text"],
 input[type="email"],
-input[type="file"],
-input[type="password"],
-button[type="submit"] {
+input[type="date"],
+input[type="button"],
+input[type="file"] {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   margin-bottom: 20px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   font-size: 16px;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
 }
 
-/* 포커스 스타일 */
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="file"]:focus,
-input[type="password"]:focus,
-button[type="submit"]:focus {
-  outline: none;
-  border-color: #4d90fe;
-  background-color: #fff;
-}
-
-/* 수정 완료 버튼 */
-button[type="submit"] {
-  background-color: #4d90fe;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
+input[type="button"] {
+  cursor: pointer;
+  background-color: #12b886;
+  color: white;
   border: none;
-  cursor: pointer;
-  padding: 15px 0;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
 }
 
-button[type="submit"]:hover {
-  background-color: #357ae8;
+input[type="button"]:hover {
+  background-color: #0b8c66;
 }
 
-/* 수정 완료 버튼 비활성화 */
-button[type="submit"]:disabled {
-  background-color: #b5d0fe;
-  cursor: not-allowed;
-}
-
-/* 프로필 이미지 */
-#preview {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 20px auto;
-  border: 3px solid #ddd;
-}
-
-/* 이미지 업로드 버튼 */
-.image-upload {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f7f7f7;
-  padding: 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  border: 2px dashed #ddd;
-  transition: background-color 0.3s ease;
-}
-
-.image-upload:hover {
-  background-color: #fff;
-  border-color: #4d90fe;
-}
-
-/* 주소 입력 */
-#sample6_postcode {
-  width: 48%;
-  display: inline-block;
-}
-
-#sample6_address,
-#sample6_detailAddress,
-#sample6_extraAddress {
-  width: 48%;
-  display: inline-block;
+/* 주소 입력 필드 */
+input[type="text"]#sample6_postcode,
+input[type="text"]#sample6_address,
+input[type="text"]#sample6_detailAddress,
+input[type="text"]#sample6_extraAddress {
+  width: 80%;
   margin-bottom: 10px;
 }
 
 /* 비밀번호 변경 버튼 */
 #changePasswordBtn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  background-color: #f7f7f7;
+  background-color: #12b886;
+  border: none;
+  color: white;
+  padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  margin-bottom: 20px;
 }
 
 #changePasswordBtn:hover {
-  background-color: #4d90fe;
-  color: white;
+  background-color: #0b8c66;
 }
 
 /* 버튼 그룹 */
 .button-group {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
 }
 
 .button-group button {
-  padding: 12px;
+  padding: 10px 20px;
   font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  background-color: #f0f0f0;
-  width: 48%;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.button-group button:hover {
-  background-color: #4d90fe;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #12b886;
   color: white;
 }
 
-/* 모달 배경 */
+.button-group button:hover {
+  background-color: #0b8c66;
+}
+
+.button-group button#logoutBtn {
+  background-color: #ff5c5c;
+}
+
+.button-group button#logoutBtn:hover {
+  background-color: #e44d4d;
+}
+
+.button-group button#deleteBtn {
+  background-color: #ff5c5c;
+}
+
+.button-group button#deleteBtn:hover {
+  background-color: #e44d4d;
+}
+
+/* 비밀번호 변경 모달 */
 .modal {
   display: none;
   position: fixed;
-  top: 0;
+  z-index: 1;
   left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow: auto;
+  padding-top: 60px;
 }
 
-/* 모달 콘텐츠 */
 .modal-content {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  width: 400px;
-  text-align: center;
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 10px;
 }
 
-/* 모달 닫기 버튼 */
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
+#closeModalBtn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
   font-weight: bold;
+}
+
+#closeModalBtn:hover,
+#closeModalBtn:focus {
+  color: black;
+  text-decoration: none;
   cursor: pointer;
+}
+
+/* 비밀번호 변경 입력 필드 */
+#passwordChangeForm label {
+  font-size: 16px;
+  color: #333;
+}
+
+#passwordChangeForm input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#passwordChangeForm button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #12b886;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#passwordChangeForm button:hover {
+  background-color: #0b8c66;
+}
+
+/* 비밀번호 확인 텍스트 */
+.confirmNewPasswordText {
+  display: block;
+  margin-top: -10px;
+  font-size: 14px;
+  color: red;
 }
 
 /* 반응형 디자인 */
