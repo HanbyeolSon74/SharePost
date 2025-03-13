@@ -15,6 +15,7 @@ const {
   renderLikedPosts,
   toggleLike,
   getPostDetail,
+  getLikeStatus,
 } = require("../controllers/favoriteController");
 
 // 내 정보 수정 페이지 라우터
@@ -51,12 +52,10 @@ router.get("/myposts-json", verifyToken, getUserPosts);
 router.get("/favorites/posts/json", verifyToken, getLikedPosts);
 
 // ✅ 내가 좋아요한 게시물 페이지 렌더링 (EJS 사용)
-router.get("/favorites/posts", verifyToken, (req, res) => {
-  res.render("mylike", {
-    naverClientId: process.env.NAVER_CLIENT_ID,
-    naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
-  });
-});
+router.get("/favorites/posts", verifyToken, renderLikedPosts);
+
+// ✅ 좋아요 상태 확인 (특정 게시물에 대해 사용자가 좋아요를 눌렀는지 확인)
+router.get("/favorites/status/:postId", verifyToken, getLikeStatus);
 
 // ✅ 좋아요 추가/취소 기능 활성화
 router.post("/favorites/toggle/:postId", verifyToken, toggleLike);

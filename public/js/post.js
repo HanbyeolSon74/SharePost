@@ -1,42 +1,40 @@
-// postPage.js
 window.onload = async function () {
   document.querySelector(".contentWrapBox").innerHTML = `
   <div class="postContentAllWrap">
-  <div class="btnsWrap">
-  
+    <div class="btnsWrap">
   <div class="fixBtn" data-post-id="<%= post.id %>" data-post-user-id="<%= post.userId %>"
   >수정</div>
-  <div class="deleteBtn">삭제</div>
-  </div>
+      <div class="deleteBtn">삭제</div>
+    </div>
     <div class="postDetailWrap">
       <div class="postTitleUserWrap">
         <div class="titleWrap">
           <h1 id="postTitle"></h1>
         </div>
         <div class="postTitleBottom">
-        <div class="userIdDateWrap">
-        <div class="userLeft">
-          <div class="userImageWrap">
-            <img
+          <div class="userIdDateWrap">
+            <div class="userLeft">
+              <div class="userImageWrap">
+                 <img
               src="/uploads/profilepics/profile.png"
               alt="userImage"
               class="userImage"
             />
-          </div>
-          <div class="idDateWrap">
-            <div class="userId"></div>
-            <div class="firstPostDate"></div>
-            <div class="postDate"></div>
-          </div>
-          </div>
-          
-          <div class="postlikeBtn"></div>
+              </div>
+              <div class="idDateWrap">
+                <div class="userId"></div>
+                <div class="firstPostDate"></div>
+                <div class="postDate"></div>
+              </div>
+            </div>
+            <div class="postlikeBtn"></div>
           </div>
         </div>
       </div>
       <div class="mainContentWrap">
-      <div class="postMainImgWrap">
-        <img id="postMainImage" alt="PostMainImage" /></div>
+        <div class="postMainImgWrap">
+          <img id="postMainImage" alt="PostMainImage"/>
+        </div>
         <div id="postContent"></div>
       </div>
       <div class="postBottomWrap">
@@ -51,9 +49,9 @@ window.onload = async function () {
           </a>
           <span class="bottomLine"></span>
         </div>
-        <a href="/"><div class="bakezyName">BAKEZY</div><a>
+        <a href="/"><div class="bakezyName">BAKEZY</div></a>
         <div class="bakezyex">세상의 모든 빵집 후기</div>
-        <a href="/"><div class="mainPageGo">다른 게시물 보기</div><a>
+        <a href="/"><div class="mainPageGo">다른 게시물 보기</div></a>
       </div>
     </div>
     <div class="bottomBtnsWrap">
@@ -61,10 +59,10 @@ window.onload = async function () {
       <div class="reportPostBtn" id="download-pdf">📂 공유</div>
       <div class="topBtn">△ top</div>
     </div>
-  </div>
-`;
+  </div>`;
 
   const postId = window.location.pathname.split("/").pop();
+
   function formatDate(dateString) {
     const options = {
       year: "numeric",
@@ -78,29 +76,48 @@ window.onload = async function () {
     const date = new Date(dateString);
     return date.toLocaleString("ko-KR", options);
   }
+
+  function restoreLikedPosts(likeCount) {
+    const likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
+    const heartIcon = document.getElementById(`heartIcon-${postId}`);
+    const likeCountElement = document.querySelector(".detailLikeCount");
+
+    if (heartIcon && likeCountElement) {
+      const isLiked = likedPosts.includes(postId);
+      heartIcon.classList.toggle("fa-solid", isLiked);
+      heartIcon.classList.toggle("fa-regular", !isLiked);
+      likeCountElement.textContent = likeCount;
+    }
+  }
+
   try {
     const response = await axios.get(`/board/post/${postId}`);
 
     if (response.status === 200) {
-      const { post, canEdit } = response.data;
-      console.log(post, "post,??? 프로필 이미지");
-      const createdAtdDate = formatDate(post.createdAt);
-      const formattedDate = formatDate(post.updatedAt);
+      const { post, canEdit, likes, liked } = response.data;
+
       document.getElementById("postTitle").textContent = post.title;
-      // document.querySelector(".userImage").src= post.userImage;
       document.querySelector(".userId").textContent = post.user.name;
       document.querySelector(
         ".firstPostDate"
-      ).textContent = `작성일 : ${createdAtdDate}`;
-      document.querySelector(
-        ".postDate"
-      ).textContent = `수정일 : ${formattedDate}`;
-      document.querySelector(".postlikeBtn").innerHTML = ` 
-      <i class="fa-solid fa-print print-icon"></i>
-      <div class="likeCircle">
-      <i class="fa-regular fa-heart fa-heart2" id="heartIcon-${post.id}" onclick="toggleLike(${post.id})"></i>
-      <span class="detailLikeCount">0</span>
-</div>`;
+      ).textContent = `작성일 : ${formatDate(post.createdAt)}`;
+      document.querySelector(".postDate").textContent = `수정일 : ${formatDate(
+        post.updatedAt
+      )}`;
+
+      document.querySelector(".postlikeBtn").innerHTML = `
+        <i class="fa-solid fa-print print-icon"></i>
+        <div class="likeCircle">
+          <i class="fa-${
+            liked ? "solid" : "regular"
+          } fa-heart fa-heart2" id="heartIcon-${post.id}" onclick="toggleLike(${
+        post.id
+      })"></i>
+          <span class="detailLikeCount">${likes}</span>
+        </div>`;
+
+      restoreLikedPosts(likes);
+
       const printIcon = document.querySelector(".print-icon");
       if (printIcon) {
         printIcon.addEventListener("click", function () {
@@ -131,6 +148,7 @@ window.onload = async function () {
     console.error("게시물 로딩 오류:", error);
     alert("게시물 데이터를 가져오는 중 오류가 발생했습니다.");
   }
+
   document.querySelector(".topBtn").addEventListener("click", function () {
     window.scrollTo({
       top: 0,
@@ -210,22 +228,26 @@ window.onload = async function () {
   }
 };
 
-// 좋아요 버튼
+// 🔹 좋아요 기능
 async function toggleLike(postId) {
   const heartIcon = document.getElementById(`heartIcon-${postId}`);
-  const postElement = heartIcon?.closest(".postlikeBtn");
-  const likeCountElement = document.querySelector(`.detailLikeCount-${postId}`);
+  const likeCountElement = document.querySelector(".detailLikeCount");
 
-  console.log(heartIcon); // 요소가 선택되는지 확인
-  console.log(likeCountElement); // 요소가 선택되는지 확인
   if (!heartIcon || !likeCountElement) {
-    console.error("아이콘이나 좋아요 숫자 요소가 선택되지 않았습니다.");
+    console.error("좋아요 버튼 또는 숫자 요소를 찾을 수 없습니다.");
     return;
   }
 
-  const isLiked = heartIcon.classList.contains("fa-solid");
+  let isLiked = heartIcon.classList.contains("fa-solid");
+  let likeCount = parseInt(likeCountElement.textContent, 10) || 0;
+
+  // ✅ 1️⃣ UI 즉시 변경
+  heartIcon.classList.toggle("fa-solid", !isLiked);
+  heartIcon.classList.toggle("fa-regular", isLiked);
+  likeCountElement.textContent = isLiked ? likeCount - 1 : likeCount + 1;
 
   try {
+    // ✅ 2️⃣ 서버 요청
     const response = await axios.post(
       `/board/postdetail/${postId}/like`,
       {},
@@ -235,37 +257,31 @@ async function toggleLike(postId) {
     if (response.status === 200) {
       const { likes, liked } = response.data;
 
-      // 좋아요 상태 UI 업데이트
-      if (liked) {
-        heartIcon.classList.remove("fa-regular");
-        heartIcon.classList.add("fa-solid");
-      } else {
-        heartIcon.classList.remove("fa-solid");
-        heartIcon.classList.add("fa-regular");
-      }
-
-      // 좋아요 수 업데이트
+      // ✅ 3️⃣ 서버 응답을 UI에 반영
+      heartIcon.classList.toggle("fa-solid", liked);
+      heartIcon.classList.toggle("fa-regular", !liked);
       likeCountElement.textContent = likes;
 
-      // 로컬스토리지에 좋아요 상태 업데이트
+      // ✅ 4️⃣ localStorage 업데이트
       let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
-
       if (liked) {
-        if (!likedPosts.includes(postId)) {
-          likedPosts.push(postId);
-        }
+        if (!likedPosts.includes(postId)) likedPosts.push(postId);
       } else {
         likedPosts = likedPosts.filter((id) => id !== postId);
       }
-
       localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
     }
   } catch (error) {
-    if (error.response && error.response.status === 403) {
+    console.error("좋아요 상태 업데이트 실패:", error);
+
+    // ✅ 5️⃣ 요청 실패 시 원래 상태로 복구
+    heartIcon.classList.toggle("fa-solid", isLiked);
+    heartIcon.classList.toggle("fa-regular", !isLiked);
+    likeCountElement.textContent = isLiked ? likeCount + 1 : likeCount - 1;
+
+    if (error.response?.status === 403) {
       alert("로그인 후 좋아요가 가능합니다. 로그인을 해주세요.");
       window.location.href = "/";
-    } else {
-      console.error("좋아요 상태 업데이트 실패:", error);
     }
   }
 }
