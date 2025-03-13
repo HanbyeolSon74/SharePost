@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   Favorite.associate = (models) => {
     // 관계 정의 (예: User와 Post와의 관계)
     Favorite.belongsTo(models.User, { foreignKey: "userId" });
-    Favorite.belongsTo(models.Post, { foreignKey: "postId" });
+    Favorite.belongsTo(models.Post, { foreignKey: "postId", as: "post" });
   };
 
   return Favorite;
