@@ -127,6 +127,10 @@ body {
   .contentHover {
     font-size: 11px;
   }
+
+  .mainPostsBox {
+    padding: 0 30px !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -166,6 +170,9 @@ body {
   }
   .postTitle span {
     font-size: 10px !important;
+  }
+  .mainPostsBox {
+    padding: 0 15px !important;
   }
 }
 
@@ -290,7 +297,7 @@ body {
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 45px;
 }
 
 .post {

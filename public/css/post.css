@@ -372,13 +372,12 @@ a {
 }
 
 .deleteBtn {
-  border: 1px solid #333333;
+  border: 1px solid #cbcbcb;
   border-radius: 5px;
   padding: 5px 10px;
   margin-left: 5px;
   margin-right: 5px;
-  color: white;
-  background-color: #333333;
+  background-color: #cbcbcb;
   cursor: pointer;
   visibility: hidden;
 }

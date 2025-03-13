@@ -11,7 +11,7 @@ async function getMyPosts() {
 
   if (!accessToken) {
     alert("로그인이 필요합니다.");
-    window.location.href = "/login"; // 로그인 페이지로 리디렉션
+    window.location.href = "/"; // 로그인 페이지로 리디렉션
     return;
   }
 
@@ -47,23 +47,38 @@ function renderPosts(posts) {
     postContainer.innerHTML = "<p>등록된 게시글이 없습니다.</p>";
     return;
   }
-
+  const categories = [
+    {
+      1: "ALL",
+      2: "JENNIE COLLAB",
+      3: "NEWJEANS COLLAB",
+      4: "SINSA",
+      5: "BIRTH",
+      6: "PURPOSE",
+    },
+  ];
   posts.forEach((post) => {
+    console.log(post);
+    const categoryName = categories[0][String(post.categoryId)];
     const postElement = document.createElement("div");
-    postElement.className = "post";
+    postElement.className = "postElement";
+    postElement.addEventListener("click", () => {
+      window.location.href = `/board/post/view/${post.id}`;
+    });
 
     // post 객체로 각 항목에 접근하여 렌더링
     postElement.innerHTML = `
-      <div class="post-header">
-        <h3>${post.title}</h3>
-        <small>작성일: ${new Date(post.createdAt).toLocaleString()}</small>
-      </div>
-      <div class="post-content">${post.content}</div>
-      <div class="post-image">
+          <div class="post-image">
         <img src="${
           post.mainimage || "/uploads/default-image.jpg"
         }" alt="게시글 이미지" />
       </div>
+      <div class="post-header">
+        <h3>[${categoryName}]<br> ${post.title}</h3>
+        <small>작성일: ${new Date(post.createdAt).toLocaleString()}</small>
+      </div>
+      <div class="post-content">${post.content}</div>
+
     `;
 
     postContainer.appendChild(postElement);
