@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Favorite, Category, Post } = require("../models");
+const { Favorite, Category, Post, User } = require("../models");
 
 module.exports = {
   // 게시글 생성
@@ -131,7 +131,8 @@ module.exports = {
       const post = await Post.findByPk(postId, {
         include: [
           { model: Category, as: "category", attributes: ["name"] },
-          { model: Favorite, as: "favorites", attributes: ["id"] }, // 좋아요 수를 가져오기 위해 추가
+          { model: Favorite, as: "favorites", attributes: ["id"] },
+          { model: User, as: "user", attributes: ["name", "id"] },
         ],
       });
 
@@ -151,9 +152,15 @@ module.exports = {
       // 좋아요 수 계산
       const likeCount = post.likes ? post.likes.length : 0;
 
+      // 사용자 이름과 아이디 포함
+      const postWithUser = {
+        ...post.toJSON(),
+        user: post.user ? { name: post.user.name, id: post.user.id } : null,
+      };
+
       res.status(200).json({
         success: true,
-        post,
+        post: postWithUser,
         likeCount,
         canEdit,
       });

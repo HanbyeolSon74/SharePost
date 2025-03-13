@@ -88,7 +88,7 @@ window.onload = async function () {
       const formattedDate = formatDate(post.updatedAt);
       document.getElementById("postTitle").textContent = post.title;
       // document.querySelector(".userImage").src= post.userImage;
-      document.querySelector(".userId").textContent = post.name;
+      document.querySelector(".userId").textContent = post.user.name;
       document.querySelector(
         ".firstPostDate"
       ).textContent = `작성일 : ${createdAtdDate}`;
