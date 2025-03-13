@@ -14,36 +14,35 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => {
         const posts = response.data.posts;
         const postList = document.getElementById("postList");
-        postList.innerHTML = ""; // 기존 게시글 목록을 초기화
+        postList.innerHTML = "";
 
         if (!posts || posts.length === 0) {
-          postList.innerHTML = "<li>검색된 게시글이 없습니다.</li>";
+          document.querySelector(".searchResult").style.display = "none";
+          postList.innerHTML =
+            "<li class='noPost'>검색된 게시글이 없습니다.</li>";
         } else {
+          document.querySelector(".searchResult").style.display = "block";
           posts.forEach((post) => {
+            console.log(post, "posts?");
             const li = document.createElement("li");
 
-            // 게시글 제목 추가
-            const title = document.createElement("h3");
-            title.textContent = post.title;
+            const postDetailUrl = `/board/post/view/${post.id}`;
 
-            // 게시글 카테고리 추가
-            const category = document.createElement("p");
-            category.textContent = `카테고리: ${post.category.name}`;
-
-            // 게시글 이미지 추가 (이미지가 있다면)
-            const imageContainer = document.createElement("div");
-            if (post.mainimage) {
-              const image = document.createElement("img");
-              image.src = post.mainimage;
-              image.alt = post.title;
-              image.style.width = "100px";
-              imageContainer.appendChild(image);
-            }
-
-            li.appendChild(title);
-            li.appendChild(category);
-            li.appendChild(imageContainer);
-
+            li.classList.add("listBox");
+            li.innerHTML = `
+                          <div class="post-image-container">
+                ${
+                  post.mainimage
+                    ? `<img src="${post.mainimage}" alt="${post.title}" class="post-image"/>`
+                    : ""
+                }
+              </div>
+              <p class="post-category">[${post.category.name}]</p>
+              <h3 class="post-title">${post.title}</h3>
+            `;
+            li.addEventListener("click", () => {
+              window.location.href = postDetailUrl;
+            });
             postList.appendChild(li);
           });
         }
