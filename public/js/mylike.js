@@ -1,78 +1,96 @@
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async () => {
+  const postContainer = document.getElementById("postContainer");
+
+  // 내가 좋아요한 게시물 가져오기
   try {
-    // 좋아요한 게시물 목록을 서버에서 가져옵니다.
-    const response = await axios.get("/profile/favorites/posts");
-    const data = response.data;
+    const response = await axios.get("/profile/favorites/posts/json");
 
-    console.log("서버 응답:", data); // 서버 응답 출력
+    // 응답 데이터 구조 확인
+    const { success, posts } = response.data;
 
-    if (data.success && data.posts.length > 0) {
-      displayLikedPosts(data.posts);
-    } else {
-      document.getElementById("postContainer").innerHTML =
-        "<p>좋아요한 게시물이 없습니다.</p>";
+    if (!success || !posts || posts.length === 0) {
+      postContainer.innerHTML = `<p>좋아요한 게시물이 없습니다.</p>`;
+      return;
     }
+
+    // 좋아요한 게시물 목록 렌더링
+    posts.forEach((post) => {
+      const postElement = document.createElement("div");
+      postElement.classList.add("post");
+
+      postElement.innerHTML = `
+          <div class="post-image">
+            <img src="${post.mainimage}" alt="${post.title}" />
+          </div>
+          <div class="post-content">
+            <h3>${post.title}</h3>
+            <p>${post.content}</p>
+            <button class="like-btn" data-post-id="${post.id}">💖 좋아요 취소</button>
+          </div>
+        `;
+
+      postContainer.appendChild(postElement);
+    });
+
+    // 좋아요 취소 버튼 클릭 이벤트
+    postContainer.addEventListener("click", async (e) => {
+      if (e.target.classList.contains("like-btn")) {
+        const postId = e.target.dataset.postId;
+
+        try {
+          const response = await axios.post(`/favorites/toggle/${postId}`);
+          if (response.data.success) {
+            alert("좋아요가 취소되었습니다!");
+            postContainer.innerHTML = ""; // 기존 목록 초기화
+            getLikedPosts(); // 목록을 다시 불러오기
+          } else {
+            alert("좋아요 취소 중 오류가 발생했습니다.");
+          }
+        } catch (error) {
+          console.error("좋아요 취소 오류:", error);
+          alert("좋아요 취소 중 오류가 발생했습니다.");
+        }
+      }
+    });
   } catch (error) {
-    console.error("좋아요 게시물 로딩 실패:", error);
-    document.getElementById("postContainer").innerHTML =
-      "<p>게시물을 불러오는 데 오류가 발생했습니다.</p>";
+    console.error("좋아요 목록 가져오기 실패:", error);
+    postContainer.innerHTML = `<p>좋아요 목록을 불러오는 중 오류가 발생했습니다.</p>`;
   }
 });
 
-// 좋아요한 게시물 목록을 화면에 표시하는 함수
-function displayLikedPosts(posts) {
-  const postContainer = document.getElementById("postContainer");
-  postContainer.innerHTML = ""; // 기존 내용 초기화
-
-  console.log("받은 게시물들:", posts); // posts 배열 확인
-
-  posts.forEach((post) => {
-    const postElement = document.createElement("div");
-    postElement.classList.add("post");
-    postElement.innerHTML = `
-        <h3>${post.title}</h3>
-        <p>${post.content}</p>
-        <img src="${post.mainimage}" alt="${post.title}" width="200">
-        <button onclick="toggleLike(${post.id})">좋아요 취소</button>
-        <hr>
-      `;
-    postContainer.appendChild(postElement);
-  });
-}
-
-// 좋아요 추가/취소 기능
-async function toggleLike(postId) {
+// 좋아요한 게시물 목록 다시 가져오는 함수
+async function getLikedPosts() {
   try {
-    const response = await axios.post(`/favorites/toggle/${postId}`);
-    const data = response.data;
+    const response = await axios.get("/favorites/posts/json");
+    const { success, posts } = response.data;
 
-    console.log("서버 응답:", data); // 응답 데이터 확인
-
-    if (data.liked) {
-      alert("좋아요 추가!");
-    } else {
-      alert("좋아요 취소!");
-    }
-
-    // 화면에 반영할 데이터만 갱신
     const postContainer = document.getElementById("postContainer");
     postContainer.innerHTML = ""; // 기존 내용 초기화
 
-    // 받은 posts 배열을 사용하여 화면 갱신
-    data.posts.forEach((post) => {
+    if (!success || !posts || posts.length === 0) {
+      postContainer.innerHTML = `<p>좋아요한 게시물이 없습니다.</p>`;
+      return;
+    }
+
+    posts.forEach((post) => {
       const postElement = document.createElement("div");
       postElement.classList.add("post");
       postElement.innerHTML = `
-          <h3>${post.title}</h3>
-          <p>${post.content}</p>
-          <img src="${post.mainimage}" alt="${post.title}" width="200">
-          <button onclick="toggleLike(${post.id})">좋아요 취소</button>
-          <hr>
+          <div class="post-image">
+            <img src="${post.mainimage}" alt="${post.title}" />
+          </div>
+          <div class="post-content">
+            <h3>${post.title}</h3>
+            <p>${post.content}</p>
+            <button class="like-btn" data-post-id="${post.id}">💖 좋아요 취소</button>
+          </div>
         `;
       postContainer.appendChild(postElement);
     });
   } catch (error) {
-    console.error("좋아요 처리 실패:", error);
-    alert("좋아요 처리 중 오류가 발생했습니다.");
+    console.error("좋아요 목록 가져오기 실패:", error);
+    document.getElementById(
+      "postContainer"
+    ).innerHTML = `<p>좋아요 목록을 불러오는 중 오류가 발생했습니다.</p>`;
   }
 }

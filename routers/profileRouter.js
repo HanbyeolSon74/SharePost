@@ -14,6 +14,7 @@ const {
   getLikedPosts,
   renderLikedPosts,
   toggleLike,
+  getPostDetail,
 } = require("../controllers/favoriteController");
 
 // 내 정보 수정 페이지 라우터
@@ -59,6 +60,9 @@ router.get("/favorites/posts", verifyToken, (req, res) => {
 
 // ✅ 좋아요 추가/취소 기능 활성화
 router.post("/favorites/toggle/:postId", verifyToken, toggleLike);
+
+// ✅ 상세 게시물 조회 (좋아요 수 포함)
+router.get("/posts/:postId", verifyToken, getPostDetail);
 
 // 비밀번호 변경
 router.post("/changePassword", changePassword);

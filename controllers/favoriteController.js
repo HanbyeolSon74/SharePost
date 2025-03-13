@@ -12,7 +12,7 @@ module.exports = {
           {
             model: Post,
             as: "post",
-            attributes: ["id", "title", "content", "mainimage"],
+            attributes: ["id", "title", "content", "mainimage", "likes"], // 좋아요 수 추가
           },
         ],
       });
@@ -67,28 +67,67 @@ module.exports = {
 
       if (favorite) {
         await favorite.destroy(); // 이미 좋아요한 경우 -> 삭제
+
+        // 좋아요 수 감소
+        await Post.decrement("likes", { where: { id: postId } });
       } else {
         await Favorite.create({ userId, postId }); // 좋아요 추가
+
+        // 좋아요 수 증가
+        await Post.increment("likes", { where: { id: postId } });
       }
 
-      // 변경된 좋아요 목록 반환
-      const updatedFavorites = await Favorite.findAll({
-        where: { userId },
+      // 변경된 좋아요 수 가져오기
+      const updatedPost = await Post.findOne({ where: { id: postId } });
+
+      res.json({
+        success: true,
+        liked: !favorite,
+        likeCount: updatedPost.likes,
+      });
+    } catch (error) {
+      console.error("좋아요 처리 실패:", error);
+      res.status(500).json({ success: false, message: "서버 오류 발생" });
+    }
+  },
+
+  // 상세 게시물 조회 (좋아요 수 포함)
+  getPostDetail: async (req, res) => {
+    try {
+      const postId = req.params.postId;
+
+      // 게시물 조회 (좋아요 수 포함)
+      const post = await Post.findOne({
+        where: { id: postId },
         include: [
           {
-            model: Post,
-            as: "post",
-            attributes: ["id", "title", "content", "mainimage"],
+            model: Favorite,
+            as: "favorites",
+            attributes: ["id"], // 좋아요 수만 가져옴
           },
         ],
       });
 
-      const posts = updatedFavorites.map((fav) => fav.post);
+      if (!post) {
+        return res
+          .status(404)
+          .json({ success: false, message: "게시물이 존재하지 않습니다." });
+      }
 
-      res.json({ success: true, liked: !favorite, posts });
+      // 좋아요 수 계산
+      const likeCount = post.favorites.length;
+
+      res.render("detail", {
+        post,
+        likeCount,
+        headerData: {
+          naverClientId: process.env.NAVER_CLIENT_ID,
+          naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
+        },
+      });
     } catch (error) {
-      console.error("좋아요 처리 실패:", error);
-      res.status(500).json({ success: false, message: "서버 오류 발생" });
+      console.error("상세 게시물 조회 실패:", error);
+      res.status(500).send("서버 오류 발생");
     }
   },
 };
