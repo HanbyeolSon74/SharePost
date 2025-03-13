@@ -43,7 +43,7 @@ function displayLikedPosts(posts) {
 // 좋아요 추가/취소 기능
 async function toggleLike(postId) {
   try {
-    const response = await axios.post(`/api/toggle-like/${postId}`);
+    const response = await axios.post(`/favorites/toggle/${postId}`);
     const data = response.data;
 
     console.log("서버 응답:", data); // 응답 데이터 확인

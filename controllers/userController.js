@@ -6,6 +6,30 @@ const path = require("path");
 require("dotenv").config();
 
 module.exports = {
+  // 네이버 로그인 관련 처리
+  getNaverAuth: (req, res) => {
+    try {
+      const naverClientId = process.env.NAVER_CLIENT_ID;
+      const naverCallbackUrl = process.env.NAVER_CALLBACK_URL;
+
+      if (!naverClientId || !naverCallbackUrl) {
+        return res.status(400).json({
+          success: false,
+          message: "네이버 클라이언트 ID 또는 콜백 URL이 설정되지 않았습니다.",
+        });
+      }
+
+      res.json({
+        success: true,
+        naverClientId,
+        naverCallbackUrl,
+      });
+    } catch (error) {
+      console.error("네이버 로그인 처리 오류:", error);
+      res.status(500).json({ success: false, message: "서버 오류 발생" });
+    }
+  },
+
   // 회원가입
   signup: async (req, res) => {
     try {
@@ -191,14 +215,6 @@ module.exports = {
     }
   },
 
-  // 아이디 찾기 페이지 렌더링
-  findIdPage: (req, res) => {
-    res.render("findid", {
-      naverClientId: process.env.NAVER_CLIENT_ID,
-      naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
-    });
-  },
-
   // 사용자 정보를 ID로 가져오는 함수
   getUserById: async (userId) => {
     try {
@@ -221,12 +237,17 @@ module.exports = {
       return null;
     }
   },
-};
-// 로그인 상태 확인 API
-exports.checkLoginStatus = (req, res) => {
-  if (req.user) {
-    res.json({ success: true, message: "로그인 상태입니다.", user: req.user });
-  } else {
-    res.json({ success: false, message: "로그인 상태가 아닙니다." });
-  }
+
+  // 로그인 상태 확인 API
+  checkLoginStatus: (req, res) => {
+    if (req.user) {
+      res.json({
+        success: true,
+        message: "로그인 상태입니다.",
+        user: req.user,
+      });
+    } else {
+      res.json({ success: false, message: "로그인 상태가 아닙니다." });
+    }
+  },
 };
