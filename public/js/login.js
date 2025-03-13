@@ -48,9 +48,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const savedEmail = loadEmailFromLocalStorage();
       if (savedEmail) {
         document.querySelector("#loginEmail").value = savedEmail;
-        saveIdCheckbox.checked = true; // 체크박스 체크 상태로 설정
+        saveIdCheckbox.checked = true;
       } else {
-        saveIdCheckbox.checked = false; // 체크박스 체크 해제
+        saveIdCheckbox.checked = false;
       }
     }
   });
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
             response.data.refreshToken
           );
           alert("로그인 성공!");
-          window.location.href = "/"; // X
+          window.location.href = "/";
         } else {
           alert("로그인 실패: 액세스 토큰이 없습니다.");
         }
@@ -187,14 +187,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 const goToJoinPage = () => {
-  console.log("찍히나?");
   window.location.href = "http://localhost:3000/user/sign";
 };
 
 const goToFindIdPage = () => {
-  location.replace("/user/findid");
+  window.location.href = "http://localhost:3000/user/find-id";
 };
 
 const goToFindPasswordPage = () => {
-  location.replace("/user/reset-password");
+  window.location.href = "http://localhost:3000/user/reset-password";
 };

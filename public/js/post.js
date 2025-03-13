@@ -83,7 +83,7 @@ window.onload = async function () {
 
     if (response.status === 200) {
       const { post, canEdit } = response.data;
-      console.log(post, "post,???");
+      console.log(post, "post,??? 프로필 이미지");
       const createdAtdDate = formatDate(post.createdAt);
       const formattedDate = formatDate(post.updatedAt);
       document.getElementById("postTitle").textContent = post.title;
@@ -213,7 +213,7 @@ window.onload = async function () {
 // 좋아요 버튼
 async function toggleLike(postId) {
   const heartIcon = document.getElementById(`heartIcon-${postId}`);
-  const postElement = heartIcon?.closest(".");
+  const postElement = heartIcon?.closest(".postlikeBtn");
   const likeCountElement = document.querySelector(`.detailLikeCount-${postId}`);
 
   console.log(heartIcon); // 요소가 선택되는지 확인
