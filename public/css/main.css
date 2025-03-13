@@ -6,6 +6,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 body {
   padding-top: 58px;
   width: 100%;
@@ -151,7 +152,7 @@ body {
     width: 45px;
     height: 45px;
   }
-  .fa-heart {
+  .fa-heart2 {
     font-size: 10px;
   }
   .likeHeartWrap {
@@ -378,4 +379,64 @@ body {
   font-size: 13px;
   padding: 50px;
   color: #555;
+}
+
+/* 모달 띄우기 */
+.event-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 이벤트 창 스타일 */
+.event-content {
+  background-color: white;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.event-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+/* 버튼 스타일 */
+.event-buttons {
+  display: flex;
+}
+.event-buttons button {
+  padding: 15px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 50%;
+  font-weight: bold;
+}
+
+.close-button {
+  /* background-color: #2d2d2d;
+  color: white; */
+  border: none;
+  border: solid 1px black;
+}
+
+.dismiss-button {
+  border: none;
+  border-right: solid 1px black;
+  border-top: solid 1px black;
+  border-bottom: solid 1px black;
 }

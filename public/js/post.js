@@ -57,7 +57,7 @@ window.onload = async function () {
     </div>
     <div class="bottomBtnsWrap">
       <div class="sharePostBtn">📢 신고</div>
-      <div class="reportPostBtn">📂 공유</div>
+      <div class="reportPostBtn" id="download-pdf">📂 공유</div>
       <div class="topBtn">△ top</div>
     </div>
   </div>
@@ -170,4 +170,21 @@ window.onload = async function () {
     const postId = window.location.pathname.split("/").pop(); // URL에서 postId를 추출
     window.location.href = `/board/post/edit/${encodeURIComponent(postId)}`;
   });
+
+  // pdf 파일 공유 버튼
+  document
+    .getElementById("download-pdf")
+    .addEventListener("click", function () {
+      const contentElement = document.querySelector(".contentWrapBox");
+
+      const opt = {
+        margin: 0,
+        filename: "bakezy.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+      };
+
+      html2pdf().from(contentElement).set(opt).save();
+    });
 };

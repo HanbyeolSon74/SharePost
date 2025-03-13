@@ -4,8 +4,8 @@ const limit = 12;
 let totalPages = 1;
 
 window.onload = function () {
-  fetchPosts(); // 페이지 로드 시 게시물 불러오기
-  restoreLikedPosts(); // 로컬스토리지에서 좋아요 상태 복원
+  fetchPosts();
+  restoreLikedPosts();
 };
 
 function fetchPosts() {
@@ -59,7 +59,7 @@ function renderPosts(posts) {
           <div class="contentHover" style="display:none">${post.content}</div>
         </div>
         <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
-          <i class="fa-regular fa-heart" id="heartIcon-${post.id}"></i>
+          <i class="fa-regular fa-heart fa-heart2" id="heartIcon-${post.id}"></i>
           <span class="likeCount">${post.likes}</span>
         </div>
         <div class="postTitle" onclick="window.location.href='/board/post/view/${post.id}'"><span>[${post.category.name}]</span> ${post.title}</div>
@@ -271,6 +271,52 @@ async function toggleLike(postId) {
       localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
     }
   } catch (error) {
-    console.error("좋아요 상태 업데이트 실패:", error);
+    if (error.response && error.response.status === 403) {
+      alert("로그인 후 좋아요가 가능합니다. 로그인을 해주세요.");
+      window.location.href = "/";
+    } else {
+      console.error("좋아요 상태 업데이트 실패:", error);
+    }
   }
 }
+
+// 모달 띄우기
+function setCookie(name, value, days) {
+  const date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+// 쿠키를 가져오는 함수
+function getCookie(name) {
+  const decodedCookies = decodeURIComponent(document.cookie);
+  const cookies = decodedCookies.split(";");
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+    if (cookie.indexOf(name + "=") == 0) {
+      return cookie.substring(name.length + 1, cookie.length);
+    }
+  }
+  return "";
+}
+
+const modal = document.querySelector(".event-modal");
+const closeButton = document.querySelector(".close-button");
+const dismissButton = document.querySelector(".dismiss-button");
+
+closeButton.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+dismissButton.addEventListener("click", () => {
+  modal.style.display = "none";
+
+  setCookie("eventDismissed", "true", 1);
+});
+
+window.addEventListener("load", () => {
+  if (getCookie("eventDismissed") === "true") {
+    modal.style.display = "none";
+  }
+});
