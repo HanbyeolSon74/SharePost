@@ -138,3 +138,69 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("likeBtn 요소를 찾을 수 없습니다.");
   }
 });
+// 드롭다운
+const menuItems = document.querySelectorAll(".menu-item");
+const mainOverLay = document.querySelector(".mainOverLay");
+
+menuItems.forEach((menuItem) => {
+  const dropdownMenu = menuItem.querySelector(".dropdowns");
+
+  if (dropdownMenu) {
+    menuItem.addEventListener("mouseenter", () => {
+      mainOverLay.classList.add("open");
+      dropdownMenu.style.display = "block";
+    });
+
+    menuItem.addEventListener("mouseleave", () => {
+      mainOverLay.classList.remove("open");
+      dropdownMenu.style.display = "none";
+    });
+  }
+});
+
+// 모달 띄우기
+// 쿠키를 설정하는 함수
+function setCookie(name, value, days) {
+  const date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000); // 만료일 설정
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+// 쿠키를 가져오는 함수
+function getCookie(name) {
+  const decodedCookies = decodeURIComponent(document.cookie);
+  const cookies = decodedCookies.split(";");
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+    if (cookie.indexOf(name + "=") == 0) {
+      return cookie.substring(name.length + 1, cookie.length);
+    }
+  }
+  return "";
+}
+
+// 모달과 버튼 요소를 가져옵니다.
+const modal = document.querySelector(".event-modal");
+const closeButton = document.querySelector(".close-button");
+const dismissButton = document.querySelector(".dismiss-button");
+
+// '닫기' 버튼 클릭 시 모달 닫기
+closeButton.addEventListener("click", () => {
+  modal.style.display = "none"; // 모달을 숨깁니다.
+});
+
+// '오늘 그만 보기' 버튼 클릭 시 모달 숨기기 및 쿠키 설정
+dismissButton.addEventListener("click", () => {
+  modal.style.display = "none"; // 모달을 숨깁니다.
+
+  // 쿠키에 'eventDismissed' 상태를 저장하여 오늘은 더 이상 표시하지 않도록 설정
+  setCookie("eventDismissed", "true", 1); // 1일 동안 쿠키 유지
+});
+
+// 페이지 로드 시, 쿠키에 'eventDismissed' 값이 있으면 모달을 표시하지 않음
+window.addEventListener("load", () => {
+  if (getCookie("eventDismissed") === "true") {
+    modal.style.display = "none"; // '오늘 그만 보기' 버튼을 눌렀으면 모달을 표시하지 않음
+  }
+});

@@ -313,6 +313,9 @@ li {
 
 .postListBox {
   width: 85%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 70%;
 }
 
 .post-image-container {
@@ -335,7 +338,7 @@ li {
 
 .post-title {
   font-size: 12px;
-  padding-left: 10px;
+  padding-left: 15px;
   width: 45%;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -349,3 +352,75 @@ li {
   color: rgb(84, 84, 84);
   padding: 10px 5px;
 }
+
+.mainOverLay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  visibility: hidden; /* 기본적으로 숨김 */
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s ease;
+  z-index: 9;
+}
+.mainOverLay.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* 모달 띄우기 */
+.event-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 이벤트 창 스타일 */
+.event-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.event-image {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* 버튼 스타일 */
+/* .event-buttons {
+  margin-top: 20px;
+}
+
+.event-buttons button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.close-button {
+  background-color: #ff6347;
+  color: white;
+}
+
+.dismiss-button {
+  background-color: #32cd32;
+  color: white;
+} */
