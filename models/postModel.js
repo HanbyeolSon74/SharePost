@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "users", // 외래키 참조
+          model: "users",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -27,27 +27,37 @@ module.exports = (sequelize, DataTypes) => {
       categoryId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "categories", // 외래키 참조
+          model: "categories",
           key: "id",
         },
         onUpdate: "CASCADE",
         onDelete: "SET NULL",
       },
+      likes: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0, // 기본값 0
+      },
     },
     {
-      tableName: "posts", // 테이블 이름을 'posts'로 변경
-      timestamps: true, // Sequelize가 자동으로 createdAt, updatedAt을 관리
-      createdAt: "createdAt", // 테이블의 컬럼명 설정
-      updatedAt: "updatedAt", // 테이블의 컬럼명 설정
+      tableName: "posts",
+      timestamps: true,
+      createdAt: "createdAt",
+      updatedAt: "updatedAt",
     }
   );
 
   // 관계 설정
   Post.associate = function (models) {
-    // Post는 하나의 Category에 속함
+    // Category와의 관계
     Post.belongsTo(models.Category, {
-      foreignKey: "categoryId", // 외래키 이름 설정
-      as: "category", // 연결될 모델 이름
+      foreignKey: "categoryId",
+      as: "category",
+    });
+
+    // Favorite과의 관계 추가
+    Post.hasMany(models.Favorite, {
+      foreignKey: "postId",
+      as: "favorites",
     });
   };
 
