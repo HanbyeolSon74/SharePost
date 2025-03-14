@@ -142,13 +142,11 @@ p {
 .imgRightInBox {
   display: flex;
   justify-content: center;
-  align-items: center;
   width: 150px;
   height: 150px;
   border: 1px solid #808080;
   overflow: hidden;
   font-size: 12px;
-  padding: 5px;
   margin-left: 10px;
 }
 

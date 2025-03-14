@@ -373,7 +373,7 @@ a {
 
 .btnsWrap {
   font-size: 13px;
-  width: 80%;
+  width: 75%;
   justify-content: right;
   display: flex;
 }
@@ -401,7 +401,7 @@ a {
   visibility: hidden;
 }
 .deleteBtn:hover {
-  background-color: #1a1a1a;
+  background-color: #b5b5b5;
 }
 
 /* 보이게 할 때 */
@@ -436,7 +436,7 @@ a {
 @media (max-width: 1024px) {
   .btnsWrap {
     font-size: 12px;
-    width: 90%;
+    width: 75%;
     justify-content: flex-end;
   }
 
@@ -450,7 +450,7 @@ a {
 @media (max-width: 768px) {
   .btnsWrap {
     font-size: 11px;
-    width: 85%;
+    width: 75%;
   }
 
   .fixBtn,
@@ -507,8 +507,10 @@ a {
 }
 
 .detailLikeCount {
-  font-size: 9px;
+  font-size: 8px;
   position: absolute;
   bottom: 8px;
   right: 8px;
+  font-weight: bold;
+  color: rgb(82, 82, 82);
 }
