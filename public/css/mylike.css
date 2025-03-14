@@ -1,0 +1,151 @@
+/* 기본 설정 */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  padding-top: 58px;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.contentWrapBox {
+  flex: 1;
+}
+
+.my_footer {
+  margin-top: auto;
+}
+
+.mypostsAllContent {
+  width: 100%;
+}
+.mypostTitle {
+  width: 100%;
+  border-bottom: 1px solid black;
+  padding: 12px 0px 12px 0px;
+  text-align: right !important;
+}
+.mypostTitle div {
+  padding-right: 15px;
+  font-size: 14px;
+}
+#postContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding-bottom: 100px;
+}
+#postContainer .postElement:nth-child(3n) {
+  border-right: none;
+}
+
+.postElement {
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  overflow: hidden;
+  padding-bottom: 30px;
+}
+
+.post-image img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-bottom: 1px solid black;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.post-header {
+  text-align: left;
+  padding: 10px 50px 0px 50px;
+}
+.post-image {
+  overflow: hidden;
+}
+.post-content {
+  text-align: left;
+  padding: 0px 50px 0px 50px;
+  box-sizing: border-box;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+  height: 4.5em;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.post-content p {
+  margin: 0;
+  line-height: 1.5;
+  overflow: hidden;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+}
+
+.post-header h3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+  height: 3em;
+  cursor: pointer;
+}
+/* 
+.post-header small {
+  font-size: 12px;
+  color: #777;
+} */
+
+.post-content {
+  font-size: 14px;
+  color: #333;
+}
+@media (max-width: 1024px) {
+  #postContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  #postContainer .postElement:nth-child(3n) {
+    border-right: solid 1px black;
+  }
+  #postContainer .postElement:nth-child(2n) {
+    border-right: none;
+  }
+}
+@media (max-width: 768px) {
+  #postContainer {
+    grid-template-columns: 1fr;
+  }
+  #postContainer .postElement {
+    border-right: none;
+  }
+}
+
+/* 좋아요 버튼 */
+.like-btn {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.like-btn:hover {
+  background-color: black;
+  color: white;
+}
+
+.like-btn:active {
+  background-color: #333;
+  color: white;
+}

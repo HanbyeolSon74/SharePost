@@ -16,18 +16,33 @@ async function getLikedPosts() {
       postContainer.innerHTML = `<p>좋아요한 게시물이 없습니다.</p>`;
       return;
     }
-
+    // const categories = [
+    //   {
+    //     1: "ALL",
+    //     2: "JENNIE COLLAB",
+    //     3: "NEWJEANS COLLAB",
+    //     4: "SINSA",
+    //     5: "BIRTH",
+    //     6: "PURPOSE",
+    //   },
+    // ];
     posts.forEach((post) => {
+      console.log(post, "post");
+      // const categoryName = categories[0][String(post.categoryId)];
       const postElement = document.createElement("div");
       postElement.classList.add("post");
-
+      postElement.className = "postElement";
+      postElement.addEventListener("click", () => {
+        window.location.href = `/board/post/view/${post.id}`;
+      });
       postElement.innerHTML = `
           <div class="post-image">
             <img src="${post.mainimage}" alt="${post.title}" />
           </div>
-          <div class="post-content">
+          <div class="post-header">
             <h3>${post.title}</h3>
-            <p>${post.content}</p>
+            </div>
+            <div class="post-content">${post.content}</div>
             <button class="like-btn" data-post-id="${post.id}" data-liked="true">💖 좋아요 취소</button>
           </div>
         `;

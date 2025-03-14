@@ -58,7 +58,6 @@ function renderPosts(posts) {
     },
   ];
   posts.forEach((post) => {
-    console.log(post);
     const categoryName = categories[0][String(post.categoryId)];
     const postElement = document.createElement("div");
     postElement.className = "postElement";

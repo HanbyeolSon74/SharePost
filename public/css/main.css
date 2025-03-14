@@ -440,3 +440,17 @@ body {
   border-top: solid 1px black;
   border-bottom: solid 1px black;
 }
+
+@media (max-width: 768px) {
+  .mainPostsBox {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0 30px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainPostsBox {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 15px !important;
+  }
+}
