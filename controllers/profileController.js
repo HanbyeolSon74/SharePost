@@ -48,7 +48,9 @@ module.exports = {
 
   // 회원 정보 수정
   updateProfile: async (req, res) => {
-    const { name, phone, birthDate, profilePic } = req.body;
+    console.log("📢 [updateProfile] 파일 업로드 요청 도착");
+
+    const { name, phone, birthDate } = req.body;
     const accessToken = req.cookies.accessToken;
 
     if (!accessToken) {
@@ -68,20 +70,48 @@ module.exports = {
           .json({ success: false, message: "사용자를 찾을 수 없습니다." });
       }
 
-      // 이름, 전화번호, 생년월일을 업데이트
+      const profilePic = req.file
+        ? `/uploads/profilepics/${req.file.filename}`
+        : user.profilePic;
+
+      // 사용자 정보 업데이트
       user.name = name || user.name;
       user.phone = phone || user.phone;
       user.birthDate = birthDate || user.birthDate;
-      user.profilePic = profilePic || user.profilePic; // 프로필 이미지 수정
+      if (profilePic) user.profilePic = profilePic; // 프로필 사진 업데이트
 
       await user.save();
 
-      // 네이버 로그인 관련 값 추가
-      const naverClientId = process.env.NAVER_CLIENT_ID; // 환경변수에서 가져오기
-      const naverCallbackUrl = process.env.NAVER_CALLBACK_URL; // 환경변수에서 가져오기
+      console.log("✅ 회원 정보 수정 완료:", { userId, profilePic });
 
-      // 수정된 사용자 정보를 렌더링하여 profile 페이지로 전달
-      res.render("editprofile", {
+      return module.exports.renderProfilePage(req, res);
+    } catch (error) {
+      console.error("❌ 회원 정보 수정 오류:", error);
+      res.status(500).json({ success: false, message: "서버 오류 발생" });
+    }
+  },
+
+  // 회원 정보 페이지 렌더링 (수정 후에도 사용)
+  renderProfilePage: async (req, res) => {
+    const accessToken = req.cookies.accessToken;
+    if (!accessToken) {
+      return res
+        .status(401)
+        .json({ success: false, message: "로그인 후 시도해주세요." });
+    }
+
+    try {
+      const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
+      const user = await User.findOne({ where: { id: decoded.id } });
+
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "사용자를 찾을 수 없습니다.",
+        });
+      }
+
+      return res.render("editprofile", {
         success: true,
         message: "회원 정보가 수정되었습니다.",
         user: {
@@ -89,14 +119,16 @@ module.exports = {
           name: user.name,
           phone: user.phone,
           birthdate: user.birthDate,
-          profileImage: user.profilePic,
+          profilePic: user.profilePic,
         },
-        naverClientId, // 네이버 클라이언트 ID 전달
-        naverCallbackUrl, // 네이버 콜백 URL 전달
+        naverClientId: process.env.NAVER_CLIENT_ID,
+        naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
       });
     } catch (error) {
-      console.error("회원 정보 수정 오류:", error);
-      res.status(500).json({ success: false, message: "서버 오류 발생" });
+      console.error("회원 정보 페이지 렌더링 오류:", error);
+      return res
+        .status(500)
+        .json({ success: false, message: "서버 오류 발생" });
     }
   },
 

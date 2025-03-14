@@ -38,7 +38,7 @@ router.get("/check-login", (req, res) => {
 router.post(
   "/update",
   verifyToken,
-  uploadProfilePic.single("profileImage"), // 프로필 이미지 업로드 처리
+  uploadProfilePic.single("profilePic"), // 프로필 이미지 업로드 처리
   updateProfile
 );
 

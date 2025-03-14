@@ -27,12 +27,24 @@
           <!-- 프로필 이미지 -->
           <div class="profile-img">
             <img id="preview" src="<%= user.imageurl %>" alt="프로필 사진" />
+            <div
+              class="image-preview"
+              id="imagePreview"
+              onclick="document.getElementById('profilePicInput').click()"
+              style="background-image: url('<%= user.imageurl %>')"
+            ></div>
             <input
               type="file"
-              name="profileImage"
-              id="profileImage"
+              name="profilePic"
+              id="profilePicInput"
               accept="image/*"
+              style="display: none"
             />
+
+            <div class="imgBtnBox">
+              <button class="uploadBtn">이미지 업로드</button>
+              <button class="removeBtn">이미지 제거</button>
+            </div>
           </div>
 
           <!-- 이메일 (수정 불가) -->

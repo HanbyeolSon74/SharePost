@@ -27,7 +27,10 @@ app.set("views", path.join(__dirname, "views"));
 
 // ✅ 정적 파일 제공 (CSS, JS, 이미지 등)
 app.use(express.static("public"));
-app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static("uploads"));
+// ✅ 정적 파일 제공 (CSS, JS, 이미지 등)
+// app.use(express.static("public"));
+app.use("/uploads", express.static(path.join(__dirname, "/uploads"))); // 업로드된 이미지 제공
 
 // ✅ 세션 설정
 app.use(
@@ -57,6 +60,7 @@ app.get("/get-key", (req, res) => {
 app.get("/api/verify-token", verifyToken, (req, res) => {
   res.status(200).json({ message: "토큰이 유효합니다." });
 });
+
 // ✅ 라우터 등록
 app.use("/auth", authRoutes); // 로그인/로그아웃
 app.use("/user", userRoutes); // 회원 관련
