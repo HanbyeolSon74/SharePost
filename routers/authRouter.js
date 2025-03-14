@@ -31,7 +31,7 @@ router.post("/refresh-token", authController.refreshAccessToken);
 // 네이버 로그인 라우트
 router.get("/login/naver", naverController.redirectToNaver); // 네이버 로그인 페이지로 리디렉션
 router.get("/login/naver/callback", naverController.handleNaverCallback); // 네이버 로그인 콜백 (GET 요청)
-
+router.get("/getNaver", naverController.naverAPI);
 // 카카오 로그인 라우트
 router.get("/kakao/callback", kakaoController.kakaoCallback); // 카카오 로그인 콜백
 

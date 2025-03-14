@@ -16,6 +16,7 @@ const {
   toggleLike,
   getPostDetail,
   getLikeStatus,
+  likePage,
 } = require("../controllers/favoriteController");
 
 // 내 정보 수정 페이지 라우터
@@ -49,7 +50,8 @@ router.post("/profile/delete", verifyToken, deleteProfile);
 router.get("/myposts-json", verifyToken, getUserPosts);
 
 // ✅ 내가 좋아요한 게시물 조회 (JSON 응답)
-// router.get("/favorites/posts/json", verifyToken, getLikedPosts);
+router.get("/favorites/posts", verifyToken, likePage);
+router.get("/getPost", verifyToken, renderLikedPosts);
 
 // ✅ 내가 좋아요한 게시물 페이지 렌더링 (EJS 사용)
 router.get("/favorites/posts", verifyToken, renderLikedPosts);

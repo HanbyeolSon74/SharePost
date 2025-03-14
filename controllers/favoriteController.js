@@ -1,5 +1,5 @@
-const { Favorite, Post } = require("../models");
-
+const { Favorite, Post, User } = require("../models");
+const jwt = require("jsonwebtoken");
 module.exports = {
   // JSON 응답용 좋아요한 게시물 조회
   getPostList: async (req, res) => {
@@ -46,30 +46,19 @@ module.exports = {
   },
 
   // 좋아요한 게시물 페이지 렌더링 (EJS)
+  likePage: (req, res) => {
+    res.render("mylike");
+  },
   renderLikedPosts: async (req, res) => {
     try {
-      const userId = req.user.id;
+      if (req.cookies.accessToken) {
+        let accessToken = req.cookies.accessToken;
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
+        const user = await User.findOne({ where: { email: decoded.email } });
+        const likePost = await Favorite.findAll({ where: { userId: user.id } });
 
-      const favoritePosts = await Favorite.findAll({
-        where: { userId },
-        include: [
-          {
-            model: Post,
-            as: "post",
-            attributes: ["id", "title", "content", "mainimage"],
-          },
-        ],
-      });
-
-      const posts = favoritePosts.map((fav) => fav.post);
-
-      res.render("mylike", {
-        posts,
-        headerData: {
-          naverClientId: process.env.NAVER_CLIENT_ID,
-          naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
-        },
-      });
+        res.json(likePage);
+      }
     } catch (error) {
       console.error("좋아요한 게시물 조회 실패:", error);
       res.status(500).send("서버 오류 발생");

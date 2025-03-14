@@ -8,10 +8,11 @@ async function getLikedPosts() {
 
   try {
     const response = await axios.get("/profile/favorites/posts/json");
+    console.log("res", response);
     const { success, posts } = response.data;
 
     postContainer.innerHTML = ""; // 기존 목록 초기화
-
+    console.log(success, posts);
     if (!success || !posts || posts.length === 0) {
       postContainer.innerHTML = `<div class="alertText"><p>좋아요한 게시물이 없습니다.</p></div>`;
       return;
@@ -84,3 +85,6 @@ async function handleLikeToggle(event) {
     alert("좋아요 처리 중 오류가 발생했습니다.");
   }
 }
+axios.get("/profile/getPost").then((res) => {
+  console.log(res.data);
+});

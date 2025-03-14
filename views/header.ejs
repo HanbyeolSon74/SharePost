@@ -161,12 +161,18 @@
     <script src="/js/login.js"></script>
   </body>
   <script>
-    window.naverLogin = new naver.LoginWithNaverId({
-      clientId: "<%= naverClientId %>", // 네이버 클라이언트 ID
-      callbackUrl: "<%= naverCallbackUrl %>",
-      isPopup: false,
-      loginButton: { color: "green", type: 3, height: 60 },
+    let naverAPIkey;
+    let navercallBack;
+    axios.get("/auth/getNaver").then((res) => {
+      naverAPIkey = res.data.api;
+      navercallBack = res.data.cB;
+      window.naverLogin = new naver.LoginWithNaverId({
+        clientId: naverAPIkey, // 네이버 클라이언트 ID
+        callbackUrl: navercallBack,
+        isPopup: false,
+        loginButton: { color: "green", type: 3, height: 60 },
+      });
+      naverLogin.init();
     });
-    naverLogin.init();
   </script>
 </html>

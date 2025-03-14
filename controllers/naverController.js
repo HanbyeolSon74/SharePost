@@ -3,6 +3,9 @@ const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+let naverApi = process.env.NAVER_CLIENT_ID;
+let naverCallBack = process.env.NAVER_REDIRECT_URI;
+
 // ✅ 네이버 로그인 페이지로 리디렉션
 const redirectToNaver = (req, res) => {
   if (!req.session) {
@@ -148,7 +151,12 @@ const handleNaverCallback = async (req, res) => {
   }
 };
 
+const naverAPI = async (req, res) => {
+  res.json({ api: naverApi, cB: naverCallBack });
+};
+
 module.exports = {
   redirectToNaver,
   handleNaverCallback,
+  naverAPI,
 };
