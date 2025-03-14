@@ -107,14 +107,17 @@ window.onload = async function () {
         post.updatedAt
       )}`;
 
+      console.log(post.user, "?? post.user 데이터"); // 유저 정보 확인
+      console.log(post.user.profilePic, "?? post.user.profilePic 값 확인"); // 프로필 이미지 확인
+
       // ✅ 프로필 이미지 적용
       const userImageElement = document.querySelector(".userImage");
 
-      if (post.user.profileImage) {
-        // 업로드된 이미지 사용 (절대 경로 추가)
-        userImageElement.src = `/uploads/profilepics/${post.user.profileImage}`;
+      if (post.user.profilePic.startsWith("/uploads/profilepics/")) {
+        console.log("✅ 프로필 이미지 있음:", post.user.profilePic);
+        userImageElement.src = post.user.profilePic;
       } else {
-        // 기본 프로필 이미지 사용 (public 폴더에서 서빙되는 경로로 수정)
+        console.log("❌ 프로필 이미지 없음, 기본 이미지 사용");
         userImageElement.src = "/images/image.jpg";
       }
 
