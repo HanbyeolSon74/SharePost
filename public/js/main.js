@@ -306,17 +306,24 @@ const closeButton = document.querySelector(".close-button");
 const dismissButton = document.querySelector(".dismiss-button");
 
 closeButton.addEventListener("click", () => {
-  modal.style.display = "none";
+  modal.style.display = "none"; // 모달 닫기
 });
 
 dismissButton.addEventListener("click", () => {
-  modal.style.display = "none";
+  modal.style.display = "none"; // 모달 닫기
 
+  // 쿠키 설정하여 모달을 다시 보지 않도록 처리
   setCookie("eventDismissed", "true", 1);
 });
 
 window.addEventListener("load", () => {
-  if (getCookie("eventDismissed") === "true") {
-    modal.style.display = "none";
+  // 쿠키 값이 "false"일 때만 모달을 보여줌
+  if (getCookie("eventDismissed") !== "true") {
+    modal.style.display = "flex";
+  }
+});
+window.addEventListener("load", () => {
+  if (getCookie("eventDismissed") === "false") {
+    modal.style.display = "flex";
   }
 });

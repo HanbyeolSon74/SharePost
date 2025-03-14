@@ -13,7 +13,7 @@ async function getLikedPosts() {
     postContainer.innerHTML = ""; // 기존 목록 초기화
 
     if (!success || !posts || posts.length === 0) {
-      postContainer.innerHTML = `<p>좋아요한 게시물이 없습니다.</p>`;
+      postContainer.innerHTML = `<div class="alertText"><p>좋아요한 게시물이 없습니다.</p></div>`;
       return;
     }
     // const categories = [
@@ -54,7 +54,7 @@ async function getLikedPosts() {
     postContainer.addEventListener("click", handleLikeToggle);
   } catch (error) {
     console.error("좋아요 목록 가져오기 실패:", error);
-    postContainer.innerHTML = `<p>좋아요 목록을 불러오는 중 오류가 발생했습니다.</p>`;
+    postContainer.innerHTML = `<div class="alertText"><p>좋아요 목록을 불러오는 중 오류가 발생했습니다.</p></div>`;
   }
 }
 

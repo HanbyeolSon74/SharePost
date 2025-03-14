@@ -38,19 +38,31 @@ document.addEventListener("DOMContentLoaded", function () {
     return { accessToken, refreshToken };
   }
 
+  // 카카오 로그인 상태 확인 함수
+  function isKakaoLoggedIn() {
+    const accessToken = Kakao.Auth.getAccessToken();
+    return accessToken !== null; // 토큰이 존재하면 로그인 상태
+  }
   // 로그인 버튼 클릭 시 동작
   loginBtn.addEventListener("click", function () {
-    const { accessToken, refreshToken } = checkToken();
-    if (accessToken || refreshToken) {
+    // 카카오 로그인 상태 확인
+    if (isKakaoLoggedIn()) {
+      // 카카오 로그인 되어 있다면 바로 프로필 페이지로 이동
       window.location.href = "/profile/editprofile";
     } else {
-      loginModal.style.display = "flex";
-      const savedEmail = loadEmailFromLocalStorage();
-      if (savedEmail) {
-        document.querySelector("#loginEmail").value = savedEmail;
-        saveIdCheckbox.checked = true;
+      // 카카오 로그인 안 되어 있다면 모달을 띄움
+      const { accessToken, refreshToken } = checkToken();
+      if (accessToken || refreshToken) {
+        window.location.href = "/profile/editprofile";
       } else {
-        saveIdCheckbox.checked = false;
+        loginModal.style.display = "flex";
+        const savedEmail = loadEmailFromLocalStorage();
+        if (savedEmail) {
+          document.querySelector("#loginEmail").value = savedEmail;
+          saveIdCheckbox.checked = true;
+        } else {
+          saveIdCheckbox.checked = false;
+        }
       }
     }
   });

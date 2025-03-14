@@ -138,6 +138,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 20px;
 }
 
 .like-btn:hover {
@@ -148,4 +149,14 @@ body {
 .like-btn:active {
   background-color: #333;
   color: white;
+}
+
+.alertText {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 150px;
+  font-size: 15px;
+  color: rgb(61, 61, 61);
 }
