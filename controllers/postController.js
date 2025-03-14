@@ -102,9 +102,8 @@ module.exports = {
       // 좋아요 수 계산
       const postsWithLikeCount = rows.map((post) => ({
         ...post.toJSON(),
-        likeCount: post.likes ? post.likes.length : 0,
+        likeCount: Math.max(post.favorites ? post.favorites.length : 0, 0),
       }));
-
       const totalPages = Math.ceil(count / limit);
 
       res.status(200).json({
@@ -149,7 +148,7 @@ module.exports = {
         canEdit = post.userId === userIdFromToken;
       }
       // 좋아요 수 계산
-      const likeCount = typeof post.likes === "number" ? post.likes : 0;
+      const likeCount = Math.max(post.favorites ? post.favorites.length : 0, 0);
 
       // 사용자 이름과 아이디 포함
       const postWithUser = {

@@ -48,7 +48,7 @@ function renderPosts(posts) {
     return;
   }
   mainPostsBox.innerHTML = "";
-
+  console.log(posts, "posts???");
   posts.forEach((post) => {
     const postElement = document.createElement("div");
     postElement.classList.add("post");
@@ -60,7 +60,7 @@ function renderPosts(posts) {
         </div>
         <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
           <i class="fa-regular fa-heart fa-heart2" id="heartIcon-${post.id}"></i>
-          <span class="likeCount">${post.likes}</span>
+          <span class="likeCount">${post.likeCount}</span>
         </div>
         <div class="postTitle" onclick="window.location.href='/board/post/view/${post.id}'"><span>[${post.category.name}]</span> ${post.title}</div>
       </div>
@@ -241,7 +241,7 @@ async function toggleLike(postId) {
     );
 
     if (response.status === 200) {
-      const { likes, liked } = response.data;
+      const { likes, liked, likeCount } = response.data;
 
       // 좋아요 상태 UI 업데이트
       if (liked) {
@@ -253,7 +253,7 @@ async function toggleLike(postId) {
       }
 
       // 좋아요 수 업데이트
-      likeCountElement.textContent = likes;
+      likeCountElement.textContent = likeCount;
 
       // 로컬스토리지에 좋아요 상태 업데이트
       let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];

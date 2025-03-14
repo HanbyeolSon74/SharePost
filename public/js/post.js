@@ -248,13 +248,13 @@ async function toggleLike(postId) {
 
     if (response.status === 200) {
       const { likeCount, liked } = response.data;
-
-      // ✅ 서버 응답에 따라 UI 업데이트
+      console.log(liked, "liked");
+      console.log(likeCount, "likeCount");
       heartIcon.classList.toggle("fa-solid", liked);
+
       heartIcon.classList.toggle("fa-regular", !liked);
       likeCountElement.textContent = likeCount;
 
-      // ✅ localStorage 업데이트
       let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
       if (liked) {
         if (!likedPosts.includes(postId)) likedPosts.push(postId);
