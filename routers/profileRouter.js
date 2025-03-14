@@ -19,7 +19,7 @@ const {
 } = require("../controllers/favoriteController");
 
 // 내 정보 수정 페이지 라우터
-router.get("/editprofile", verifyToken, getProfile);
+router.get("/update", verifyToken, getProfile);
 
 // 로그인 상태 확인 라우트
 router.get("/check-login", (req, res) => {

@@ -48,12 +48,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // 카카오 로그인 상태 확인
     if (isKakaoLoggedIn()) {
       // 카카오 로그인 되어 있다면 바로 프로필 페이지로 이동
-      window.location.href = "/profile/editprofile";
+      window.location.href = "/profile/update";
     } else {
       // 카카오 로그인 안 되어 있다면 모달을 띄움
       const { accessToken, refreshToken } = checkToken();
       if (accessToken || refreshToken) {
-        window.location.href = "/profile/editprofile";
+        window.location.href = "/profile/update";
       } else {
         loginModal.style.display = "flex";
         const savedEmail = loadEmailFromLocalStorage();

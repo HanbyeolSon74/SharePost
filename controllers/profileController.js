@@ -26,7 +26,7 @@ module.exports = {
       // 네이버 로그인 관련 값 추가
       const naverClientId = process.env.NAVER_CLIENT_ID; // 환경변수에서 가져오기
       const naverCallbackUrl = process.env.NAVER_CALLBACK_URL; // 환경변수에서 가져오기
-
+      console.log(user.profilePic, "user.profilePic");
       // 회원 정보를 profile.ejs로 전달하여 렌더링
       res.render("editprofile", {
         success: true,

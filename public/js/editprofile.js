@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
           imagePreview.style.backgroundImage = `url('${response.data.imageUrl}')`;
           imagePreview.setAttribute("data-url", response.data.imageUrl);
         }
+        window.location.href = "/";
       }
     } catch (error) {
       console.error("❌ 회원 정보 수정 실패:", error);
