@@ -11,7 +11,7 @@ const {
   changePassword,
 } = require("../controllers/profileController");
 const {
-  getLikedPosts,
+  getPostList,
   renderLikedPosts,
   toggleLike,
   getPostDetail,
@@ -49,7 +49,7 @@ router.post("/profile/delete", verifyToken, deleteProfile);
 router.get("/myposts-json", verifyToken, getUserPosts);
 
 // ✅ 내가 좋아요한 게시물 조회 (JSON 응답)
-router.get("/favorites/posts/json", verifyToken, getLikedPosts);
+// router.get("/favorites/posts/json", verifyToken, getLikedPosts);
 
 // ✅ 내가 좋아요한 게시물 페이지 렌더링 (EJS 사용)
 router.get("/favorites/posts", verifyToken, renderLikedPosts);
@@ -62,6 +62,9 @@ router.post("/favorites/toggle/:postId", verifyToken, toggleLike);
 
 // ✅ 상세 게시물 조회 (좋아요 수 포함)
 router.get("/posts/:postId", verifyToken, getPostDetail);
+
+// 게시물 목록 조회 (좋아요 여부 포함)
+router.get("/posts", verifyToken, getPostList);
 
 // 비밀번호 변경
 router.post("/changePassword", changePassword);

@@ -5,7 +5,6 @@ let totalPages = 1;
 
 window.onload = function () {
   fetchPosts();
-  restoreLikedPosts();
 };
 
 function fetchPosts() {
@@ -14,26 +13,18 @@ function fetchPosts() {
       `/board/main?page=${currentPage}&limit=${limit}&category=${selectedCategory}`
     )
     .then((response) => {
+      console.log("ddd", response.data.posts); // 🔥 isLiked 값이 정상적으로 내려오는지 확인
       const posts = response.data.posts;
       totalPages = response.data.totalPages;
 
       if (posts.length === 0) {
-        const mainPostsBox = document.querySelector(".mainPostsBox");
-        mainPostsBox.innerHTML = "";
-
-        const noPostsMessage = document.createElement("div");
-        noPostsMessage.className = "noPostsMessage";
-        noPostsMessage.textContent = "게시물이 없습니다.";
-        mainPostsBox.appendChild(noPostsMessage);
-
-        const pagination = document.querySelector("#pagination");
-        pagination.style.display = "none";
+        document.querySelector(".mainPostsBox").innerHTML =
+          "<div class='noPostsMessage'>게시물이 없습니다.</div>";
+        document.querySelector("#pagination").style.display = "none";
       } else {
         renderPosts(posts);
         renderPagination(totalPages);
-
-        const pagination = document.querySelector("#pagination");
-        pagination.style.display = "flex";
+        document.querySelector("#pagination").style.display = "flex";
       }
     })
     .catch((error) => {
@@ -43,50 +34,40 @@ function fetchPosts() {
 
 function renderPosts(posts) {
   const mainPostsBox = document.querySelector(".mainPostsBox");
-  if (!mainPostsBox) {
-    console.error("mainPostsBox를 찾을 수 없습니다.");
-    return;
-  }
+  if (!mainPostsBox) return;
+
   mainPostsBox.innerHTML = "";
-  console.log(posts, "posts???");
+
   posts.forEach((post) => {
+    console.log(post.isLiked);
     const postElement = document.createElement("div");
     postElement.classList.add("post");
+    let heart = post.isLiked
+      ? `<i class="fa-heart fa-heart2 fa-solid 
+          }" id="heartIcon-${post.id}"></i>`
+      : `<i class="fa-heart fa-heart2 fa-regular
+          }" id="heartIcon-${post.id}"></i>`;
     postElement.innerHTML = `
       <div class="postWrap">
-        <div class="postItem" onclick="window.location.href='/board/post/view/${post.id}'">
+        <div class="postItem" onclick="window.location.href='/board/post/view/${
+          post.id
+        }'">
           <img src="${post.mainimage}" alt="${post.title}" />
           <div class="contentHover">${post.content}</div>
         </div>
         <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
-          <i class="fa-regular fa-heart fa-heart2" id="heartIcon-${post.id}"></i>
-          <span class="likeCount">${post.likeCount}</span>
+          ${heart}
+          <span class="likeCount">${post.likes}</span>
         </div>
-        <div class="postTitle" onclick="window.location.href='/board/post/view/${post.id}'"><span>[${post.category.name}]</span> ${post.title}</div>
+        <div class="postTitle" onclick="window.location.href='/board/post/view/${
+          post.id
+        }'">
+          <span>[${post.category?.name || "카테고리 없음"}]</span> ${post.title}
+        </div>
       </div>
     `;
     mainPostsBox.appendChild(postElement);
-
-    // 서버에서 받은 isLiked 값을 통해 하트 색상 설정
-    const heartIcon = document.getElementById(`heartIcon-${post.id}`);
-    if (post.isLiked) {
-      heartIcon.classList.remove("fa-regular");
-      heartIcon.classList.add("fa-solid");
-    }
   });
-
-  document.querySelectorAll(".postItem").forEach((post) => {
-    const contentHover = post.querySelector(".contentHover");
-    post.addEventListener("mouseenter", function () {
-      contentHover.classList.add("visible"); // 마우스 오버 시 contentHover가 서서히 나타남
-    });
-    post.addEventListener("mouseleave", function () {
-      contentHover.classList.remove("visible"); // 마우스가 떠날 때 서서히 사라짐
-    });
-  });
-
-  // 로컬스토리지에서 좋아요 상태 복원
-  restoreLikedPosts(posts);
 }
 
 function renderPagination(totalPages) {
@@ -208,31 +189,8 @@ cateImgBoxs.forEach((box) => {
   });
 });
 
-// 로컬스토리지에서 좋아요 상태 복원
-function restoreLikedPosts() {
-  const likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
-  likedPosts.forEach((postId) => {
-    const heartIcon = document.getElementById(`heartIcon-${postId}`);
-    if (heartIcon) {
-      heartIcon.classList.remove("fa-regular");
-      heartIcon.classList.add("fa-solid");
-    }
-  });
-}
-
 // 좋아요 버튼
 async function toggleLike(postId) {
-  const heartIcon = document.getElementById(`heartIcon-${postId}`);
-  const postElement = heartIcon?.closest(".post");
-  const likeCountElement = postElement?.querySelector(".likeCount");
-
-  if (!heartIcon || !likeCountElement) {
-    console.error("아이콘이나 좋아요 숫자 요소가 선택되지 않았습니다.");
-    return;
-  }
-
-  const isLiked = heartIcon.classList.contains("fa-solid");
-
   try {
     const response = await axios.post(
       `/board/post/${postId}/like`,
@@ -241,44 +199,55 @@ async function toggleLike(postId) {
     );
 
     if (response.status === 200) {
-      const { likes, liked, likeCount } = response.data;
+      const { liked, likeCount } = response.data;
+      const heartIcon = document.getElementById(`heartIcon-${postId}`);
+      const likeCountElement = heartIcon.nextElementSibling;
 
-      // 좋아요 상태 UI 업데이트
-      if (liked) {
-        heartIcon.classList.remove("fa-regular");
-        heartIcon.classList.add("fa-solid");
-      } else {
-        heartIcon.classList.remove("fa-solid");
-        heartIcon.classList.add("fa-regular");
-      }
-
-      // 좋아요 수 업데이트
+      heartIcon.classList.toggle("fa-solid", liked);
+      heartIcon.classList.toggle("fa-regular", !liked);
       likeCountElement.textContent = likeCount;
-
-      // 로컬스토리지에 좋아요 상태 업데이트
-      let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
-
-      if (liked) {
-        // 좋아요 추가
-        if (!likedPosts.includes(postId)) {
-          likedPosts.push(postId);
-        }
-      } else {
-        // 좋아요 취소
-        likedPosts = likedPosts.filter((id) => id !== postId);
-      }
-
-      localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
     }
   } catch (error) {
-    if (error.response && error.response.status === 403) {
-      alert("로그인 후 좋아요가 가능합니다. 로그인을 해주세요.");
-      window.location.href = "/";
-    } else {
-      console.error("좋아요 상태 업데이트 실패:", error);
-    }
+    console.error("좋아요 상태 업데이트 실패:", error);
+    alert("좋아요 처리 중 오류가 발생했습니다.");
   }
 }
+
+// async function toggleLike(postId) {
+//   const heartIcon = document.getElementById(`heartIcon-${postId}`);
+//   const likeCountElement = heartIcon.nextElementSibling;
+
+//   if (!heartIcon || !likeCountElement) return;
+
+//   const isCurrentlyLiked = heartIcon.classList.contains("fa-solid");
+
+//   // UI 즉시 변경
+//   heartIcon.classList.toggle("fa-solid");
+//   heartIcon.classList.toggle("fa-regular");
+//   likeCountElement.textContent = isCurrentlyLiked
+//     ? parseInt(likeCountElement.textContent) - 1
+//     : parseInt(likeCountElement.textContent) + 1;
+
+//   try {
+//     const response = await axios.post(
+//       `/board/post/${postId}/like`,
+//       {},
+//       { withCredentials: true }
+//     );
+
+//     if (response.status === 200) {
+//       const { liked, likeCount } = response.data;
+
+//       // 서버 응답 기반으로 최종 UI 업데이트
+//       heartIcon.classList.toggle("fa-solid", liked);
+//       heartIcon.classList.toggle("fa-regular", !liked);
+//       likeCountElement.textContent = likeCount;
+//     }
+//   } catch (error) {
+//     console.error("좋아요 상태 업데이트 실패:", error);
+//     alert("좋아요 처리 중 오류가 발생했습니다.");
+//   }
+// }
 
 // 모달 띄우기
 function setCookie(name, value, days) {

@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
 const { Favorite, Category, Post, User } = require("../models");
-
+const jwt = require("jsonwebtoken");
 module.exports = {
   // 게시글 생성
   createPost: async (req, res) => {
@@ -105,6 +105,29 @@ module.exports = {
         likeCount: Math.max(post.favorites ? post.favorites.length : 0, 0),
       }));
       const totalPages = Math.ceil(count / limit);
+      let accessToken = req.cookies.accessToken;
+      if (accessToken) {
+        console.log(accessToken);
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
+        const user = await User.findOne({ where: { email: decoded.email } });
+        console.log(user);
+
+        // 로그인한 유저가 좋아요한 게시글을 찾기
+        const userFavorites = await Favorite.findAll({
+          where: { userId: user.id },
+          attributes: ["postId"], // postId만 가져옴
+        });
+
+        // 좋아요한 게시글 ID 배열 만들기
+        const likedPostIds = userFavorites.map((favorite) => favorite.postId);
+
+        // 각 게시글에 isLiked 추가
+        postsWithLikeCount.forEach((post) => {
+          if (likedPostIds.includes(post.id)) {
+            post.isLiked = true; // 해당 게시글을 좋아요한 경우 true로 설정
+          }
+        });
+      }
 
       res.status(200).json({
         success: true,
@@ -153,7 +176,13 @@ module.exports = {
       // 사용자 이름과 아이디 포함
       const postWithUser = {
         ...post.toJSON(),
-        user: post.user ? { name: post.user.name, id: post.user.id } : null,
+        user: post.user
+          ? {
+              name: post.user.name,
+              id: post.user.id,
+              profilePic: post.user.profilePic,
+            }
+          : null,
       };
 
       res.status(200).json({
@@ -333,6 +362,7 @@ module.exports = {
       });
     }
   },
+
   // 게시물 삭제 처리
   deletePost: async (req, res) => {
     try {

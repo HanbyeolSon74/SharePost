@@ -2,26 +2,45 @@ const { Favorite, Post } = require("../models");
 
 module.exports = {
   // JSON 응답용 좋아요한 게시물 조회
-  getLikedPosts: async (req, res) => {
+  getPostList: async (req, res) => {
     try {
-      const userId = req.user.id;
+      const userId = req.user ? req.user.id : null;
+      const { page = 1, limit = 12, category = "ALL" } = req.query;
 
-      const favoritePosts = await Favorite.findAll({
-        where: { userId },
+      const whereCondition = category !== "ALL" ? { category } : {};
+
+      // 게시물 조회
+      const posts = await Post.findAll({
+        where: whereCondition,
+        limit: parseInt(limit),
+        offset: (page - 1) * limit,
+        attributes: ["id", "title", "content", "mainimage", "likes"],
         include: [
           {
-            model: Post,
-            as: "post",
-            attributes: ["id", "title", "content", "mainimage", "likes"], // 좋아요 수 포함
+            model: Favorite,
+            as: "favorites",
+            attributes: ["id", "userId"],
           },
         ],
       });
 
-      const posts = favoritePosts.map((fav) => fav.post);
+      // 게시물마다 현재 사용자가 좋아요했는지 여부 추가
+      const postsWithLikeStatus = posts.map((post) => {
+        console.log(post.favorites); // 🔥 여기에 userId가 있는지 확인
+        const isLiked = userId
+          ? post.favorites.some((fav) => fav.userId === userId)
+          : false;
+        return {
+          ...post.toJSON(),
+          isLiked, // ✅ 좋아요 여부 추가
+        };
+      });
 
-      res.json({ success: true, posts });
+      const totalPages = Math.ceil(posts.length / limit);
+
+      res.json({ success: true, posts: postsWithLikeStatus, totalPages });
     } catch (error) {
-      console.error("좋아요한 게시물 조회 실패:", error);
+      console.error("게시물 목록 조회 실패:", error);
       res.status(500).json({ success: false, message: "서버 오류 발생" });
     }
   },
@@ -92,7 +111,7 @@ module.exports = {
   // 상세 게시물 조회 (좋아요 수 및 현재 사용자의 좋아요 상태 포함)
   getPostDetail: async (req, res) => {
     try {
-      const userId = req.user ? req.user.id : null; // 로그인 상태 확인
+      const userId = req.user ? req.user.id : null;
       const postId = req.params.postId;
 
       // 게시물 조회 (좋아요 수 포함)
@@ -101,7 +120,7 @@ module.exports = {
           {
             model: Favorite,
             as: "favorites",
-            attributes: ["id"], // 좋아요 수만 가져옴
+            attributes: ["id"],
           },
         ],
       });
@@ -119,13 +138,13 @@ module.exports = {
       let isLiked = false;
       if (userId) {
         const favorite = await Favorite.findOne({ where: { userId, postId } });
-        isLiked = !!favorite; // 좋아요한 경우 true, 아니면 false
+        isLiked = !!favorite;
       }
 
       res.render("detail", {
         post,
         likeCount,
-        isLiked, // 좋아요 여부 추가
+        isLiked, // ✅ 좋아요 여부 추가
         headerData: {
           naverClientId: process.env.NAVER_CLIENT_ID,
           naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
@@ -151,7 +170,7 @@ module.exports = {
 
       res.json({
         success: true,
-        liked: !!favorite, // 좋아요 여부 (true / false)
+        liked: !favorite, // 좋아요 여부 (true / false)
         likeCount,
       });
     } catch (error) {
