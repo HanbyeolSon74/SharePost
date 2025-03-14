@@ -188,7 +188,7 @@ document.querySelectorAll(".allCate").forEach((cateElement) => {
 
 // 게시물 작성 버튼
 const postBtnBox = document.querySelector(".postBtnBox");
-postBtnBox.innerHTML = `<div class="postBoard">게시물 작성하기</div>`;
+postBtnBox.innerHTML = `<div class="reviewTitle">BAKERY BOARD</div><div class="postBoard">게시물 작성하기</div>`;
 const postBoard = document.querySelector(".postBoard");
 postBoard.addEventListener("click", function () {
   window.location.href = "/board/post";

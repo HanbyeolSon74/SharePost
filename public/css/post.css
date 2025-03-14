@@ -34,13 +34,13 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 20px 50px 20px;
+  padding: 20px 20px 80px 20px;
   position: relative;
 }
 .postDetailWrap {
-  width: 80%;
+  width: 75%;
   max-width: 1280px;
-  border: 1px gray solid;
+  /* border: 1px rgb(183, 183, 183) solid; */
   border-radius: 15px;
   box-sizing: border-box;
   margin: 0px 20px 5px 20px;
@@ -48,6 +48,7 @@ a {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 .btnsWrap {
   padding-top: 50px;
@@ -56,11 +57,12 @@ a {
   text-align: right;
 }
 .bottomBtnsWrap {
-  padding: 5px 10px;
+  padding: 10px 10px;
   font-size: 11px;
   display: flex;
   position: absolute;
-  right: 150px;
+  right: 195px;
+  color: rgb(81, 81, 81);
 }
 .sharePostBtn {
   cursor: pointer;
@@ -95,15 +97,15 @@ a {
 }
 .postTitleUserWrap {
   width: 100%;
-  border-bottom: solid 1px #d1d1d1;
+  border-bottom: solid 1px #e4e4e4;
   /* border-bottom: solid 1px #e7e7e9; */
-  padding: 30px;
+  padding: 50px;
   box-sizing: border-box;
 }
 
 .mainContentWrap {
   width: 100%;
-  padding: 30px;
+  /* padding: 30px; */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -163,7 +165,7 @@ a {
 }
 
 #postContent {
-  width: 100%;
+  width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
   word-wrap: break-word;
@@ -245,11 +247,11 @@ a {
 
 /* 메인 이미지 */
 .postMainImgWrap {
-  width: 60%;
+  width: 100%;
 }
 #postMainImage {
   width: 100%;
-  border-radius: 15px;
+  /* border-radius: 15px; */
 }
 
 /* 메인 이미지 끝 */
@@ -258,20 +260,20 @@ a {
 /* 반응형 디자인 - 미디어 쿼리 */
 @media (max-width: 1024px) {
   .postDetailWrap {
-    width: 90%;
+    width: 75%;
   }
 
   .postTitleUserWrap {
-    padding: 20px;
+    padding: 40px;
   }
 
-  .mainContentWrap {
+  /* .mainContentWrap {
     padding: 20px;
-  }
+  } */
 
-  .postMainImgWrap {
+  /* .postMainImgWrap {
     width: 80%;
-  }
+  } */
 
   .postBottomWrap {
     padding-top: 30px;
@@ -286,20 +288,20 @@ a {
 
 @media (max-width: 768px) {
   .postDetailWrap {
-    width: 95%;
+    width: 75%;
   }
 
   .postTitleUserWrap {
-    padding: 15px;
+    padding: 35px;
   }
 
-  .mainContentWrap {
+  /* .mainContentWrap {
     padding: 15px;
-  }
-
+  } */
+  /* 
   .postMainImgWrap {
     width: 90%;
-  }
+  } */
 
   .mainPageGo {
     width: 120px;
@@ -323,16 +325,24 @@ a {
 
 @media (max-width: 480px) {
   .postDetailWrap {
-    width: 100%;
+    width: 95%;
   }
-
+  #postTitle {
+    font-size: 30px;
+  }
   .postTitleUserWrap {
-    padding: 10px;
+    padding: 30px;
   }
-
-  .mainContentWrap {
-    padding: 10px;
+  .firstPostDate {
+    font-size: 8px;
   }
+  .postDate {
+    padding-top: 2px;
+    font-size: 8px;
+  }
+  /* .mainContentWrap {
+    padding: 10px;
+  } */
 
   .postMainImgWrap {
     width: 100%;
@@ -355,6 +365,9 @@ a {
 
   .bakezyex {
     font-size: 9px;
+  }
+  .bottomBtnsWrap {
+    font-size: 6px;
   }
 }
 
@@ -468,12 +481,12 @@ a {
 /* 하단 버튼들 반응형 */
 @media (max-width: 1024px) {
   .bottomBtnsWrap {
-    right: 80px;
+    right: 135px;
   }
 }
 @media (max-width: 768px) {
   .bottomBtnsWrap {
-    right: 50px;
+    right: 145px;
   }
 
   .sharePostBtn,
@@ -486,7 +499,7 @@ a {
 
 @media (max-width: 480px) {
   .bottomBtnsWrap {
-    right: 30px;
+    right: 50px;
   }
 }
 .likeCircle {
