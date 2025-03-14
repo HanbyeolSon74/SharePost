@@ -5,63 +5,63 @@ module.exports = {
   getPostList: async (req, res) => {
     try {
       const userId = req.user ? req.user.id : null;
-      const { page = 1, limit = 12, category = "ALL" } = req.query;
+      console.log("📌 userId:", userId);
 
-      const whereCondition = category !== "ALL" ? { category } : {};
+      const { page = 1, limit = 12 } = req.query;
 
-      // 게시물 조회
+      // 좋아요한 게시물 조회
+      const likedPosts = await Favorite.findAll({
+        where: { userId },
+        attributes: ["postId"],
+      });
+
+      const postIds = likedPosts.map((fav) => fav.postId);
+
+      // 좋아요한 게시물 조회
       const posts = await Post.findAll({
-        where: whereCondition,
+        where: { id: postIds },
         limit: parseInt(limit),
         offset: (page - 1) * limit,
         attributes: ["id", "title", "content", "mainimage", "likes"],
-        include: [
-          {
-            model: Favorite,
-            as: "favorites",
-            attributes: ["id", "userId"],
-          },
-        ],
       });
 
-      // 게시물마다 현재 사용자가 좋아요했는지 여부 추가
-      const postsWithLikeStatus = posts.map((post) => {
-        console.log(post.favorites); // 🔥 여기에 userId가 있는지 확인
-        const isLiked = userId
-          ? post.favorites.some((fav) => fav.userId === userId)
-          : false;
-        return {
-          ...post.toJSON(),
-          isLiked, // ✅ 좋아요 여부 추가
-        };
+      res.json({
+        success: true,
+        posts,
+        totalPages: Math.ceil(posts.length / limit),
       });
-
-      const totalPages = Math.ceil(posts.length / limit);
-
-      res.json({ success: true, posts: postsWithLikeStatus, totalPages });
     } catch (error) {
-      console.error("게시물 목록 조회 실패:", error);
+      console.error("🚨 좋아요한 게시물 조회 실패:", error);
       res.status(500).json({ success: false, message: "서버 오류 발생" });
     }
   },
 
   // 좋아요한 게시물 페이지 렌더링 (EJS)
   likePage: (req, res) => {
-    res.render("mylike");
+    res.render("mylike", {
+      headerData: {
+        naverClientId: process.env.NAVER_CLIENT_ID,
+        naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
+      },
+    });
   },
+
   renderLikedPosts: async (req, res) => {
     try {
       if (req.cookies.accessToken) {
-        let accessToken = req.cookies.accessToken;
+        const accessToken = req.cookies.accessToken;
         const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
         const user = await User.findOne({ where: { email: decoded.email } });
-        const likePost = await Favorite.findAll({ where: { userId: user.id } });
+        const likePost = await Favorite.findAll({
+          where: { userId: user.id },
+          include: [{ model: Post, as: "post" }],
+        });
 
-        res.json(likePage);
+        res.json({ posts: likePost });
       }
     } catch (error) {
-      console.error("좋아요한 게시물 조회 실패:", error);
-      res.status(500).send("서버 오류 발생");
+      console.error("🚨 좋아요한 게시물 조회 실패:", error);
+      res.status(500).json({ success: false, message: "서버 오류 발생" });
     }
   },
 
@@ -88,8 +88,8 @@ module.exports = {
 
       res.json({
         success: true,
-        liked: !favorite,
-        likeCount: updatedPost.likes,
+        liked: !favorite, // 좋아요 여부 (true / false)
+        likeCount: updatedPost.likes, // 최신 좋아요 수
       });
     } catch (error) {
       console.error("좋아요 처리 실패:", error);

@@ -53,6 +53,9 @@ router.get("/myposts-json", verifyToken, getUserPosts);
 router.get("/favorites/posts", verifyToken, likePage);
 router.get("/getPost", verifyToken, renderLikedPosts);
 
+// 좋아요한 게시물 JSON 조회 API
+router.get("/favorites/posts/json", verifyToken, getPostList);
+
 // ✅ 내가 좋아요한 게시물 페이지 렌더링 (EJS 사용)
 router.get("/favorites/posts", verifyToken, renderLikedPosts);
 

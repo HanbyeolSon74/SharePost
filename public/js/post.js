@@ -107,6 +107,17 @@ window.onload = async function () {
         post.updatedAt
       )}`;
 
+      // ✅ 프로필 이미지 적용
+      const userImageElement = document.querySelector(".userImage");
+
+      if (post.user.profileImage) {
+        // 업로드된 이미지 사용 (절대 경로 추가)
+        userImageElement.src = `/uploads/profilepics/${post.user.profileImage}`;
+      } else {
+        // 기본 프로필 이미지 사용 (public 폴더에서 서빙되는 경로로 수정)
+        userImageElement.src = "/images/image.jpg";
+      }
+
       document.querySelector(".postlikeBtn").innerHTML = `
         <i class="fa-solid fa-print print-icon"></i>
         <div class="likeCircle">

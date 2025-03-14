@@ -154,7 +154,7 @@ module.exports = {
         include: [
           { model: Category, as: "category", attributes: ["name"] },
           { model: Favorite, as: "favorites", attributes: ["id"] },
-          { model: User, as: "user", attributes: ["name", "id"] },
+          { model: User, as: "user", attributes: ["name", "id", "profilePic"] },
         ],
       });
 

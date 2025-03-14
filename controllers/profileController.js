@@ -70,17 +70,21 @@ module.exports = {
           .json({ success: false, message: "사용자를 찾을 수 없습니다." });
       }
 
-      const profilePic = req.file
-        ? `/uploads/profilepics/${req.file.filename}`
-        : user.profilePic;
+      console.log("📂 업로드된 파일 정보:", req.file); // 파일 업로드 확인
+
+      // 프로필 이미지 경로 설정
+      let profilePic = user.profilePic; // 기본값은 기존 프로필 이미지
+      if (req.file) {
+        profilePic = `/uploads/profilepics/${req.file.filename}`;
+      }
 
       // 사용자 정보 업데이트
-      user.name = name || user.name;
-      user.phone = phone || user.phone;
-      user.birthDate = birthDate || user.birthDate;
-      if (profilePic) user.profilePic = profilePic; // 프로필 사진 업데이트
-
-      await user.save();
+      await user.update({
+        name: name || user.name,
+        phone: phone || user.phone,
+        birthDate: birthDate || user.birthDate,
+        profilePic, // 프로필 이미지 저장
+      });
 
       console.log("✅ 회원 정보 수정 완료:", { userId, profilePic });
 
@@ -185,10 +189,19 @@ module.exports = {
     try {
       const posts = await Post.findAll({
         where: { userId: req.user.id }, // 현재 로그인한 사용자의 게시글만 조회
+        include: [
+          {
+            model: User,
+            attributes: ["profilePic"], // 프로필 사진 포함
+          },
+        ],
         order: [["createdAt", "DESC"]], // 최신순으로 정렬
       });
 
-      const plainPosts = posts.map((post) => post.toJSON()); // JSON 형식으로 변환
+      const plainPosts = posts.map((post) => ({
+        ...post.toJSON(),
+        profilePic: post.User ? post.User.profilePic : "/images/default.png", // 기본 이미지 추가
+      }));
 
       // JSON 형식으로 응답 반환
       res.json({ posts: plainPosts });

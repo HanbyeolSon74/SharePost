@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     const formData = new FormData(this);
-
+    console.log(formData.files[0].name);
     if (selectedFile) {
       formData.append("profileImage", profilePicInput.files[0]); // 이미지 파일 추가
     } else if (imagePreview.hasAttribute("data-url")) {
@@ -66,6 +66,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.data.imageUrl) {
           imagePreview.style.backgroundImage = `url('${response.data.imageUrl}')`;
           imagePreview.setAttribute("data-url", response.data.imageUrl);
+
+          // ✅ 게시글의 프로필 이미지도 즉시 업데이트
+          document.querySelectorAll(".post .profile-image").forEach((img) => {
+            img.src = response.data.imageUrl;
+          });
         }
         window.location.href = "/";
       }
