@@ -56,7 +56,7 @@ function renderPosts(posts) {
       <div class="postWrap">
         <div class="postItem" onclick="window.location.href='/board/post/view/${post.id}'">
           <img src="${post.mainimage}" alt="${post.title}" />
-          <div class="contentHover" style="display:none">${post.content}</div>
+          <div class="contentHover">${post.content}</div>
         </div>
         <div class="likeHeartWrap" onclick="toggleLike(${post.id})">
           <i class="fa-regular fa-heart fa-heart2" id="heartIcon-${post.id}"></i>
@@ -78,10 +78,10 @@ function renderPosts(posts) {
   document.querySelectorAll(".postItem").forEach((post) => {
     const contentHover = post.querySelector(".contentHover");
     post.addEventListener("mouseenter", function () {
-      contentHover.style.display = "block";
+      contentHover.classList.add("visible"); // 마우스 오버 시 contentHover가 서서히 나타남
     });
     post.addEventListener("mouseleave", function () {
-      contentHover.style.display = "none";
+      contentHover.classList.remove("visible"); // 마우스가 떠날 때 서서히 사라짐
     });
   });
 

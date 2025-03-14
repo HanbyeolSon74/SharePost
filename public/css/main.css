@@ -156,8 +156,8 @@ body {
     font-size: 10px;
   }
   .likeHeartWrap {
-    bottom: 55px !important;
-    right: 5px !important;
+    bottom: 60px !important;
+    right: 13px !important;
   }
   .cateAllBox {
     width: 100%;
@@ -202,12 +202,20 @@ body {
   border-radius: 15px;
   cursor: pointer;
   color: black;
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-out, visibility 0s 0.3s;
   z-index: 1;
   font-size: 12px;
   overflow: hidden;
   box-sizing: border-box;
   height: 100%;
+}
+
+.contentHover.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s ease-out, visibility 0s 0s;
 }
 
 .contentHover p {
@@ -446,11 +454,25 @@ body {
     grid-template-columns: repeat(3, 1fr);
     padding: 0 30px !important;
   }
+  .contentHover p {
+    font-size: 12px;
+    height: calc(100% - 20px);
+  }
+  .contentHover {
+    padding: 10px 15px;
+  }
 }
 
 @media (max-width: 480px) {
   .mainPostsBox {
     grid-template-columns: repeat(2, 1fr);
     padding: 0 15px !important;
+  }
+  .contentHover p {
+    font-size: 11px;
+    height: calc(100% - 20px);
+  }
+  .contentHover {
+    padding: 10px 15px;
   }
 }
