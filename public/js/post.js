@@ -78,23 +78,24 @@ window.onload = async function () {
     return date.toLocaleString("ko-KR", options);
   }
 
-  function restoreLikedPosts(likeCount) {
-    const likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
-    const heartIcon = document.getElementById(`heartIcon-${postId}`);
-    const likeCountElement = document.querySelector(".detailLikeCount");
+  // function restoreLikedPosts(likeCount) {
+  //   const likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
+  //   const heartIcon = document.getElementById(`heartIcon-${postId}`);
+  //   const likeCountElement = document.querySelector(".detailLikeCount");
 
-    if (heartIcon && likeCountElement) {
-      const isLiked = likedPosts.includes(postId);
-      heartIcon.classList.toggle("fa-solid", isLiked);
-      heartIcon.classList.toggle("fa-regular", !isLiked);
-      likeCountElement.textContent = likeCount;
-    }
-  }
+  //   if (heartIcon && likeCountElement) {
+  //     const isLiked = likedPosts.includes(postId);
+  //     heartIcon.classList.toggle("fa-solid", isLiked);
+  //     heartIcon.classList.toggle("fa-regular", !isLiked);
+  //     likeCountElement.textContent = likeCount;
+  //   }
+  // }
 
   try {
     const response = await axios.get(`/board/post/${postId}`);
 
     if (response.status === 200) {
+      console.log("ddd", response.data.posts);
       console.log(response.data, "??전체");
       const { post, canEdit, likes, liked, likeCount } = response.data;
 
@@ -106,6 +107,12 @@ window.onload = async function () {
       document.querySelector(".postDate").textContent = `수정일 : ${formatDate(
         post.updatedAt
       )}`;
+
+      let heart = post.user.isLiked
+        ? `<i class="fa-heart fa-heart2 fa-solid 
+          }" id="heartIcon-${post.id}"></i>`
+        : `<i class="fa-heart fa-heart2 fa-regular
+          }" id="heartIcon-${post.id}"></i>`;
 
       console.log(post.user, "?? post.user 데이터"); // 유저 정보 확인
       console.log(post.user.profilePic, "?? post.user.profilePic 값 확인"); // 프로필 이미지 확인
@@ -123,15 +130,10 @@ window.onload = async function () {
 
       document.querySelector(".postlikeBtn").innerHTML = `
         <i class="fa-solid fa-print print-icon"></i>
-        <div class="likeCircle">
-          <i class="fa-${
-            liked ? "solid" : "regular"
-          } fa-heart fa-heart2" id="heartIcon-${post.id}" onclick="toggleLike(${
-        post.id
-      })"></i>
-          <span class="detailLikeCount">${likeCount}</span>
+        <div class="likeCircle" onclick="toggleLike(${post.id})">
+        ${heart}
+          <span class="detailLikeCount">${post.likes}</span>
         </div>`;
-      restoreLikedPosts(likeCount);
 
       const printIcon = document.querySelector(".print-icon");
       if (printIcon) {
@@ -262,27 +264,30 @@ async function toggleLike(postId) {
 
     if (response.status === 200) {
       const { likeCount, liked } = response.data;
+      const heartIcon = document.getElementById(`heartIcon-${postId}`);
+      const likeCountElement = heartIcon.nextElementSibling;
       console.log(liked, "liked");
       console.log(likeCount, "likeCount");
-      heartIcon.classList.toggle("fa-solid", liked);
 
+      heartIcon.classList.toggle("fa-solid", liked);
       heartIcon.classList.toggle("fa-regular", !liked);
       likeCountElement.textContent = likeCount;
 
-      let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
-      if (liked) {
-        if (!likedPosts.includes(postId)) likedPosts.push(postId);
-      } else {
-        likedPosts = likedPosts.filter((id) => id !== postId);
-      }
-      localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
+      // let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
+      // if (liked) {
+      //   if (!likedPosts.includes(postId)) likedPosts.push(postId);
+      // } else {
+      //   likedPosts = likedPosts.filter((id) => id !== postId);
+      // }
+      // localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
     }
   } catch (error) {
-    console.error("좋아요 상태 업데이트 실패:", error);
-
-    if (error.response?.status === 403) {
-      alert("로그인 후 좋아요가 가능합니다. 로그인을 해주세요.");
+    if (error.response && error.response.status === 403) {
+      alert("로그인이 필요합니다.");
       window.location.href = "/";
+    } else {
+      console.error("좋아요 처리 오류:", error);
+      alert("오류가 발생했습니다. 다시 시도해주세요.");
     }
   }
 }

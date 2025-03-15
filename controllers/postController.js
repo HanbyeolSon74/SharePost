@@ -166,10 +166,21 @@ module.exports = {
       }
 
       let canEdit = false;
+      let isLiked = false;
+
       if (req.user) {
         const userIdFromToken = req.user.id;
         canEdit = post.userId === userIdFromToken;
+
+        // 로그인한 유저가 좋아요한 게시글인지 확인
+        const userFavorites = await Favorite.findAll({
+          where: { userId: userIdFromToken, postId: post.id },
+        });
+
+        // 유저가 좋아요를 눌렀으면 isLiked를 true로 설정
+        isLiked = userFavorites.length > 0;
       }
+
       // 좋아요 수 계산
       const likeCount = Math.max(post.favorites ? post.favorites.length : 0, 0);
 
@@ -181,6 +192,7 @@ module.exports = {
               name: post.user.name,
               id: post.user.id,
               profilePic: post.user.profilePic,
+              isLiked: isLiked,
             }
           : null,
       };
@@ -200,7 +212,6 @@ module.exports = {
       });
     }
   },
-
   // 게시글 상세 페이지 렌더링
   getPostPage: async (req, res) => {
     try {

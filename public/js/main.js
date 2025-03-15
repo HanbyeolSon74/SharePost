@@ -13,7 +13,6 @@ function fetchPosts() {
       `/board/main?page=${currentPage}&limit=${limit}&category=${selectedCategory}`
     )
     .then((response) => {
-      console.log("ddd", response.data.posts); // 🔥 isLiked 값이 정상적으로 내려오는지 확인
       const posts = response.data.posts;
       totalPages = response.data.totalPages;
 
@@ -47,6 +46,7 @@ function renderPosts(posts) {
           }" id="heartIcon-${post.id}"></i>`
       : `<i class="fa-heart fa-heart2 fa-regular
           }" id="heartIcon-${post.id}"></i>`;
+
     postElement.innerHTML = `
       <div class="postWrap">
         <div class="postItem" onclick="window.location.href='/board/post/view/${
