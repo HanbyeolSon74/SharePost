@@ -208,8 +208,13 @@ async function toggleLike(postId) {
       likeCountElement.textContent = likeCount;
     }
   } catch (error) {
-    console.error("좋아요 상태 업데이트 실패:", error);
-    alert("좋아요 처리 중 오류가 발생했습니다.");
+    if (error.response && error.response.status === 403) {
+      alert("로그인이 필요합니다.");
+      window.location.href = "/";
+    } else {
+      console.error("좋아요 처리 오류:", error);
+      alert("오류가 발생했습니다. 다시 시도해주세요.");
+    }
   }
 }
 

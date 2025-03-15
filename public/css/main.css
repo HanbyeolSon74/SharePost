@@ -480,3 +480,7 @@ body {
     padding: 10px 15px;
   }
 }
+
+.postItem {
+  cursor: pointer;
+}

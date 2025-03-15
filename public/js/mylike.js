@@ -8,20 +8,20 @@ async function getLikedPosts() {
 
   try {
     const response = await axios.get("/profile/favorites/posts/json");
-    console.log("res", response);
+
     const { success, posts } = response.data;
 
-    postContainer.innerHTML = ""; // 기존 목록 초기화
-    console.log(success, posts);
+    postContainer.innerHTML = "";
+
     if (!success || !posts || posts.length === 0) {
       postContainer.innerHTML = `<div class="alertText"><p>좋아요한 게시물이 없습니다.</p></div>`;
       return;
     }
 
     posts.forEach((post) => {
-      console.log(post, "post");
       const postElement = document.createElement("div");
-      postElement.classList.add("post", "postElement"); // 두 개의 클래스 추가
+      postElement.classList.add("post", "postElement");
+      postElement.dataset.postId = post.id;
 
       postElement.innerHTML = `
               <div class="post-image">
@@ -35,6 +35,17 @@ async function getLikedPosts() {
             `;
 
       postContainer.appendChild(postElement);
+    });
+
+    postContainer.addEventListener("click", (event) => {
+      const postElement = event.target.closest(".postElement");
+      const isLikeButton = event.target.classList.contains("like-btn");
+
+      if (postElement && !isLikeButton) {
+        // 좋아요 버튼이 아닌 경우 상세 페이지로 이동
+        const postId = postElement.dataset.postId;
+        window.location.href = `/board/post/view/${postId}`;
+      }
     });
 
     // 좋아요 버튼 이벤트 리스너 추가
@@ -54,9 +65,7 @@ async function handleLikeToggle(event) {
 
   const button = event.target;
   const postId = button.dataset.postId;
-  const isLiked = button.dataset.liked === "true"; // 현재 상태 확인
-
-  console.log("버튼 클릭됨:", button);
+  const isLiked = button.dataset.liked === "true";
 
   try {
     const response = await axios.post(`/profile/favorites/toggle/${postId}`);
@@ -66,12 +75,10 @@ async function handleLikeToggle(event) {
 
       // 좋아요 취소 시 목록에서 제거
       const postElement = button.parentElement.closest(".postElement");
-      console.log("가장 가까운 .post 요소:", postElement);
 
       if (postElement) {
-        postElement.remove(); // .post 요소가 있을 경우에만 제거
+        postElement.remove();
 
-        // ✅ 남은 게시물이 없으면 "좋아요한 게시물이 없습니다." 표시
         if (document.querySelectorAll(".postElement").length === 0) {
           postContainer.innerHTML = `<div class="alertText"><p>좋아요한 게시물이 없습니다.</p></div>`;
         }
