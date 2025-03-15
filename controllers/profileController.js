@@ -14,7 +14,18 @@ module.exports = {
 
     try {
       const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
-      const user = await User.findOne({ where: { id: decoded.id } });
+      const user = await User.findOne({
+        where: { id: decoded.id },
+        attributes: [
+          "id",
+          "email",
+          "name",
+          "phone",
+          "birthDate",
+          "address",
+          "profilePic",
+        ], // 👈 address와 birthDate 포함!
+      });
 
       if (!user) {
         return res.status(404).json({
@@ -36,7 +47,8 @@ module.exports = {
           email: user.email,
           name: user.name,
           phone: user.phone,
-          birthdate: user.birthDate,
+          birthDate: user.birthDate,
+          address: user.address,
           profileImage: user.profilePic,
         },
         naverClientId, // 네이버 클라이언트 ID 전달
@@ -52,7 +64,7 @@ module.exports = {
   updateProfile: async (req, res) => {
     console.log("📢 [updateProfile] 파일 업로드 요청 도착");
 
-    const { name, phone, birthDate } = req.body;
+    const { name, phone, birthDate, address } = req.body;
     const accessToken = req.cookies.accessToken;
 
     if (!accessToken) {
@@ -72,10 +84,10 @@ module.exports = {
           .json({ success: false, message: "사용자를 찾을 수 없습니다." });
       }
 
-      console.log("📂 업로드된 파일 정보:", req.file); // 파일 업로드 확인
+      console.log("📂 업로드된 파일 정보:", req.file);
 
       // 프로필 이미지 경로 설정
-      let profilePic = user.profilePic; // 기본값은 기존 프로필 이미지
+      let profilePic = user.profilePic;
       if (req.file) {
         profilePic = `/uploads/profilepics/${req.file.filename}`;
       }
@@ -84,8 +96,9 @@ module.exports = {
       await user.update({
         name: name || user.name,
         phone: phone || user.phone,
-        birthDate: birthDate || user.birthDate,
-        profilePic, // 프로필 이미지 저장
+        birthDate: birthDate !== "" ? birthDate : user.birthDate,
+        address: address || user.address,
+        profilePic,
       });
 
       console.log(
@@ -129,7 +142,8 @@ module.exports = {
           email: user.email,
           name: user.name,
           phone: user.phone,
-          birthdate: user.birthDate,
+          birthDate: user.birthDate,
+          address: user.address,
           profilePic: user.profilePic,
         },
         naverClientId: process.env.NAVER_CLIENT_ID,

@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const changePasswordModal = document.getElementById("changePasswordModal");
   const closeModalBtn = document.getElementById("closeModalBtn");
   let selectedFile = null;
+  let previousImageUrl = imagePreview.getAttribute("data-url") || "";
 
   // 📌 파일 선택 시 미리보기 업데이트
   profilePicInput.addEventListener("change", function (event) {
@@ -19,10 +20,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (selectedFile) {
       const reader = new FileReader();
       reader.onload = function (e) {
-        console.log("이미지 로드 성공:", e.target.result); // 디버깅 로그 추가
-        imagePreview.style.backgroundImage = `none`; // 기존 배경 제거
+        console.log("이미지 로드 성공:", e.target.result);
+        imagePreview.style.backgroundImage = `none`;
         imagePreview.style.backgroundImage = `url('${e.target.result}')`;
-        imagePreview.setAttribute("data-url", e.target.result); // div에 이미지 URL 저장
+        imagePreview.setAttribute("data-url", e.target.result);
       };
       reader.readAsDataURL(selectedFile);
     }
@@ -37,8 +38,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // 📌 이미지 제거 버튼
   removeBtn.addEventListener("click", function (event) {
     event.preventDefault();
-    imagePreview.style.backgroundImage = "url('/images/image.png')"; // 기본 이미지로 변경
-    imagePreview.removeAttribute("data-url"); // URL 데이터 삭제
+    imagePreview.style.backgroundImage = "url('/images/image.png')";
+    imagePreview.removeAttribute("data-url");
     selectedFile = null;
   });
 
@@ -46,12 +47,22 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     const formData = new FormData(this);
-    console.log(formData.files[0].name);
+
     if (selectedFile) {
-      formData.append("profileImage", profilePicInput.files[0]); // 이미지 파일 추가
+      formData.append("profileImage", profilePicInput.files[0]);
     } else if (imagePreview.hasAttribute("data-url")) {
-      formData.append("profileImageUrl", imagePreview.getAttribute("data-url")); // 기존 이미지 URL 추가
+      formData.append("profileImageUrl", imagePreview.getAttribute("data-url"));
     }
+
+    // 📌 주소 추가
+    formData.append(
+      "address",
+      document.getElementById("sample6_address").value
+    );
+    formData.append(
+      "detailAddress",
+      document.getElementById("sample6_detailAddress").value
+    );
 
     try {
       const response = await axios.post("/profile/update", formData, {
@@ -61,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (response.data.success) {
         alert("회원 정보가 수정되었습니다.");
+        window.location.reload();
 
         // ✅ 업로드된 이미지 URL로 미리보기 업데이트
         if (response.data.imageUrl) {
@@ -80,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // 로그아웃 버튼 클릭 이벤트
+  // 📌 로그아웃 버튼 클릭 이벤트
   if (logoutBtn) {
     logoutBtn.addEventListener("click", function () {
       document.cookie = "accessToken=; path=/; max-age=0;";
@@ -90,12 +102,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // 회원 탈퇴 버튼 클릭 이벤트
+  // 📌 회원 탈퇴 버튼 클릭 이벤트 (프로필 이미지도 삭제)
   if (deleteBtn) {
     deleteBtn.addEventListener("click", function () {
       if (confirm("정말 회원 탈퇴하시겠습니까?")) {
         axios
-          .post("/auth/profile/delete", {}, { withCredentials: true })
+          .post(
+            "/auth/profile/delete",
+            { profileImageUrl: previousImageUrl },
+            { withCredentials: true }
+          )
           .then(() => {
             alert("회원 탈퇴가 완료되었습니다.");
             location.href = "/";
@@ -108,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // 비밀번호 변경 모달 이벤트
+  // 📌 비밀번호 변경 모달 이벤트
   if (changePasswordBtn) {
     changePasswordBtn.addEventListener("click", function () {
       changePasswordModal.style.display = "block";
@@ -128,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// 📌 주소 API 연동
 function sample6_execDaumPostcode() {
   new daum.Postcode({
     oncomplete: function (data) {
