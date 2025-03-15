@@ -199,6 +199,7 @@ module.exports = {
         include: [
           {
             model: User,
+            as: "user",
             attributes: ["profilePic"], // 프로필 사진 포함
           },
         ],
