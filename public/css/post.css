@@ -237,7 +237,7 @@ a {
 }
 .likeCircle i {
   font-size: 15px;
-  color: rgb(81, 81, 81);
+  color: red;
 }
 
 .likeCircle:hover i {
@@ -425,6 +425,7 @@ a {
 }
 .fa-heart2 {
   font-size: 20px;
+  color: red;
 }
 @media print {
   .fa-print {
