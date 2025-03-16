@@ -83,4 +83,5 @@
 - 전체 게시판이 보이는 페이지
 ![Image](https://github.com/user-attachments/assets/bf8be14a-5557-4776-86c1-35991f38b426)
 
-
+![Image](https://github.com/user-attachments/assets/1dc773b3-91ef-4c92-9816-e2f4455d92ad)
+![Image](https://github.com/user-attachments/assets/b8bced74-cf95-4f05-8365-98085484fa7f)
