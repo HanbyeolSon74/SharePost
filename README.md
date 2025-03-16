@@ -38,8 +38,8 @@
 
 ## ⚙️ 기능 정의서 
 <img width="834" alt="Image" src="https://github.com/user-attachments/assets/b928d24e-e4ff-4e9c-a602-59fa725e1d97" />
-<img width="443" alt="Image" src="https://github.com/user-attachments/assets/1fa7c45d-51b5-49fe-94cb-9bd1e5473982" />
 <img width="279" alt="Image" src="https://github.com/user-attachments/assets/53e00eb4-d696-4983-b197-802f789d8a05" />
+<img width="443" alt="Image" src="https://github.com/user-attachments/assets/1fa7c45d-51b5-49fe-94cb-9bd1e5473982" />
 
 ## 📌 향후 계획  
 - 평점 기능 추가  
