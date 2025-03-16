@@ -2,7 +2,9 @@
 **빵을 리뷰하고 공유하는 플랫폼**  
 
 
-
+![Image](https://github.com/user-attachments/assets/4ca20732-cdff-489e-a8ed-6d567a5bb41a)
+![Image](https://github.com/user-attachments/assets/0fedb928-7938-477b-b042-86e2c1eea61b)
+![Image](https://github.com/user-attachments/assets/e2913fc0-c70e-47be-a50d-593e0bffdfae)
 
 
 ## 🚀 프로젝트 소개  
