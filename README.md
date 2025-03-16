@@ -1,15 +1,6 @@
 # 🥐 BAKEZY
 **빵을 리뷰하고 공유하는 플랫폼**  
 
-//
-![Image](https://github.com/user-attachments/assets/fd76ad5a-12d1-47e2-ae21-e63748af559f)
-
-// 기능정의서
-<img width="834" alt="Image" src="https://github.com/user-attachments/assets/b928d24e-e4ff-4e9c-a602-59fa725e1d97" />
-<img width="443" alt="Image" src="https://github.com/user-attachments/assets/1fa7c45d-51b5-49fe-94cb-9bd1e5473982" />
-<img width="279" alt="Image" src="https://github.com/user-attachments/assets/53e00eb4-d696-4983-b197-802f789d8a05" />
-
-
 ## 🚀 프로젝트 소개  
 **BAKEZY**는 **MVC 패턴과 MySQL**을 활용하여 개발한 쇼핑몰 관리자 시스템입니다.  
 빵들의 솔직한 후기를 공유하는 웹사이트입니다. 
@@ -44,6 +35,11 @@
 - **Backend**: Node.js, Express  
 - **Database**: MySQL  
 - **Architecture**: MVC 패턴 , JWT, OAuth (Kakao, Naver) 
+
+## ⚙️ 기능 정의서 
+<img width="834" alt="Image" src="https://github.com/user-attachments/assets/b928d24e-e4ff-4e9c-a602-59fa725e1d97" />
+<img width="443" alt="Image" src="https://github.com/user-attachments/assets/1fa7c45d-51b5-49fe-94cb-9bd1e5473982" />
+<img width="279" alt="Image" src="https://github.com/user-attachments/assets/53e00eb4-d696-4983-b197-802f789d8a05" />
 
 ## 📌 향후 계획  
 - 평점 기능 추가  
