@@ -1,5 +1,5 @@
 # 🥐 BAKEZY
-
+[db.drawio.pdf](https://github.com/user-attachments/files/19273195/db.drawio.pdf)
 **빵을 리뷰하고 공유하는 플랫폼**  
 
 ## 🚀 프로젝트 소개  
