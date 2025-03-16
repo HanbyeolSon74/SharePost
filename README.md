@@ -1,6 +1,7 @@
 # 🥐 BAKEZY
 **빵을 리뷰하고 공유하는 플랫폼**  
 
+<img width="834" alt="Image" src="https://github.com/user-attachments/assets/b928d24e-e4ff-4e9c-a602-59fa725e1d97" />
 
 ![Image](https://github.com/user-attachments/assets/4ca20732-cdff-489e-a8ed-6d567a5bb41a)
 ![Image](https://github.com/user-attachments/assets/0fedb928-7938-477b-b042-86e2c1eea61b)
