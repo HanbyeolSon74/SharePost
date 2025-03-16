@@ -62,15 +62,4 @@
 - 전체 게시판이 보이는 페이지
 
 
-[screencapture-localhost-3000-2025-03-16-22_27_57.pdf](https://github.com/user-attachments/files/19272385/screencapture-localhost-3000-2025-03-16-22_27_57.pdf)
-[screencapture-localhost-3000-2025-03-16-22_32_40.pdf](https://github.com/user-attachments/files/19272389/screencapture-localhost-3000-2025-03-16-22_32_40.pdf)
-[screencapture-localhost-3000-2025-03-16-22_34_36.pdf](https://github.com/user-attachments/files/19272384/screencapture-localhost-3000-2025-03-16-22_34_36.pdf)
-[screencapture-localhost-3000-board-post-2025-03-16-22_53_04.pdf](https://github.com/user-attachments/files/19272380/screencapture-localhost-3000-board-post-2025-03-16-22_53_04.pdf)
-[screencapture-localhost-3000-board-post-2025-03-16-23_11_06.pdf](https://github.com/user-attachments/files/19272388/screencapture-localhost-3000-board-post-2025-03-16-23_11_06.pdf)
-[screencapture-localhost-3000-board-post-edit-21-2025-03-16-22_55_20.pdf](https://github.com/user-attachments/files/19272382/screencapture-localhost-3000-board-post-edit-21-2025-03-16-22_55_20.pdf)
-[screencapture-localhost-3000-profile-favorites-posts-2025-03-16-22_33_05.pdf](https://github.com/user-attachments/files/19272379/screencapture-localhost-3000-profile-favorites-posts-2025-03-16-22_33_05.pdf)
-[screencapture-localhost-3000-profile-favorites-posts-2025-03-16-22_33_20.pdf](https://github.com/user-attachments/files/19272390/screencapture-localhost-3000-profile-favorites-posts-2025-03-16-22_33_20.pdf)
-[screencapture-localhost-3000-profile-update-2025-03-16-15_57_44.pdf](https://github.com/user-attachments/files/19272381/screencapture-localhost-3000-profile-update-2025-03-16-15_57_44.pdf)
-[screencapture-localhost-3000-profile-update-2025-03-16-22_33_46.pdf](https://github.com/user-attachments/files/19272387/screencapture-localhost-3000-profile-update-2025-03-16-22_33_46.pdf)
-[screencapture-localhost-3000-profile-update-2025-03-16-22_34_17.pdf](https://github.com/user-attachments/files/19272383/screencapture-localhost-3000-profile-update-2025-03-16-22_34_17.pdf)
 [screencapture-localhost-3000-user-sign-2025-03-16-22_34_51.pdf](https://github.com/user-attachments/files/19272386/screencapture-localhost-3000-user-sign-2025-03-16-22_34_51.pdf)
