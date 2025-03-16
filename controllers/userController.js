@@ -33,9 +33,6 @@ module.exports = {
   // 회원가입
   signup: async (req, res) => {
     try {
-      console.log("🔹 회원가입 요청:", req.body);
-      console.log("🔹 업로드 파일:", req.file);
-
       const {
         name,
         phone,
@@ -221,8 +218,6 @@ module.exports = {
       // .env 파일에서 클라이언트 ID와 콜백 URL 가져오기
       const naverClientId = process.env.NAVER_CLIENT_ID;
       const naverCallbackUrl = process.env.NAVER_CALLBACK_URL;
-
-      console.log("🔍 아이디 찾기 페이지 렌더링");
 
       // findid 페이지로 클라이언트 ID와 콜백 URL 전달
       res.render("findid", {

@@ -225,36 +225,6 @@ const nameOninput = () => {
   validCheck();
 };
 
-// 주소 검사
-// const addressOninput = () => {
-//   const postcodeInput = document.querySelector("#sample6_postcode");
-//   const addressInput = document.querySelector("#sample6_address");
-//   const detailAddressInput = document.querySelector("#sample6_detailAddress");
-//   const addressText = document.querySelector(".addressText");
-
-//   const postcode = postcodeInput.value.trim();
-//   const address = addressInput.value.trim();
-//   const detailAddress = detailAddressInput.value.trim();
-
-//   if (postcode.length < 1) {
-//     addressText.innerText = "우편번호를 입력하세요.";
-//     addressText.style.color = "red";
-//     addressCheck = false;
-//   } else if (address.length < 1) {
-//     addressText.innerText = "주소를 입력하세요.";
-//     addressText.style.color = "red";
-//     addressCheck = false;
-//   } else if (detailAddress.length < 1) {
-//     addressText.innerText = "상세주소를 입력하세요.";
-//     addressText.style.color = "red";
-//     addressCheck = false;
-//   } else {
-//     addressText.innerText = "";
-//     addressCheck = true;
-//   }
-//   validCheck();
-// };
-
 // 휴대폰 번호 검사
 const phoneOninput = () => {
   const phonePrefix = document.querySelector("#phonePrefix");

@@ -78,25 +78,10 @@ window.onload = async function () {
     return date.toLocaleString("ko-KR", options);
   }
 
-  // function restoreLikedPosts(likeCount) {
-  //   const likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
-  //   const heartIcon = document.getElementById(`heartIcon-${postId}`);
-  //   const likeCountElement = document.querySelector(".detailLikeCount");
-
-  //   if (heartIcon && likeCountElement) {
-  //     const isLiked = likedPosts.includes(postId);
-  //     heartIcon.classList.toggle("fa-solid", isLiked);
-  //     heartIcon.classList.toggle("fa-regular", !isLiked);
-  //     likeCountElement.textContent = likeCount;
-  //   }
-  // }
-
   try {
     const response = await axios.get(`/board/post/${postId}`);
 
     if (response.status === 200) {
-      console.log("ddd", response.data.posts);
-      console.log(response.data, "??전체");
       const { post, canEdit, likes, liked, likeCount } = response.data;
 
       document.getElementById("postTitle").textContent = post.title;
@@ -114,17 +99,12 @@ window.onload = async function () {
         : `<i class="fa-heart fa-heart2 fa-regular
           }" id="heartIcon-${post.id}"></i>`;
 
-      console.log(post.user, "?? post.user 데이터"); // 유저 정보 확인
-      console.log(post.user.profilePic, "?? post.user.profilePic 값 확인"); // 프로필 이미지 확인
-
       // ✅ 프로필 이미지 적용
       const userImageElement = document.querySelector(".userImage");
 
       if (post.user.profilePic.startsWith("/uploads/profilepics/")) {
-        console.log("✅ 프로필 이미지 있음:", post.user.profilePic);
         userImageElement.src = post.user.profilePic;
       } else {
-        console.log("❌ 프로필 이미지 없음, 기본 이미지 사용");
         userImageElement.src = "/images/image.jpg";
       }
 
@@ -266,20 +246,10 @@ async function toggleLike(postId) {
       const { likeCount, liked } = response.data;
       const heartIcon = document.getElementById(`heartIcon-${postId}`);
       const likeCountElement = heartIcon.nextElementSibling;
-      console.log(liked, "liked");
-      console.log(likeCount, "likeCount");
 
       heartIcon.classList.toggle("fa-solid", liked);
       heartIcon.classList.toggle("fa-regular", !liked);
       likeCountElement.textContent = likeCount;
-
-      // let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
-      // if (liked) {
-      //   if (!likedPosts.includes(postId)) likedPosts.push(postId);
-      // } else {
-      //   likedPosts = likedPosts.filter((id) => id !== postId);
-      // }
-      // localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
     }
   } catch (error) {
     if (error.response && error.response.status === 403) {

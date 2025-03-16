@@ -180,7 +180,7 @@ module.exports = {
   // 🗑️ 회원 탈퇴
   deleteAccount: async (req, res) => {
     const accessToken = req.cookies.accessToken;
-    console.log(accessToken);
+
     if (!accessToken) {
       return res
         .status(401)

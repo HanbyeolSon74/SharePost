@@ -38,7 +38,6 @@ function renderPosts(posts) {
   mainPostsBox.innerHTML = "";
 
   posts.forEach((post) => {
-    console.log(post.isLiked);
     const postElement = document.createElement("div");
     postElement.classList.add("post");
     let heart = post.isLiked
@@ -67,6 +66,16 @@ function renderPosts(posts) {
       </div>
     `;
     mainPostsBox.appendChild(postElement);
+  });
+
+  document.querySelectorAll(".postItem").forEach((post) => {
+    const contentHover = post.querySelector(".contentHover");
+    post.addEventListener("mouseenter", function () {
+      contentHover.classList.add("visible");
+    });
+    post.addEventListener("mouseleave", function () {
+      contentHover.classList.remove("visible");
+    });
   });
 }
 

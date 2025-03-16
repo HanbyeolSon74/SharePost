@@ -5,7 +5,6 @@ module.exports = {
   getPostList: async (req, res) => {
     try {
       const userId = req.user ? req.user.id : null;
-      console.log("📌 userId:", userId);
 
       const { page = 1, limit = 12 } = req.query;
 

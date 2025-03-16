@@ -38,8 +38,6 @@ module.exports = {
       const naverClientId = process.env.NAVER_CLIENT_ID; // 환경변수에서 가져오기
       const naverCallbackUrl = process.env.NAVER_CALLBACK_URL; // 환경변수에서 가져오기
 
-      console.log("✅ [getProfile] 프로필 사진 경로:", user.profilePic);
-
       // 회원 정보를 profile.ejs로 전달하여 렌더링
       res.render("editprofile", {
         success: true,
@@ -62,8 +60,6 @@ module.exports = {
 
   // 회원 정보 수정
   updateProfile: async (req, res) => {
-    console.log("📢 [updateProfile] 파일 업로드 요청 도착");
-
     const { name, phone, birthDate, address } = req.body;
     const accessToken = req.cookies.accessToken;
 
@@ -84,8 +80,6 @@ module.exports = {
           .json({ success: false, message: "사용자를 찾을 수 없습니다." });
       }
 
-      console.log("📂 업로드된 파일 정보:", req.file);
-
       // 프로필 이미지 경로 설정
       let profilePic = user.profilePic;
       if (req.file) {
@@ -100,11 +94,6 @@ module.exports = {
         address: address || user.address,
         profilePic,
       });
-
-      console.log(
-        "✅ [updateProfile] 최종 저장된 프로필 사진 경로:",
-        profilePic
-      );
 
       return res.render("editprofile", {
         success: true,
@@ -145,8 +134,6 @@ module.exports = {
           message: "사용자를 찾을 수 없습니다.",
         });
       }
-
-      console.log("✅ [renderProfilePage] 프로필 사진 경로:", user.profilePic);
 
       return res.render("editprofile", {
         success: true,
@@ -237,8 +224,6 @@ module.exports = {
         ...post.toJSON(),
         profilePic: post.User ? post.User.profilePic : "/images/default.png", // 기본 이미지 추가
       }));
-
-      console.log("✅ [getUserPosts] 조회된 게시글 목록:", plainPosts);
 
       // JSON 형식으로 응답 반환
       res.json({ posts: plainPosts });
