@@ -6,10 +6,8 @@
 
 // 기능정의서
 <img width="834" alt="Image" src="https://github.com/user-attachments/assets/b928d24e-e4ff-4e9c-a602-59fa725e1d97" />
-
-![Image](https://github.com/user-attachments/assets/4ca20732-cdff-489e-a8ed-6d567a5bb41a)
-![Image](https://github.com/user-attachments/assets/0fedb928-7938-477b-b042-86e2c1eea61b)
-
+<img width="443" alt="Image" src="https://github.com/user-attachments/assets/1fa7c45d-51b5-49fe-94cb-9bd1e5473982" />
+<img width="279" alt="Image" src="https://github.com/user-attachments/assets/53e00eb4-d696-4983-b197-802f789d8a05" />
 
 
 ## 🚀 프로젝트 소개  
