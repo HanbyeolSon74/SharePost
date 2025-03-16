@@ -1,52 +1,55 @@
 # 🥐 BAKEZY
-**빵을 리뷰하고 공유하는 플랫폼**  
+**🍞 빵을 리뷰하고 공유하는 플랫폼**  
 
 ## 🚀 프로젝트 소개  
 **BAKEZY**는 **MVC 패턴과 MySQL**을 활용하여 개발한 쇼핑몰 관리자 시스템입니다.  
-빵들의 솔직한 후기를 공유하는 웹사이트입니다. 
+🥖 빵들의 솔직한 후기를 공유하는 웹사이트입니다. 
 사용자는 직접 빵을 평가하고 사진과 함께 후기를 남길 수 있으며, 인기 있는 빵을 추천받을 수도 있습니다.
 
 ## 🎯 개발 동기  
 빵과 감각적인 디자인을 좋아하는 사람들이 보다 쉽게 정보를 공유할 수 있도록 이 플랫폼을 기획했습니다. 
 단순한 후기 사이트가 아니라, 사용자들의 실제 경험과 의견을 반영하여 빵을 보다 깊이 있게 탐색할 수 있는 공간을 목표로 하고 있습니다.
 
-## DB 설계도
+## 🗂️ DB 설계도
+📌 데이터베이스 설계도
 <img width="789" alt="Image" src="https://github.com/user-attachments/assets/8311c724-3816-4e56-9227-80118084950b" />
 
 ## 🖥️ 주요 기능  
-✔ **빵 후기 작성**  
+✔ **🥯 빵 후기 작성**  
 - 빵에 대한 맛, 식감, 향 등에 대한 리뷰 작성 가능
 - 사진 업로드
 
-✔ **빵 검색 및 추천**  
+✔ **🔍 빵 검색 및 추천**  
 - 빵 검색 가능
 - 인기 빵 및 트렌드 리뷰 제공 
 
-✔ **소셜 로그인 및 좋아요 기능**  
+✔ **💛 소셜 로그인 및 좋아요 기능**  
 - 카카오, 네이버 등 소셜 로그인 지원
 - 좋아요를 눌러 인기 있는 리뷰 확인
 
-✔ **데이터베이스 연동**  
+✔ **🗄️ 데이터베이스 연동**  
 - MySQL을 활용하여 게시글 저장 및 관리  
 - 유저 정보 저장 및 관리
 
 ## ⚙️ 기술 스택  
-- **Frontend**: HTML, CSS, EJS  
-- **Backend**: Node.js, Express  
-- **Database**: MySQL  
-- **Architecture**: MVC 패턴 , JWT, OAuth (Kakao, Naver) 
+- **🛠️ Frontend**: HTML, CSS, EJS  
+- **🛠️ Backend**: Node.js, Express  
+- **🛠️ Database**: MySQL  
+- **🛠️ Architecture**: MVC 패턴 , JWT, OAuth (Kakao, Naver) 
 
-## ⚙️ 기능 정의서 
+## 📌 기능 정의서
+- 📋 기능 정의서
+
 <img width="834" alt="Image" src="https://github.com/user-attachments/assets/b928d24e-e4ff-4e9c-a602-59fa725e1d97" />
 <img width="279" alt="Image" src="https://github.com/user-attachments/assets/53e00eb4-d696-4983-b197-802f789d8a05" />
 <img width="443" alt="Image" src="https://github.com/user-attachments/assets/1fa7c45d-51b5-49fe-94cb-9bd1e5473982" />
 
-## 📌 향후 계획  
-- 평점 기능 추가  
-- 댓글 기능 추가  
+## 🔮 향후 계획
+- ✨ 평점 기능 추가  
+- ✨ 댓글 기능 추가  
 
 
-## 로그인 페이지 ##
+## 🔑 로그인 페이지 ##
 - 로그인 모달창이 보이는 페이지 (아이디 찾기, 비밀번호 찾기, 카카오 & 네이버 로그인도 가능)
 ![Image](https://github.com/user-attachments/assets/b8bced74-cf95-4f05-8365-98085484fa7f)
 
