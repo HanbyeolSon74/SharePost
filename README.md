@@ -1,6 +1,20 @@
 # 🥐 BAKEZY
 **빵을 리뷰하고 공유하는 플랫폼**  
-[기능정의서.pdf](https://github.com/user-attachments/files/19273273/default.pdf)
+
+
+![Image](https://github.com/user-attachments/assets/d7f590e6-54fb-4072-81ad-72315cc91493)
+![Image](https://github.com/user-attachments/assets/b51ec17c-7d2a-44c6-a232-5f3bafc8c603)
+![Image](https://github.com/user-attachments/assets/3dda9008-afa5-470d-a09d-ae037f51ddc1)
+![Image](https://github.com/user-attachments/assets/06d2a78c-ff90-4fa1-9702-f279d49db065)
+![Image](https://github.com/user-attachments/assets/303d89ce-9a61-47bb-a941-eac2c45ac49d)
+![Image](https://github.com/user-attachments/assets/cfbe31f6-460c-46a2-9418-0696aca010e9)
+![Image](https://github.com/user-attachments/assets/d026e8d9-74f3-4680-bb9b-d2dd57c0b6d7)
+![Image](https://github.com/user-attachments/assets/de30408f-4da6-4651-b144-76791d1cc325)
+![Image](https://github.com/user-attachments/assets/dbf4ebbf-ad43-4700-8288-cf2e7631eaf6)
+![Image](https://github.com/user-attachments/assets/7db7c91d-0016-493f-8a34-e85e1860ee5a)
+![Image](https://github.com/user-attachments/assets/11c80074-6e3a-40dd-ae59-ae548aa095eb)
+
+
 ## 🚀 프로젝트 소개  
 **BAKEZY**는 **MVC 패턴과 MySQL**을 활용하여 개발한 쇼핑몰 관리자 시스템입니다.  
 빵들의 솔직한 후기를 공유하는 웹사이트입니다. 
