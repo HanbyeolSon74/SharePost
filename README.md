@@ -86,4 +86,4 @@
 - 전체 게시판이 보이는 페이지 1
 ![Image](https://github.com/user-attachments/assets/bf8be14a-5557-4776-86c1-35991f38b426)
 - 전체 게시판이 보이는 페이지 2 (아이폰 SE 사이즈)
-
+![Image](https://github.com/user-attachments/assets/1c28af33-72fb-45f3-803f-b68eae4945d7)
