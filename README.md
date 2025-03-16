@@ -1,6 +1,9 @@
 # 🥐 BAKEZY
 **빵을 리뷰하고 공유하는 플랫폼**  
 
+//
+![Image](https://github.com/user-attachments/assets/fd76ad5a-12d1-47e2-ae21-e63748af559f)
+
 // 기능정의서
 <img width="834" alt="Image" src="https://github.com/user-attachments/assets/b928d24e-e4ff-4e9c-a602-59fa725e1d97" />
 
