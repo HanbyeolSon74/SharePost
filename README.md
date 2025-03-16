@@ -62,4 +62,4 @@
 - 전체 게시판이 보이는 페이지
 
 
-![Image](https://github.com/user-attachments/assets/bf8be14a-5557-4776-86c1-35991f38b426)
+![Image](https://github.com/user-attachments/assets/c9303cb8-e648-44a8-b769-cd14f4063926)
