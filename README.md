@@ -41,7 +41,7 @@
 
 ## 로그인 페이지 ##
 - 로그인 모달창이 보이는 페이지 (아이디 찾기, 비밀번호 찾기, 카카오 & 네이버 로그인도 가능)
-![Image](https://github.com/user-attachments/assets/be446a33-d29d-4122-a605-e0d1f2062668)
+![Image](https://github.com/user-attachments/assets/b8bced74-cf95-4f05-8365-98085484fa7f)
 
 ## 회원가입 페이지 ##
 - 회원가입 페이지 (비밀번호 2차 확인,  조건 모두 만족해야 버튼 활성화)
@@ -73,7 +73,7 @@
   
 ## 게시글 검색 페이지 ##
 - 검색한 게시글 보이는 페이지
-![Image](https://github.com/user-attachments/assets/7e447fd1-d2a9-4dc5-9a93-d4e990e00b17)
+![Image](https://github.com/user-attachments/assets/1dc773b3-91ef-4c92-9816-e2f4455d92ad)
 
 - ## 메인 페이지 ##
 전체 게시판이 보이는 페이지 (페이지 네이션)
@@ -83,5 +83,4 @@
 - 전체 게시판이 보이는 페이지
 ![Image](https://github.com/user-attachments/assets/bf8be14a-5557-4776-86c1-35991f38b426)
 
-![Image](https://github.com/user-attachments/assets/1dc773b3-91ef-4c92-9816-e2f4455d92ad)
-![Image](https://github.com/user-attachments/assets/b8bced74-cf95-4f05-8365-98085484fa7f)
+
