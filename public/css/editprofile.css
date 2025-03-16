@@ -108,3 +108,10 @@ button:hover {
   font-size: 18px;
   cursor: pointer;
 }
+.imgBtnBox {
+  padding-top: 25px;
+  padding-bottom: 10px;
+}
+#changePasswordBtn {
+  margin-top: 10px;
+}
