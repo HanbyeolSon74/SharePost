@@ -1,5 +1,7 @@
 # 🥐 BAKEZY
+[기능정의서.xlsx](https://github.com/user-attachments/files/19273190/default.xlsx)
 
+[db.drawio (1).pdf](https://github.com/user-attachments/files/19273191/db.drawio.1.pdf)
 **빵을 리뷰하고 공유하는 플랫폼**  
 
 ## 🚀 프로젝트 소개  
