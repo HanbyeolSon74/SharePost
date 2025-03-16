@@ -83,7 +83,7 @@
 ![Image](https://github.com/user-attachments/assets/e6c05e7c-dcde-4c76-9637-1a279b3c733f)
 
 ## 메인 페이지 (반응형 : 전 페이지 반응형) ##
-- 전체 게시판이 보이는 페이지
+- 전체 게시판이 보이는 페이지 1
 ![Image](https://github.com/user-attachments/assets/bf8be14a-5557-4776-86c1-35991f38b426)
-
+- 전체 게시판이 보이는 페이지 2 (아이폰 SE 사이즈)
 
