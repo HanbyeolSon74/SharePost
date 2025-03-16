@@ -31,7 +31,7 @@ async function getLikedPosts() {
                 <h3>${post.title}</h3>
               </div>
               <div class="post-content">${post.content}</div>
-              <button class="like-btn" data-post-id="${post.id}" data-liked="true">💖 좋아요 취소</button>
+              <button class="like-btn" data-post-id="${post.id}" data-liked="true">좋아요 취소</button>
             `;
 
       postContainer.appendChild(postElement);
@@ -71,7 +71,7 @@ async function handleLikeToggle(event) {
     const response = await axios.post(`/profile/favorites/toggle/${postId}`);
     if (response.data.success) {
       button.dataset.liked = isLiked ? "false" : "true"; // 상태 변경
-      button.innerText = isLiked ? "🤍 좋아요" : "💖 좋아요 취소";
+      button.innerText = isLiked ? "🤍 좋아요" : "좋아요 취소";
 
       // 좋아요 취소 시 목록에서 제거
       const postElement = button.parentElement.closest(".postElement");

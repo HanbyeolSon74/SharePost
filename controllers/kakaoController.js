@@ -6,9 +6,9 @@ require("dotenv").config();
 module.exports = {
   kakaoCallback: async (req, res) => {
     try {
-      const { access_token } = req.query;
+      const { accessToken } = req.body;
 
-      if (!access_token) {
+      if (!accessToken) {
         return res
           .status(400)
           .json({ success: false, message: "액세스 토큰이 없습니다." });
@@ -19,7 +19,7 @@ module.exports = {
         "https://kapi.kakao.com/v2/user/me",
         {
           headers: {
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/x-www-form-urlencoded",
           },
         }
@@ -68,7 +68,7 @@ module.exports = {
         maxAge: 3600000,
       });
 
-      res.redirect("/profile/editprofile"); // 로그인 성공 후 프로필 수정 페이지로 이동
+      res.redirect("/profile/update"); // 로그인 성공 후 프로필 수정 페이지로 이동
     } catch (error) {
       console.error("카카오 로그인 오류:", error);
       res.status(500).json({ success: false, message: "카카오 로그인 실패" });

@@ -1,204 +1,110 @@
-/* 기본 스타일 */
+/** editprofile.css **/
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Pretendard", sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9;
-}
-
-.wrapper {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  background-color: #fff;
+  color: #111;
 }
 
 .container {
+  max-width: 400px;
+  margin: 120px auto;
   padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 30px;
 }
 
 h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
   text-align: center;
-  margin-bottom: 30px;
 }
 
 label {
+  font-size: 14px;
+  font-weight: 500;
   display: block;
-  font-weight: bold;
-  margin: 10px 0 5px;
+  margin: 8px 0 4px;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="date"],
-input[type="file"],
-input[type="button"],
-button {
+input[type="password"] {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="date"]:focus,
-button:focus {
+  padding: 8px;
+  font-size: 14px;
+  border: none;
+  border-bottom: 1px solid #111;
+  background: transparent;
   outline: none;
-  border-color: #007bff;
 }
 
-button {
-  background-color: #007bff;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-button[type="button"] {
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-button[type="button"]:hover {
-  background-color: #e0e0e0;
-}
-
-/* 이미지 업로드 관련 */
 .profile-img {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.profile-img img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
 .image-preview {
-  width: 120px;
-  height: 120px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  background-color: #f0f0f0;
-  margin-bottom: 10px;
-  cursor: pointer;
-  overflow: hidden;
+  border: 1px solid #111;
   background-size: cover;
   background-position: center;
-}
-
-.image-preview img {
-  display: none;
-}
-
-.imgBtnBox {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.uploadBtn,
-.removeBtn {
-  width: 48%;
-  padding: 8px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
   cursor: pointer;
+  margin: 0 auto;
 }
 
-.uploadBtn:hover,
-.removeBtn:hover {
-  background-color: #0056b3;
-}
-
-/* 주소 관련 */
-#sample6_postcode,
-#sample6_address,
-#sample6_detailAddress,
-#sample6_extraAddress {
-  width: 100%;
-}
-
-#sample6_postcode {
-  width: 30%;
-  display: inline-block;
-}
-
-#sample6_address,
-#sample6_detailAddress,
-#sample6_extraAddress {
-  width: 65%;
-  display: inline-block;
-}
-
-/* 비밀번호 변경 모달 */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
 }
 
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  width: 300px;
-  border-radius: 8px;
+button {
+  padding: 8px 12px;
+  border: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  flex: 1 1 45%;
   text-align: center;
 }
 
-.close-btn {
-  font-size: 24px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
+button:hover {
+  background-color: #333;
 }
 
-/* 버튼 그룹 */
-.button-group {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
-.button-group button {
-  width: 22%;
-  padding: 10px;
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  width: 280px;
+  margin: 150px auto;
+  text-align: center;
   border-radius: 5px;
-  border: none;
-  background-color: #9eb3c9;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+  position: relative;
 }
 
-.button-group button:hover {
-  background-color: #0056b3;
+.close-btn {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 18px;
+  cursor: pointer;
 }

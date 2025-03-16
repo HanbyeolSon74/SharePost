@@ -188,9 +188,9 @@ document.addEventListener("DOMContentLoaded", function () {
         scope: "account_email", // 이메일 권한 요청
         throughTalk: false,
         success: function (authObj) {
-          const accessToken = authObj.access_token;
+          const accessToken = authObj.accessToken;
           // 로그인 후 콜백 URL로 리디렉션
-          window.location.href = `/auth/kakao/callback?access_token=${accessToken}`;
+          window.location.href = `/auth/kakao/callback?accessToken=${accessToken}`;
         },
         fail: function (err) {
           console.error("카카오 로그인 실패:", err);

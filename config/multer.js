@@ -65,7 +65,7 @@ const fileFilter = (req, file, cb) => {
 // 📌 게시글 이미지 업로드 미들웨어
 const uploadBoardImage = multer({
   storage: boardImageStorage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 최대 5MB
+  limits: { fileSize: 20 * 1024 * 1024 }, // 최대 20MB
   fileFilter,
 });
 

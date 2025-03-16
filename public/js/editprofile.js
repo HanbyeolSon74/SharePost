@@ -96,8 +96,25 @@ document.addEventListener("DOMContentLoaded", function () {
     logoutBtn.addEventListener("click", function () {
       document.cookie = "accessToken=; path=/; max-age=0;";
       document.cookie = "refreshToken=; path=/; max-age=0;";
-      alert("로그아웃 되었습니다.");
-      window.location.href = "/";
+      // 📌 ✅ 카카오 로그아웃 추가
+      if (window.Kakao && Kakao.Auth.getAccessToken()) {
+        Kakao.API.request({
+          url: "/v1/user/logout",
+          success: function (response) {
+            console.log("카카오 로그아웃 성공:", response);
+            Kakao.Auth.setAccessToken(null);
+            alert("로그아웃 되었습니다.");
+            window.location.href = "/";
+          },
+          fail: function (error) {
+            console.error("카카오 로그아웃 실패:", error);
+            alert("카카오 로그아웃 중 오류가 발생했습니다.");
+          },
+        });
+      } else {
+        alert("로그아웃 되었습니다.");
+        window.location.href = "/";
+      }
     });
   }
 
