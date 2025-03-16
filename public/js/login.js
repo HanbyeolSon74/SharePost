@@ -188,7 +188,9 @@ document.addEventListener("DOMContentLoaded", function () {
         scope: "account_email", // 이메일 권한 요청
         throughTalk: false,
         success: function (authObj) {
-          const accessToken = authObj.accessToken;
+          const accessToken = Kakao.Auth.getAccessToken();
+
+          console.log(accessToken, "accessToken");
           // 로그인 후 콜백 URL로 리디렉션
           window.location.href = `/auth/kakao/callback?accessToken=${accessToken}`;
         },

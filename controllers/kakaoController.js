@@ -6,7 +6,7 @@ require("dotenv").config();
 module.exports = {
   kakaoCallback: async (req, res) => {
     try {
-      const { accessToken } = req.body;
+      const { accessToken } = req.query;
 
       if (!accessToken) {
         return res
