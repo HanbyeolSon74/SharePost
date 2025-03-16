@@ -40,39 +40,46 @@
 
 ## 로그인 페이지 ##
 - 로그인 모달창이 보이는 페이지 (아이디 찾기, 비밀번호 찾기, 카카오 & 네이버 로그인도 가능)
+![Image](https://github.com/user-attachments/assets/be446a33-d29d-4122-a605-e0d1f2062668)
+
 ## 회원가입 페이지 ##
 - 회원가입 페이지 (비밀번호 2차 확인,  조건 모두 만족해야 버튼 활성화)
+![Image](https://github.com/user-attachments/assets/c9303cb8-e648-44a8-b769-cd14f4063926)
+  
 ## 내정보수정 페이지 ##
 - 내정보수정 페이지 (프로필 이미지 변경, 주소 API, 비밀번호 변경)
+![Image](https://github.com/user-attachments/assets/f3ff7709-29a8-433f-823e-8c2b8bfb8983)
+
 ## 게시글 작성 페이지 ##
 - 게시글 작성 페이지 (메인 이미지, 내용 이미지 추가 가능)
+![Image](https://github.com/user-attachments/assets/0cb103d7-eade-47d9-addd-32614e36cfb5)
+  
 ## 게시글 수정 페이지 ##
 - 게시글 수정 페이지
+![Image](https://github.com/user-attachments/assets/67d9689f-2951-4497-beb4-20688061aa58)
+
 ## 상세 게시글 페이지 ##
 - 상세 게시글 페이지 (본인 작성 게시글 삭제 & 수정)
+![Image](https://github.com/user-attachments/assets/9d4f60da-1691-450d-a94f-caf5ce5664f4)
+  
 ## 좋아요 페이지 ##
 - 좋아요 게시판이 보이는 페이지
+![Image](https://github.com/user-attachments/assets/d6c53bac-4b7a-4aa5-8cc0-12d5539bf306)
+
 ## 카테고리 페이지 ##
 - 선택한 카테고리 게시글이 보이는 페이지
+![Image](https://github.com/user-attachments/assets/9358bc33-655a-43e8-a8dd-224b8c2431ef)
+  
 ## 게시글 검색 페이지 ##
 - 검색한 게시글 보이는 페이지
+![Image](https://github.com/user-attachments/assets/7e447fd1-d2a9-4dc5-9a93-d4e990e00b17)
+
 - ## 메인 페이지 ##
 전체 게시판이 보이는 페이지 (페이지 네이션)
+![Image](https://github.com/user-attachments/assets/e6c05e7c-dcde-4c76-9637-1a279b3c733f)
+
 ## 메인 페이지 (반응형) ##
 - 전체 게시판이 보이는 페이지
-
-
 ![Image](https://github.com/user-attachments/assets/bf8be14a-5557-4776-86c1-35991f38b426)
-![Image](https://github.com/user-attachments/assets/9d4f60da-1691-450d-a94f-caf5ce5664f4)
-![Image](https://github.com/user-attachments/assets/d6c53bac-4b7a-4aa5-8cc0-12d5539bf306)
-![Image](https://github.com/user-attachments/assets/3a7a4f9d-06e4-40dc-ace5-26243d1ec3c9)
-![Image](https://github.com/user-attachments/assets/be446a33-d29d-4122-a605-e0d1f2062668)
-![Image](https://github.com/user-attachments/assets/e6c05e7c-dcde-4c76-9637-1a279b3c733f)
-![Image](https://github.com/user-attachments/assets/9358bc33-655a-43e8-a8dd-224b8c2431ef)
-![Image](https://github.com/user-attachments/assets/25076bfd-b2f1-4c25-936c-4f7abb7bb6f5)
-![Image](https://github.com/user-attachments/assets/0cb103d7-eade-47d9-addd-32614e36cfb5)
-![Image](https://github.com/user-attachments/assets/67d9689f-2951-4497-beb4-20688061aa58)
-![Image](https://github.com/user-attachments/assets/7e447fd1-d2a9-4dc5-9a93-d4e990e00b17)
-![Image](https://github.com/user-attachments/assets/715ab72b-e05e-493d-b42f-a3b668c4b72f)
-![Image](https://github.com/user-attachments/assets/f3ff7709-29a8-433f-823e-8c2b8bfb8983)
-![Image](https://github.com/user-attachments/assets/c9303cb8-e648-44a8-b769-cd14f4063926)
+
+
