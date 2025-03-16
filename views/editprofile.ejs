@@ -26,12 +26,11 @@
         >
           <!-- 프로필 이미지 -->
           <div class="profile-img">
-            <img id="preview" src="<%= user.imageurl %>" alt="프로필 사진" />
             <div
               class="image-preview"
               id="imagePreview"
               onclick="document.getElementById('profilePicInput').click()"
-              style="background-image: url('<%= user.imageurl %>')"
+              style="background-image: url('<%= user.profilePic %>')"
             ></div>
             <input
               type="file"

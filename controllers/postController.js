@@ -196,7 +196,7 @@ module.exports = {
             }
           : null,
       };
-
+      console.log(post, "post?");
       res.status(200).json({
         success: true,
         post: postWithUser,

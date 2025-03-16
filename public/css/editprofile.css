@@ -101,6 +101,13 @@ button[type="button"]:hover {
   background-color: #f0f0f0;
   margin-bottom: 10px;
   cursor: pointer;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.image-preview img {
+  display: none;
 }
 
 .imgBtnBox {

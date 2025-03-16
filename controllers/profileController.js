@@ -49,7 +49,7 @@ module.exports = {
           phone: user.phone,
           birthDate: user.birthDate,
           address: user.address,
-          profileImage: user.profilePic,
+          profilePic: user.profilePic,
         },
         naverClientId, // 네이버 클라이언트 ID 전달
         naverCallbackUrl, // 네이버 콜백 URL 전달
@@ -106,7 +106,20 @@ module.exports = {
         profilePic
       );
 
-      return module.exports.renderProfilePage(req, res);
+      return res.render("editprofile", {
+        success: true,
+        message: "회원 정보가 수정되었습니다.",
+        user: {
+          email: user.email,
+          name: user.name,
+          phone: user.phone,
+          birthDate: user.birthDate,
+          address: user.address,
+          profilePic: user.profilePic,
+        },
+        naverClientId: process.env.NAVER_CLIENT_ID,
+        naverCallbackUrl: process.env.NAVER_CALLBACK_URL,
+      });
     } catch (error) {
       console.error("❌ 회원 정보 수정 오류:", error);
       res.status(500).json({ success: false, message: "서버 오류 발생" });

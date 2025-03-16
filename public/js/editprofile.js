@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const changePasswordModal = document.getElementById("changePasswordModal");
   const closeModalBtn = document.getElementById("closeModalBtn");
   let selectedFile = null;
-  let previousImageUrl = imagePreview.getAttribute("data-url") || "";
+  let previousImageUrl = imagePreview.getAttribute("data-url");
 
   // 📌 파일 선택 시 미리보기 업데이트
-  profilePicInput.addEventListener("change", function (event) {
+  profileImageInput.addEventListener("change", function (event) {
     selectedFile = event.target.files[0];
 
     if (selectedFile) {
@@ -71,8 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (response.data.success) {
-        alert("회원 정보가 수정되었습니다.");
-        window.location.reload();
+        alert(response.data.message);
+        // window.location.reload();
 
         // ✅ 업로드된 이미지 URL로 미리보기 업데이트
         if (response.data.imageUrl) {
@@ -84,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
             img.src = response.data.imageUrl;
           });
         }
-        window.location.href = "/";
       }
     } catch (error) {
       console.error("❌ 회원 정보 수정 실패:", error);
@@ -148,10 +147,6 @@ document.addEventListener("DOMContentLoaded", function () {
 function sample6_execDaumPostcode() {
   new daum.Postcode({
     oncomplete: function (data) {
-      // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-      // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-      // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
       var addr = ""; // 주소 변수
       var extraAddr = ""; // 참고항목 변수
 
