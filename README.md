@@ -41,13 +41,9 @@
 ## 로그인 페이지 ##
 - 로그인 모달창이 보이는 페이지 (아이디 찾기, 비밀번호 찾기, 카카오 & 네이버 로그인도 가능)
 ## 회원가입 페이지 ##
-- 회원가입 페이지 (비밀번호 2차 확인)
+- 회원가입 페이지 (비밀번호 2차 확인,  조건 모두 만족해야 버튼 활성화)
 ## 내정보수정 페이지 ##
 - 내정보수정 페이지 (프로필 이미지 변경, 주소 API, 비밀번호 변경)
-## 메인 페이지 ##
-- 전체 게시판이 보이는 페이지
-## 카테고리 페이지 ##
-- 선택한 카테고리 게시글이 보이는 페이지
 ## 게시글 작성 페이지 ##
 - 게시글 작성 페이지 (메인 이미지, 내용 이미지 추가 가능)
 ## 게시글 수정 페이지 ##
@@ -56,8 +52,25 @@
 - 상세 게시글 페이지 (본인 작성 게시글 삭제 & 수정)
 ## 좋아요 페이지 ##
 - 좋아요 게시판이 보이는 페이지
+## 카테고리 페이지 ##
+- 선택한 카테고리 게시글이 보이는 페이지
 ## 게시글 검색 페이지 ##
 - 검색한 게시글 보이는 페이지
+- ## 메인 페이지 ##
+전체 게시판이 보이는 페이지 (페이지 네이션)
 ## 메인 페이지 (반응형) ##
 - 전체 게시판이 보이는 페이지
 
+
+[screencapture-localhost-3000-2025-03-16-22_27_57.pdf](https://github.com/user-attachments/files/19272385/screencapture-localhost-3000-2025-03-16-22_27_57.pdf)
+[screencapture-localhost-3000-2025-03-16-22_32_40.pdf](https://github.com/user-attachments/files/19272389/screencapture-localhost-3000-2025-03-16-22_32_40.pdf)
+[screencapture-localhost-3000-2025-03-16-22_34_36.pdf](https://github.com/user-attachments/files/19272384/screencapture-localhost-3000-2025-03-16-22_34_36.pdf)
+[screencapture-localhost-3000-board-post-2025-03-16-22_53_04.pdf](https://github.com/user-attachments/files/19272380/screencapture-localhost-3000-board-post-2025-03-16-22_53_04.pdf)
+[screencapture-localhost-3000-board-post-2025-03-16-23_11_06.pdf](https://github.com/user-attachments/files/19272388/screencapture-localhost-3000-board-post-2025-03-16-23_11_06.pdf)
+[screencapture-localhost-3000-board-post-edit-21-2025-03-16-22_55_20.pdf](https://github.com/user-attachments/files/19272382/screencapture-localhost-3000-board-post-edit-21-2025-03-16-22_55_20.pdf)
+[screencapture-localhost-3000-profile-favorites-posts-2025-03-16-22_33_05.pdf](https://github.com/user-attachments/files/19272379/screencapture-localhost-3000-profile-favorites-posts-2025-03-16-22_33_05.pdf)
+[screencapture-localhost-3000-profile-favorites-posts-2025-03-16-22_33_20.pdf](https://github.com/user-attachments/files/19272390/screencapture-localhost-3000-profile-favorites-posts-2025-03-16-22_33_20.pdf)
+[screencapture-localhost-3000-profile-update-2025-03-16-15_57_44.pdf](https://github.com/user-attachments/files/19272381/screencapture-localhost-3000-profile-update-2025-03-16-15_57_44.pdf)
+[screencapture-localhost-3000-profile-update-2025-03-16-22_33_46.pdf](https://github.com/user-attachments/files/19272387/screencapture-localhost-3000-profile-update-2025-03-16-22_33_46.pdf)
+[screencapture-localhost-3000-profile-update-2025-03-16-22_34_17.pdf](https://github.com/user-attachments/files/19272383/screencapture-localhost-3000-profile-update-2025-03-16-22_34_17.pdf)
+[screencapture-localhost-3000-user-sign-2025-03-16-22_34_51.pdf](https://github.com/user-attachments/files/19272386/screencapture-localhost-3000-user-sign-2025-03-16-22_34_51.pdf)
