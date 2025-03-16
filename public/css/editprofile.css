@@ -115,3 +115,15 @@ button:hover {
 #changePasswordBtn {
   margin-top: 10px;
 }
+
+.findAdBtn {
+  padding: 8px 12px;
+  border: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  flex: 1 1 45%;
+  text-align: center;
+  margin-top: 10px;
+}
