@@ -190,7 +190,6 @@ document.addEventListener("DOMContentLoaded", function () {
         success: function (authObj) {
           const accessToken = Kakao.Auth.getAccessToken();
 
-          console.log(accessToken, "accessToken");
           // 로그인 후 콜백 URL로 리디렉션
           window.location.href = `/auth/kakao/callback?accessToken=${accessToken}`;
         },

@@ -62,7 +62,7 @@ module.exports = {
 
       // 4️⃣ JWT 토큰을 클라이언트에 전달
       res.cookie("accessToken", newAccessToken, {
-        httpOnly: true,
+        httpOnly: false,
         secure: process.env.NODE_ENV === "production",
         sameSite: "Strict",
         maxAge: 3600000,
