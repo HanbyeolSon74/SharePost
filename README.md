@@ -1,3 +1,33 @@
+![Image](https://github.com/user-attachments/assets/3beb5aea-3bbc-45a9-92ad-256d770a2832)
+![Image](https://github.com/user-attachments/assets/9fc8e645-3cfc-485d-ac28-b7c560b9591f)
+![Image](https://github.com/user-attachments/assets/91f73b30-b4f0-46c1-b4b6-c02ae7e8d3e5)
+![Image](https://github.com/user-attachments/assets/5f8b630a-c61c-4c75-829d-86e901dc08c1)
+![Image](https://github.com/user-attachments/assets/c51f5258-918b-4705-a2ac-b402b4c3eb04)
+![Image](https://github.com/user-attachments/assets/47e117fc-e443-4ff2-9f6c-a9d54972c429)
+![Image](https://github.com/user-attachments/assets/22ef66f9-0681-4322-86d7-f3321f7b0157)
+![Image](https://github.com/user-attachments/assets/77b2ba06-cf5d-49c5-aab1-6c252d8c2b6f)
+![Image](https://github.com/user-attachments/assets/a7b0d905-9f62-4541-bf39-f0f17aac9c39)
+![Image](https://github.com/user-attachments/assets/0d44574d-c438-4edf-99b8-45c24969a721)
+![Image](https://github.com/user-attachments/assets/b61a8dd5-ebfb-4fe8-8300-1ab4a7043902)
+![Image](https://github.com/user-attachments/assets/bd3cc279-0e27-426c-809f-6f33abf133fd)
+![Image](https://github.com/user-attachments/assets/b22800a7-0458-482a-90ae-7a307ccfc077)
+![Image](https://github.com/user-attachments/assets/ccee0636-2bb0-4c3e-99c7-bc233d5fc632)
+![Image](https://github.com/user-attachments/assets/a94ae5cb-dd9a-42cf-b016-abd0f13e1c97)
+![Image](https://github.com/user-attachments/assets/35f7da64-46df-4e98-b7e6-697e11dfb2ca)
+![Image](https://github.com/user-attachments/assets/1519ec00-f8d7-403a-b00e-e753cc100084)
+![Image](https://github.com/user-attachments/assets/384ca2ff-5530-498d-a134-cb72e6a31cb9)
+![Image](https://github.com/user-attachments/assets/5fc5eec3-daa8-4115-a499-ffe40fbb604e)
+![Image](https://github.com/user-attachments/assets/9c8d1eec-b318-4926-b879-2924518608bb)
+![Image](https://github.com/user-attachments/assets/e954c6c9-3db6-484c-b2ed-a829e79237f1)
+![Image](https://github.com/user-attachments/assets/d1908f29-00db-4a1c-8be0-8981e8a6c0b3)
+![Image](https://github.com/user-attachments/assets/cb953019-3684-4872-b260-fd19cb9306e0)
+![Image](https://github.com/user-attachments/assets/dbc855d3-9367-4267-b792-6812c8a500e4)
+![Image](https://github.com/user-attachments/assets/4ee9b14d-4181-4f1e-a8a6-3e7587c47651)
+![Image](https://github.com/user-attachments/assets/1912d247-abed-4a05-97fa-8cdba58c9327)
+
+
+
+
 # 🥐 BAKEZY
 **🍞 빵을 리뷰하고 공유하는 플랫폼**  
 
