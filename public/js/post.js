@@ -101,13 +101,14 @@ window.onload = async function () {
 
       // ✅ 프로필 이미지 적용
       const userImageElement = document.querySelector(".userImage");
-
-      if (post.user.profilePic.startsWith("/uploads/profilepics/")) {
+      if (
+        post.user.profilePic &&
+        post.user.profilePic.startsWith("/uploads/profilepics/")
+      ) {
         userImageElement.src = post.user.profilePic;
       } else {
         userImageElement.src = "/images/image.jpg";
       }
-
       document.querySelector(".postlikeBtn").innerHTML = `
         <i class="fa-solid fa-print print-icon"></i>
         <div class="likeCircle" onclick="toggleLike(${post.id})">
