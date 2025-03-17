@@ -2,8 +2,8 @@
 **🍞 빵을 리뷰하고 공유하는 플랫폼**  
 
 ## :busts_in_silhouette: Developers
-*  **김은주** ([ihoek](https://github.com/ounjuu))
-*  **손한별** ([ihoek](https://github.com/HanbyeolSon74))
+*  **김은주** ([ounjuu](https://github.com/ounjuu))
+*  **손한별** ([HanbyeolSon74](https://github.com/HanbyeolSon74))
 
 ## 🚀 프로젝트 소개  
 **BAKEZY**는 **MVC 패턴과 MySQL**을 활용하여 개발한 쇼핑몰 관리자 시스템입니다.  
