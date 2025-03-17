@@ -1,7 +1,7 @@
 # 🥐 BAKEZY
 **🍞 빵을 리뷰하고 공유하는 플랫폼**  
 
-https://github.com/user-attachments/assets/d16c364d-2129-4f12-8b52-8c39b90b289d
+![Image](https://github.com/user-attachments/assets/432b3444-bed2-49c1-b567-6e0794e62926)
 
 ## :busts_in_silhouette: Developers
 *  **김은주** ([ounjuu](https://github.com/ounjuu))
