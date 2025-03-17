@@ -1,7 +1,7 @@
 # 🥐 BAKEZY
 **🍞 빵을 리뷰하고 공유하는 플랫폼**  
 
-## :busts_in_silhouette:
+## :busts_in_silhouette: Developers
 *  **김은주** ([ihoek](https://github.com/ounjuu))
 *  **손한별** ([ihoek](https://github.com/HanbyeolSon74))
 
