@@ -1,5 +1,32 @@
 # 🥐 BAKEZY
 **🍞 빵을 리뷰하고 공유하는 플랫폼**  
+<table width="100%">
+  <tr>
+    <td align="center" width="50%">
+      Main 
+      <br>
+      <img src="https://github.com/user-attachments/assets/432b3444-bed2-49c1-b567-6e0794e62926" width="100%" height="250px">
+    </td>
+    <td align="center" width="50%">
+      Login
+      <br>
+      <img src="https://github.com/user-attachments/assets/040139d5-ca9a-4e50-904c-b31afed7aad1" width="100%" height="250px">
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      Search
+      <br>
+      <img src="https://github.com/user-attachments/assets/905c25cf-9043-43d2-8f6c-bd160f6d50f9" width="100%" height="250px">
+    </td>
+    <td align="center" width="50%">
+      Responsive Design
+      <br>
+      <img src="https://github.com/user-attachments/assets/a3cb8e67-b70a-4b51-926c-cde1ef62a558" width="100%" height="250px">
+    </td>
+  </tr>
+</table>
+
 
 ## 📌 목차
 
@@ -13,34 +40,6 @@
 8. [📄 페이지별 화면](#-페이지별-화면)
 9. [👥 개발자 소개](#-개발자-소개)
 10. [📑 발표 자료](#-발표-자료)
-
-<table width="100%">
-  <tr>
-    <td align="center" width="50%">
-      Main 
-      <br>
-      <img src="https://github.com/user-attachments/assets/432b3444-bed2-49c1-b567-6e0794e62926" width="100%">
-    </td>
-    <td align="center" width="50%">
-      Login
-      <br>
-      <img src="https://github.com/user-attachments/assets/040139d5-ca9a-4e50-904c-b31afed7aad1" width="100%">
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="50%">
-      Search
-      <br>
-      <img src="https://github.com/user-attachments/assets/905c25cf-9043-43d2-8f6c-bd160f6d50f9" width="100%">
-    </td>
-    <td align="center" width="50%">
-      Responsive Design
-      <br>
-      <img src="https://github.com/user-attachments/assets/a3cb8e67-b70a-4b51-926c-cde1ef62a558" height="271px">
-    </td>
-  </tr>
-</table>
-
 
 ## :busts_in_silhouette: Developers
 *  **김은주** ([ounjuu](https://github.com/ounjuu))
