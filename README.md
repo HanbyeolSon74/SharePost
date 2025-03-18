@@ -31,12 +31,12 @@
     <td align="center" width="50%">
       Search
       <br>
-      <img src="./경로/이미지3.jpg">
+      <img src="https://github.com/user-attachments/assets/905c25cf-9043-43d2-8f6c-bd160f6d50f9" width="100%">
     </td>
     <td align="center" width="50%">
       Responsive Design
       <br>
-      <img src="./경로/이미지4.jpg">
+      <img src="https://github.com/user-attachments/assets/a3cb8e67-b70a-4b51-926c-cde1ef62a558" height="271px">
     </td>
   </tr>
 </table>
