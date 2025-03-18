@@ -17,7 +17,7 @@
 
 ![Image](https://github.com/user-attachments/assets/432b3444-bed2-49c1-b567-6e0794e62926)
 
-## :busts_in_silhouette: Developers
+## 👥 Developers
 *  **김은주** ([ounjuu](https://github.com/ounjuu))
 *  **손한별** ([HanbyeolSon74](https://github.com/HanbyeolSon74))
 
@@ -121,7 +121,7 @@
 ![Image](https://github.com/user-attachments/assets/1c28af33-72fb-45f3-803f-b68eae4945d7)
 
 
-## :bookmark_tabs: 발표 자료  
+## 📑 발표 자료  
 ![Image](https://github.com/user-attachments/assets/3beb5aea-3bbc-45a9-92ad-256d770a2832)
 ![Image](https://github.com/user-attachments/assets/9fc8e645-3cfc-485d-ac28-b7c560b9591f)
 ![Image](https://github.com/user-attachments/assets/91f73b30-b4f0-46c1-b4b6-c02ae7e8d3e5)
