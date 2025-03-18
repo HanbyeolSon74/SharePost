@@ -63,6 +63,7 @@
 
 ## 🗂️ DB 설계도
 📌 데이터베이스 설계도
+
 <img width="789" alt="Image" src="https://github.com/user-attachments/assets/8311c724-3816-4e56-9227-80118084950b" />
 
 ## 🖥️ 주요 기능  
