@@ -19,17 +19,17 @@
     <td align="center" width="50%">
       Main 
       <br>
-      <img src="https://github.com/user-attachments/assets/432b3444-bed2-49c1-b567-6e0794e62926">
+      <img src="https://github.com/user-attachments/assets/432b3444-bed2-49c1-b567-6e0794e62926" width="100%">
     </td>
     <td align="center" width="50%">
-      Search
+      Login
       <br>
-      <img src="./경로/이미지2.jpg">
+      <img src="https://github.com/user-attachments/assets/040139d5-ca9a-4e50-904c-b31afed7aad1" width="100%">
     </td>
   </tr>
   <tr>
     <td align="center" width="50%">
-      hover
+      Search
       <br>
       <img src="./경로/이미지3.jpg">
     </td>
@@ -41,7 +41,6 @@
   </tr>
 </table>
 
-![Image](https://github.com/user-attachments/assets/432b3444-bed2-49c1-b567-6e0794e62926)
 
 ## :busts_in_silhouette: Developers
 *  **김은주** ([ounjuu](https://github.com/ounjuu))
