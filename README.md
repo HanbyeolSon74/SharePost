@@ -14,10 +14,36 @@
 9. [👥 개발자 소개](#-개발자-소개)
 10. [📑 발표 자료](#-발표-자료)
 
+<table width="100%">
+  <tr>
+    <td align="center" width="50%">
+      Main 
+      <br>
+      <img src="https://github.com/user-attachments/assets/432b3444-bed2-49c1-b567-6e0794e62926">
+    </td>
+    <td align="center" width="50%">
+      Search
+      <br>
+      <img src="./경로/이미지2.jpg">
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      hover
+      <br>
+      <img src="./경로/이미지3.jpg">
+    </td>
+    <td align="center" width="50%">
+      Responsive Design
+      <br>
+      <img src="./경로/이미지4.jpg">
+    </td>
+  </tr>
+</table>
 
 ![Image](https://github.com/user-attachments/assets/432b3444-bed2-49c1-b567-6e0794e62926)
 
-## 👥 Developers
+## :busts_in_silhouette: Developers
 *  **김은주** ([ounjuu](https://github.com/ounjuu))
 *  **손한별** ([HanbyeolSon74](https://github.com/HanbyeolSon74))
 
@@ -121,7 +147,7 @@
 ![Image](https://github.com/user-attachments/assets/1c28af33-72fb-45f3-803f-b68eae4945d7)
 
 
-## 📑 발표 자료  
+## :bookmark_tabs: 발표 자료  
 ![Image](https://github.com/user-attachments/assets/3beb5aea-3bbc-45a9-92ad-256d770a2832)
 ![Image](https://github.com/user-attachments/assets/9fc8e645-3cfc-485d-ac28-b7c560b9591f)
 ![Image](https://github.com/user-attachments/assets/91f73b30-b4f0-46c1-b4b6-c02ae7e8d3e5)
