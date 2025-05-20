@@ -3,7 +3,7 @@
 
 ## 프로젝트 실행
 ```
-npm init -y
+npm install -g nodemon
 nodemon server.js
 ```
 
