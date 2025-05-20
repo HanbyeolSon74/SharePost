@@ -1,7 +1,7 @@
 # 🥐 BAKEZY
 **🍞 빵을 리뷰하고 공유하는 플랫폼**  
 
-## 프로젝트 실행
+## 🔅 프로젝트 실행
 ```
 npm install -g nodemon
 nodemon server.js
